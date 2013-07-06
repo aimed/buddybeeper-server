@@ -1,0 +1,9 @@
+Hi {{first_name}}, 
+
+please verify that this is your email address.
+To do so just follow this link:
+
+{{link}}
+
+Thanks,
+buddybeeper.

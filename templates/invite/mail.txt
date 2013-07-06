@@ -1,0 +1,7 @@
+Hey,
+
+{{host.first_name}} invited you to his event {{event.description}}.
+
+Join him and others at at
+
+{{link}}

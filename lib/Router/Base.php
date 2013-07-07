@@ -36,12 +36,10 @@ class Base {
 	 */
 	public static function prepareRequestURI($uri) {
     
-    	// We want to strip any get parameters
-    	$parts = explode("?",$uri);
-    	$uri = $parts[0];
-    	
-    	$uri = Base::standardizeURI($uri);
-    	
+		// We want to strip any get parameters
+		$parts = explode("?",$uri);
+		$uri = $parts[0];
+		$uri = Base::standardizeURI($uri);
     	return $uri;
     
 	}
@@ -59,26 +57,26 @@ class Base {
 	 */
 	public static function prepareRouteExpr($route, &$paramNames = null) {
 	
-        // wildcarding
-        $route = preg_replace("/\/\*\//", "/(.*)/?", $route);
+		// wildcarding
+		$route = preg_replace("/\/\*\//", "/(.*)/?", $route);
 	  
-        // Get the parameters required from the route
-        $route = preg_replace_callback(
-            "/:([a-zA-Z0-9_\-]+)\//", // parameter regex
-            function ($match) use (&$paramNames) {
-    			// pass the parameter name to our array
-    			if ($paramNames !== null) $paramNames[] = $match[1];
-    			return "([^/]*)/"; // note: "/" must not be escaped here!
-        	},
-        	$route
+		// Get the parameters required from the route
+		$route = preg_replace_callback(
+			"/:([a-zA-Z0-9_\-]+)\//", // parameter regex
+			function ($match) use (&$paramNames) {
+				// pass the parameter name to our array
+				if ($paramNames !== null) $paramNames[] = $match[1];
+				return "([^/]*)/"; // note: "/" must not be escaped here!
+			},
+			$route
         );
         		
-        // Escape slash
-        $route = preg_replace("/\//","\/",$route);
+		// Escape slash
+		$route = preg_replace("/\//","\/",$route);
         
-        // Wrap it up
-        $route = "/^" . $route . "$/i";
-        return $route;
+		// Wrap it up
+		$route = "/^" . $route . "$/i";
+		return $route;
 	}
 	
 	

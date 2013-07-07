@@ -35,13 +35,11 @@ class Base {
 	 * @returns {String} The prepared URL string
 	 */
 	public static function prepareRequestURI($uri) {
-    
 		// We want to strip any get parameters
 		$parts = explode("?",$uri);
 		$uri = $parts[0];
 		$uri = Base::standardizeURI($uri);
-    	return $uri;
-    
+		return $uri;
 	}
 	
 	
@@ -69,7 +67,7 @@ class Base {
 				return "([^/]*)/"; // note: "/" must not be escaped here!
 			},
 			$route
-        );
+		);
         		
 		// Escape slash
 		$route = preg_replace("/\//","\/",$route);

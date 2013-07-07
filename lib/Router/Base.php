@@ -9,9 +9,8 @@ class Base {
 	/**
 	 * Standardizes a URI
 	 *
-	 * @method standardizeURI
-	 * @param {String} $str The URL string to be prepared
-	 * @returns {String} The prepared URL string
+	 * @param String $str The URL string to be prepared
+	 * @return String The prepared URL string
 	 */
 	public static function standardizeURI ($str) {
 	
@@ -30,9 +29,8 @@ class Base {
 	/**
 	 * Prepares the requested URI
 	 *
-	 * @method prepareRequestURI
-	 * @param {String} $uri The URL string to be prepared
-	 * @returns {String} The prepared URL string
+	 * @param String $uri The URL string to be prepared
+	 * @return String The prepared URL string
 	 */
 	public static function prepareRequestURI($uri) {
 		// We want to strip any get parameters
@@ -48,10 +46,9 @@ class Base {
 	/**
 	 * Create regular expression for the route
 	 *
-	 * @method prepareRouteExpr
-	 * @param {String} $route The route to be prepared
-	 * @param {Array} $params The array wich will contain the parameter names
-	 * @returns {String} The routes regular expression
+	 * @param String $route The route to be prepared
+	 * @param Array $params The array wich will contain the parameter names
+	 * @return String The routes regular expression
 	 */
 	public static function prepareRouteExpr($route, &$paramNames = null) {
 	
@@ -83,10 +80,9 @@ class Base {
 	/**
 	 * Matches a route
 	 *
-	 * @method matchRoute
-	 * @param {String} $requested current url
-	 * @param {String} $route Are we there yet?
-	 * @param {Array} Optional
+	 * @param String $requested current url
+	 * @param String $route Are we there yet?
+	 * @param Array Optional
 	 */
 	public static function matchRoute ($requested, $route, &$params = null) {
 

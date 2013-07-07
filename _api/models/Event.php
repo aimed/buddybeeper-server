@@ -17,15 +17,6 @@ class Event extends Entity {
         return Utils::htmlsafe($text);
     }
     
-    public function beforeInsert () {
-        $this->tmp_user = $this->user;
-        $this->user = $this->user->id;
-    }
-    
-    public function afterInsert () {
-        $this->user = $this->tmp_user;
-    }
-    
     public function afterFind () {
         $this->user = new User($this->_storage["user"]);
     }

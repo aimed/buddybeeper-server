@@ -2,7 +2,6 @@
 
 class User extends Entity {
 
-    
     public $table = "users";
     public $attributes = array(
         "first_name",
@@ -13,13 +12,9 @@ class User extends Entity {
     );
     
     
-    
-    
     public function setPassword ($pw) {
         return Vault::hashPassword($pw);
     }
-    
-    
     
     
     public function getChannels () {
@@ -28,22 +23,9 @@ class User extends Entity {
     }
     
     
-    
-    
-    public function getEmail () {
-        $channels = $this->channels;
-        foreach ($this->channels as $channel) {
-            if ($channel["type"] == "email") return $channel["value"];
-        }
-        
-        return null;
-    }
-    
-    
-    
-    
     public function info () {
         return $this->get("id", "first_name", "last_name", "profile_image");
     }
-        
+
+
 }

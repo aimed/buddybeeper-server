@@ -12,7 +12,7 @@ class Entity extends Model {
     /**
      * Model loaded
      */
-    private $_loaded = false;
+    protected $_loaded = false;
     
     
     /**
@@ -30,15 +30,12 @@ class Entity extends Model {
         
         parent::__construct($initial);
     }
-    
-    
-    
+        
     
     /**
-     * Default hooks
+     * Some default hooks
      */
     public function beforeSave () {}
-    
     
     
     /**
@@ -52,8 +49,6 @@ class Entity extends Model {
     }
     
     
-    
-    
     /**
      * Loads a model
      */
@@ -64,10 +59,11 @@ class Entity extends Model {
     }
     
     
-    
-    
     /**
      * Override getter
+     *
+     * @param String $name
+     * @return Mixed value
      */
     public function __get ($name) {
         if (($val = parent::__get($name)) !== null) return $val;
@@ -80,8 +76,7 @@ class Entity extends Model {
         
         return null;
     }
-    
-    
+
     
     /**
      * Saves a model
@@ -95,8 +90,6 @@ class Entity extends Model {
     }
 
 
-
-
     /**
      * Deletes model
      * 
@@ -107,10 +100,10 @@ class Entity extends Model {
     }
     
     
-    
-    
     /** 
      * Entitys will return their id as a string
+     *
+     * @return String id
      */
     public function __toString () {
         return ($key = $this->key()) ? $key : "";

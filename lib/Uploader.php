@@ -2,12 +2,11 @@
 /*
 Sample usage:
 
-$uploader = new Uploader("myfile")
-            ->maxFileSize(8*1024*1024) // limits the file size to 1MB
-            ->allowOverride() // allows the target file to be overridden
-            ->allowMimeType("image/jpg", "image/png") // allows jpg and png files
-            ->save("test.png");
-
+$upload = new Uploader("myfile");
+$upload->maxFileSize(8*1024*1024) // limits the file size to 1MB
+       ->allowOverride() // allows the target file to be overridden
+       ->allowMimeType("image/jpg", "image/png") // allows jpg and png files
+       ->save("test.png");
 if (!$uploader) var_dump($uploader->_errors);
 */
 
@@ -74,10 +73,8 @@ class Uploader {
      * Copies file error to internal stack
      */
     private function copyFileErrors () {
-        if (!$this->file) return;
-        
-        if ($this->file["error"])
-            $this->pushError($this->file["error"]);        
+        if (!$this->file) return; 
+        if ($this->file["error"]) $this->pushError($this->file["error"]);        
     }
     
     
@@ -129,15 +126,11 @@ class Uploader {
         $mimeTypes = func_get_args();
         $argNum = func_num_args();
         
-        if ($argNum == 0)
-            return $this;
-        
+        if ($argNum == 0) return $this;
         
         // see if we matched the mime type
-        $matched = false;
         $mimeType = $this->getMimeType($this->file["tmp_name"]);
-        if (in_array($mimeType, $mimeTypes))
-            $matched = true;
+        $matched = in_array($mimeType, $mimeTypes);
         
         
         if (!$matched)

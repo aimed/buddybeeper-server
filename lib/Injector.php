@@ -24,7 +24,7 @@ class Injector {
      * @param Array $initial Optional Data the object will be populated with
      */
     public function __construct ($initial = null) {
-        if (!empty($initial)) $this->store($initial);
+        $this->store($initial);
     }
     
     
@@ -83,11 +83,7 @@ class Injector {
      * @return Mixed Value 
      */
     public function __get ($attr) {
-        
-        
-        // already stored. hard performance improvement here!
         if ($this->__isset($attr)) return $this->_storage[$attr];
-        
      
         // has getter
         $getter = $this->_getter($attr);
@@ -104,7 +100,9 @@ class Injector {
     
     
     /**
+     * Isset
      *
+     * @param String $name
      */
     public function __isset ($name) {
         return isset($this->_storage[$name]) || array_key_exists($name, $this->_storage);
@@ -162,6 +160,9 @@ class Injector {
     
     /**
      * Calls wildcard functions
+     *
+     * @param String $name
+     * @param Array $args
      */
     public function __call ($name, $args) {
         foreach ($this->_wildcards as $wildcard) {

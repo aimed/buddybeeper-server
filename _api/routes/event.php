@@ -122,21 +122,20 @@ $router->post(v0 . "/events", function (&$req, &$res) {
     if (!$access_token->isValid()) throw new TokenException();
     
     $description = $req->body("description", "required|len[1]");
-    
+    $deadline    = $req->body("deadline",    "isTimestamp");
     if (isset($req->body->invite) && !is_array($req->body->invite))
         throw new ParameterException("Invalid argument invite");
     
-    if (isset($req->body->deadline) && !Validate::that($req->body->deadline)->isTimestamp()->please())
-        throw new ParameterException("Invalid argument deadline");
+    if (!$req->isValid()) throw new ParameterException($req->validationErrors);
     
     // host
     $user = new User($access_token->user);
     
     // create event
     $event = new Event();
-    $event->user = $user;
-    $event->description = $req->body->description;
-    if (isset($req->body->deadline)) $event->deadline = $req->body->deadline;
+    $event->user        = $user;
+    $event->description = $description;
+    $event->deadline    = $req->deadline;
     $event->save();
     if (!$event->id) throw new DatabaseException();
     

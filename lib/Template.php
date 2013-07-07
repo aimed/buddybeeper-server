@@ -28,12 +28,12 @@ class Template {
      * @return String php conform array name
      */
     public static function parseVar ($var, $base = TEMPLATE_ARRAY_NAME) {
-		$needlePos = strpos($var, ".");	
+        needlePos = strpos($var, ".");	
 			
-		if ($needlePos === false) 
-		{
-			$needlePos = strlen($var);	
-		}
+        if ($needlePos === false) 
+        {
+            $needlePos = strlen($var);	
+        }
 		
         $base .= "['" . substr($var, 0, $needlePos) . "']";
         $var = substr($var, $needlePos + 1, strlen($var));

@@ -202,18 +202,14 @@ class Uploader {
     public function save ($filename = null, $dir = UPLOADER_DEFAULT_DIR) {
         if (!$this->file) return false;
         
-        if (!$filename)
-            $filename = $this->file["name"];
-            
+        if (!$filename) $filename = $this->file["name"];
         $this->checkFileName($filename);
 
-        if ($this->_allowOverride == false && $this->fileExists($dir, $filename))
+        if ($this->_allowOverride == false && $this->fileExists($dir, $filename)) 
             $this->pushError("File already exists");
         
-        if (sizeof($this->_errors) > 0)
-            return false;
+        if (sizeof($this->_errors) > 0) return false;
         
-        //die(var_dump($this->file["tmp_name"], $dir . DIRECTORY_SEPARATOR . $filename));
         $ok = move_uploaded_file($this->file["tmp_name"], $dir . DIRECTORY_SEPARATOR . $filename);
         if (!$ok) $this->pushError("Something went wrong");
         

@@ -9,13 +9,10 @@ class Injector {
     public $_storage = array();
     
     
-    
     /**
      * Stores wildcards
      */
     protected $_wildcards = array();
-    
-    
     
     
     /**
@@ -26,8 +23,6 @@ class Injector {
     public function __construct ($initial = null) {
         $this->store($initial);
     }
-    
-    
     
     
     /**
@@ -48,8 +43,6 @@ class Injector {
     }
 
     
-    
-    
     /**
      * Getter Name
      *
@@ -61,8 +54,6 @@ class Injector {
     }
     
     
-    
-    
     /**
      * Setter Name
      *
@@ -72,8 +63,6 @@ class Injector {
     protected function _setter ($attr) {
         return "set" . ucfirst($attr);
     }
-    
-    
     
     
     /**
@@ -95,8 +84,6 @@ class Injector {
                 
         return null;
     }
-    
-    
     
     
     /**
@@ -126,8 +113,6 @@ class Injector {
     }
     
     
-    
-    
     /**
      * Gets a list of attributes
      *
@@ -144,8 +129,6 @@ class Injector {
     }
     
     
-    
-    
     /**
      * Registers a wildcard function
      *
@@ -154,8 +137,6 @@ class Injector {
     public function registerWildcardFunction ($name) {
         $this->_wildcards[] = $name;
     }
-    
-    
     
     
     /**

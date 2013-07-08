@@ -1,6 +1,7 @@
 <?php
 
 class VerificationToken extends Entity {
+
     public $key = "token";
     public $table = "verification_tokens";
     public $attributes = array(
@@ -11,7 +12,7 @@ class VerificationToken extends Entity {
     );
     
     public function beforeInsert () {
-        $this->token = Vault::token();
+        $this->key(Vault::token());
         $this->data = serialize($this->data);
     }
     

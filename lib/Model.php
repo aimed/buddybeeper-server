@@ -21,8 +21,6 @@ class Model extends Injector {
     private $_modified = array();
     
     
-    
-    
     /**
      * Constructor
      */
@@ -33,8 +31,6 @@ class Model extends Injector {
         
         parent::__construct($initial);
     }
-    
-    
     
     
     /**
@@ -53,7 +49,6 @@ class Model extends Injector {
     }
     
     
-    
     /**
      * Defaults hooks
      */
@@ -68,7 +63,6 @@ class Model extends Injector {
     public function onError () {}
 
 
-
     /**
      * Checks entity has attribute
      *
@@ -78,8 +72,6 @@ class Model extends Injector {
     public function hasAttribute ($name) {
         return in_array($name, $this->attributes);
     }
-    
-    
     
     
     /**
@@ -99,8 +91,6 @@ class Model extends Injector {
     }
     
     
-    
-    
     /**
      * Updates the model
      *
@@ -116,8 +106,6 @@ class Model extends Injector {
         $this->afterUpdate();
         return DB::affectedRows();
     }
-    
-    
     
     
     /**
@@ -140,7 +128,6 @@ class Model extends Injector {
     }
     
     
-    
     /**
      * Deletes the object
      *
@@ -157,8 +144,6 @@ class Model extends Injector {
     }
     
     
-    
-    
     /**
      * Converts camel case to underscore name convention
      * 
@@ -168,12 +153,10 @@ class Model extends Injector {
     private function camelcaseToUnderscore ($s) {
         return preg_replace_callback(
             "/[A-Z]+/", 
-            function ($s) { return "_" . strtolower($s[0]);}, 
+            function ($s) { return "_" . strtolower($s[0]); }, 
             $s
         );
     }
-    
-    
     
     
     /**
@@ -187,7 +170,7 @@ class Model extends Injector {
         
         $ops = $this->camelcaseToUnderscore(lcfirst($ops));
         $query = QB::select()->from($this->table)->where($ops,"=",$args[0]);
-                
+
         $result = DB::row($query,$query->data);
         $this->store($result);
         
@@ -195,8 +178,6 @@ class Model extends Injector {
         
         return $result;
     }
-    
-    
     
     
     /**

@@ -118,6 +118,123 @@ $router->post(v0 . "/events/invite", function (&$req, &$res) {
 
 
 /*---
+Vote Date or Activity
+---*/
+$router->post(v0 . "/events/:type/:id", function (&$req, &$res) {
+
+    $token = new EventInvite($req->body->event_token);
+    if (!$token->isValid()) throw new TokenException();
+    
+    
+    switch ($req->params->type) {
+        case "activity": $obj = new EventActivity; break;
+        case "date":     $obj = new EventDate; break;
+        default: throw new ParameterException("Invalid vote type"); break;
+    }
+    
+    $obj->id = $req->params->id;
+
+    if ($obj->event != $token->event->id || $obj->user != $token->user->id) 
+        throw new ParameterException("Not authorized");
+    
+    // vote something
+    $vote = new EventVote;
+    $vote->user   = $token->user;
+    $vote->event  = $token->event;
+    $vote->choice = $req->body->id;
+    $vote->type   = $req->params->type;
+    $vote->insert();
+    
+    $res->success(array("status" => DB::affectedRows() != 0 ? "ok" : "failed"));
+    
+});
+
+
+$router->delete(v0 . "/events/:type/:id", function (&$req, &$res) {
+
+    $token = new EventInvite($req->body->event_token);
+    if (!$token->isValid()) throw new TokenException();
+    
+    switch ($req->params->type) {
+        case "activity": $obj = new EventActivity; break;
+        case "date":     $obj = new EventDate; break;
+        default: throw new ParameterException("Invalid vote type"); break;
+    }
+    
+    $obj->id = $req->params->id;
+
+    if ($obj->event != $token->event->id || $obj->user != $token->user->id) 
+        throw new ParameterException("Not authorized");
+    
+    $vote = new EventVote;
+    $vote->delete(array(
+        "type"   => $req->params->type,
+        "user"   => $token->user,
+        "choice" => $req->params->id
+    )); 
+    
+    $res->success(array("status" => DB::affectedRows() > 0 ? "ok" : "failed"));
+    
+});
+
+
+
+
+/*---
+Create Date or Activity
+---*/
+$router->post(v0 . "/events/:type", function (&$req, &$res) {
+    
+    $token = new EventInvite($req->body->event_token);
+    if (!$token->isValid()) throw new TokenException();
+    
+    switch ($req->params->type) {
+        case "date":
+            $start = $req->body("start", "required|string|isTimestamp");
+            $end   = $req->body("end", "string|isTimestamp");
+            if (!$req->isValid()) throw new ParameterException($req->validationErrors);
+            
+            $obj = new EventDate;
+            $obj->user  = $token->user;
+            $obj->event = $token->event;
+            $obj->start = $start;
+            $obj->end   = $end;
+            $obj->save();
+            
+            $response = $obj->get("id", "start", "end");
+            break;
+        
+        case "activity":
+            $activity = $req->body("activity", "required|string|len[1]");
+            if (!$req->isValid()) throw new ParameterException($req->validationErrors);
+            
+            $obj = new EventActivity;
+            $obj->user     = $token->user;
+            $obj->event    = $token->event;
+            $obj->activity = $activity;
+            $obj->save();
+            
+            $response = $obj->get("id", "activity");
+            
+            break;
+        
+        default: throw new ParameterException("Invalid vote type"); break;
+    }
+    
+    $vote = new EventVote;
+    $vote->user   = $token->user;
+    $vote->type   = $req->params->type;
+    $vote->choice = $obj->id;
+    $vote->insert();
+    
+    $response["votes"] = array($token->user->id);    
+    $res->success($response);
+    
+});
+
+
+
+/*---
 Event
 ---*/
 $router->post(v0 . "/events", function (&$req, &$res) {

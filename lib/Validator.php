@@ -17,8 +17,6 @@ class Validator {
 	private $err = Array();
 	
 	
-	
-	
 	/**
 	 * Constructor
 	 *
@@ -26,10 +24,8 @@ class Validator {
 	 * @param String $str String that should be tested
 	 */
 	public function __construct ($str) {
-	    $this->str = (!empty($str)) ? $str : "";
+	    $this->str = !empty($str) && is_string($str) ? $str : "";
 	}
-		
-		
     
 			
 	/**
@@ -44,8 +40,6 @@ class Validator {
 	}
 	
 	
-	
-	
 	/**
 	 *
 	 */
@@ -53,8 +47,6 @@ class Validator {
 	    if (empty($this->str)) $this->pushErr($msg);
 	    return $this;
 	}
-	
-	
 	
 	
 	/**
@@ -89,8 +81,6 @@ class Validator {
 	}
 	
 	
-	
-	
 	/**
 	 * Has no special characters
 	 *
@@ -102,8 +92,6 @@ class Validator {
 	    if(!ctype_alpha($this->str)) $this->pushErr($errMsg);
 	    return $this;
 	}
-	
-	
 	
 	
 	/**
@@ -150,8 +138,6 @@ class Validator {
         return $this;
         
 	}
-	
-	
 	
 	
 	/**
@@ -217,22 +203,15 @@ class Validator {
 	}
 
 
-
-
 	/**
 	 * Is the string numeric?
 	 *
 	 * @param String $errMsg Optional
 	 */	
 	public function isNumeric ($errMsg = "Not a number") {
-        if ($this->str == "") return $this;
-        
 		if (!is_numeric($this->str)) $this->pushErr($errMsg);
-		
 		return $this;
 	}
-	
-	
 	
 	
 	/**
@@ -241,8 +220,6 @@ class Validator {
 	 * @param String $errMsg Optional
 	 */
 	public function isBool ($errMsg = "Not boolean") {
-	    if ($this->str == "") return $this;    
-	    
 	    if (!is_bool($this->str)) 
 	    {
 	        $this->pushErr($errMsg);
@@ -250,8 +227,6 @@ class Validator {
 	    
 	    return $this;
 	}
-	
-	
 	
 	
 	/**
@@ -270,8 +245,6 @@ class Validator {
 		
 		return $this;
 	}
-
-
 
 
 	/**
@@ -351,8 +324,6 @@ class Validator {
 	}
 	
 	
-	
-	
 	/**
 	 * Returns the result of the validations
 	 *
@@ -361,8 +332,6 @@ class Validator {
 	public function please () {
 		return sizeof($this->err) === 0;
 	}
-    
-    
     
     
     /**
@@ -374,7 +343,6 @@ class Validator {
     }
     
     
-    
 	/**
 	 * Returns the error stack
 	 *
@@ -383,7 +351,6 @@ class Validator {
 	public function errors () {
 		return $this->err;
 	}
-	
 	
 	
 	/**

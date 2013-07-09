@@ -45,12 +45,12 @@ class QB {
 	 * @param String Type
 	 */
 	public function join ($table, $col1, $col2, $type = "") {
-	    if ($type) $this->query .= strtoupper($type) . " ";
-	    $this->query .= 
-	        "JOIN " . $this->wrap($table) . 
-	        " ON " . $this->wrap($col1)  . "=" . $this->wrap($col2) . " ";
-    
-	    return $this;
+		if ($type) $this->query .= strtoupper($type) . " ";
+		$this->query .= 
+		    "JOIN " . $this->wrap($table) . 
+		    " ON " . $this->wrap($col1)  . "=" . $this->wrap($col2) . " ";
+
+		return $this;
 	}
 
 
@@ -106,9 +106,9 @@ class QB {
 	 * @return String Tablename
 	 */
 	public function wrap ($table) {
-	    $keys = explode(".", $table);
-	    array_walk($keys, function (&$k) { $k = "`" . $k . "`";} );
-	    return  implode(".", $keys);
+		$keys = explode(".", $table);
+		array_walk($keys, function (&$k) { $k = "`" . $k . "`";} );
+		return  implode(".", $keys);
 	}
 
 
@@ -118,7 +118,7 @@ class QB {
 	 * @return String Query
 	 */
 	public function __toString () {
-	    return $this->query;
+		return $this->query;
 	}
 
 
@@ -126,6 +126,7 @@ class QB {
 	 * Add a command to the query
 	 *
 	 * @param String $name
+	 * @param Array $args
 	 * @return this
 	 */
 	public function __call ($name, $args) {
@@ -146,8 +147,8 @@ class QB {
 	 * @return this
 	 */
 	public function __get ($name) {
-	    $this->query .= strtoupper($name) . " ";
-	    return $this;
+		$this->query .= strtoupper($name) . " ";
+		return $this;
 	}
 
 
@@ -157,16 +158,16 @@ class QB {
 	 * @param String $cloumn1,... Cloumns to select
 	 */
 	public static function select () {
-	    $q = new static("SELECT");
-    
-	    if (func_num_args() == 0) return $q->append("*");
-	    elseif(func_num_args() == 1 && is_array(func_get_arg(0))) $columns = func_get_arg(0);
-	    else $columns = func_get_args();	
-    
-	    foreach ($columns as &$col) {
-	        if (strpos($col, " ") === false) $col = $q->wrap($col);
-	    }
-    	
-	    return $q->append(implode(",", $columns));
+		$q = new static("SELECT");
+
+		if (func_num_args() == 0) return $q->append("*");
+		elseif(func_num_args() == 1 && is_array(func_get_arg(0))) $columns = func_get_arg(0);
+		else $columns = func_get_args();	
+
+		foreach ($columns as &$col) {
+		    if (strpos($col, " ") === false) $col = $q->wrap($col);
+		}
+
+		return $q->append(implode(",", $columns));
 	}
 }

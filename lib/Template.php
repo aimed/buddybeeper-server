@@ -5,9 +5,7 @@ if (!defined("TEMPLATE_DIR")) throw new Exception("Template dir needs to be defi
 if (!defined("TEMPLATE_ARRAY_NAME")) define("TEMPLATE_ARRAY_NAME", "\$_DATA");
 
 class Template {
-    
-    
-    
+	
     
     /**
      * Loads the template file
@@ -19,29 +17,20 @@ class Template {
     }
     
     
-    
-    
     /**
      * Parses a template var
-     * @param String var to be parsed
-     * @param String current base string to be appended to
+     * @param String $var to be parsed
+     * @param String $base current base string to be appended to
      * @return String php conform array name
      */
     public static function parseVar ($var, $base = TEMPLATE_ARRAY_NAME) {
-        needlePos = strpos($var, ".");	
+        $needlePos = ($pos = strpos($var, ".")) ? $pos : strlen($var);
 			
-        if ($needlePos === false) 
-        {
-            $needlePos = strlen($var);	
-        }
-		
         $base .= "['" . substr($var, 0, $needlePos) . "']";
         $var = substr($var, $needlePos + 1, strlen($var));
         
         return $var ? self::parseVar($var, $base) : $base;
     }
-    
-    
     
     
     /**

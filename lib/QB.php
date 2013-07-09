@@ -25,16 +25,16 @@ class QB {
 	}
 	
 	
-    /**
-     * Creates a from statement
-     *
-     * @param String $table
-     */
+	/**
+	 * Creates a from statement
+	 *
+	 * @param String $table
+	 */
 	public function from ($table) {
 		$this->query .= "FROM " . $this->wrap($table) . " ";
 		return $this;
 	}
-	
+
 	
 	/**
 	 * Creates a join

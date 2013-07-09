@@ -2,9 +2,9 @@
 
 class Event extends Entity {
     
-    public $table = "events";
-    public $attributes = array(
-        "user",
+    public $define = array(
+        "id"   => "primaryKey",
+        "user" => "model",
         "description",
         "final_date",
         "final_activity",

@@ -41,15 +41,12 @@ $router->get("/test", function (&$req, &$res) {
     $req->params = (object)array();
     $req->body->access_token = "extjNBulUSBKCbalNcxEM4DgZyq/XZPZC39nlKRemxF3xKgST8OIudPcBOBjuRjz";
     $req->body->event_token  = "ec3N1PNntWkmVgMY8arnYb64WJpc33gCyE2uG1WIY5C_k-j-dLP9fx4BVhohwQje";
-    $req->body->id = 1;
-    $req->params->id = 1;
-    $req->params->type = "activity";
     /* /HARDCODED*/
     
     $token = new EventInvite($req->body->event_token);
     if (!$token->isValid()) throw new TokenException();
-    
-    
+   
+   $event = new Event; 
 });
 
 

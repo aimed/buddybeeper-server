@@ -49,7 +49,7 @@ class QB {
 		$this->query .= 
 		    "JOIN " . $this->wrap($table) . 
 		    " ON " . $this->wrap($col1)  . "=" . $this->wrap($col2) . " ";
-
+		
 		return $this;
 	}
 

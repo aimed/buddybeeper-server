@@ -55,7 +55,6 @@ class Uploader {
     }
     
     
-    
     /**
      * Adds an error to the stack
      *
@@ -66,9 +65,7 @@ class Uploader {
         return $this;
     }
     
-    
-    
-    
+        
     /**
      * Copies file error to internal stack
      */
@@ -76,8 +73,6 @@ class Uploader {
         if (!$this->file) return; 
         if ($this->file["error"]) $this->pushError($this->file["error"]);        
     }
-    
-    
     
     
     /**
@@ -95,8 +90,6 @@ class Uploader {
     }
     
     
-    
-    
     /**
      * Gets mime type
      *
@@ -111,8 +104,6 @@ class Uploader {
         $mime = current(explode(";", $type));
         return $mime;
     }
-    
-    
     
     
     /**
@@ -133,14 +124,11 @@ class Uploader {
         $matched = in_array($mimeType, $mimeTypes);
         
         
-        if (!$matched)
-            $this->pushError("Invalid MIME type. Allowed types are: " . implode(", ", $mimeTypes) . ". Got " . $mimeType);
+        if (!$matched) $this->pushError("Invalid MIME type. Allowed types are: " . implode(", ", $mimeTypes) . ". Got " . $mimeType);
             
             
         return $this;
     }
-    
-    
     
     
     /**
@@ -154,8 +142,6 @@ class Uploader {
     }
     
     
-    
-    
     /**
      * Checks if the file already exists
      *
@@ -165,8 +151,6 @@ class Uploader {
     public function fileExists ($dir = UPLOADER_DEFAULT_DIR, $fileName = null) {
         return file_exists($dir . DIRECTORY_SEPARATOR . $fileName);
     }
-    
-    
     
     
     /**
@@ -182,8 +166,6 @@ class Uploader {
         if (preg_match("/[^a-zA-Z0-9_\-\. ]/", $name))
             return $this->pushError($errmsg);
     }
-    
-    
     
     
     /**

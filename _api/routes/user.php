@@ -22,12 +22,12 @@ $router->post(v0 . "/users", function (&$req, &$res) {
     if (!$req->isValid()) throw new ParameterException($req->validationErrors);
     
     $channel = new UserCommunicationChannel;
-    $channelexists = !!$channel->find(array("value" => $email));
+    $channelexists = !!$channel->findByValue($email);
     
     if ($channel->is_bound) throw new ParameterException("Email already in use");
     elseif ($channelexists) 
     {
-        $data = $req->body;
+        $data = (object) compact($first_name, $last_name, $password);
         $data->user = $channel->user;
         
         $token = new VerificationToken;

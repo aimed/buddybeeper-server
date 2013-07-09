@@ -102,28 +102,23 @@ class Router extends Router\Base{
 		}
 	}
 
-
+	
+	// Bind request methods
 	public function get ($route, $callback, $provide = array("request", "response")) {
 		$this->when("get", $route, $callback, $provide);
 	}
-
-
+	
 	public function post ($route, $callback, $provide = array("request", "response")) {
 		$this->when("post", $route, $callback, $provide);
 	}
-
 
 	public function put ($route, $callback, $provide = array("request", "response")) {
 		$this->when("put", $route, $callback, $provide);
 	}
 
-
 	public function delete ($route, $callback, $provide = array("request", "response")) {
 		$this->when("delete", $route, $callback, $provide);
 	}
-
-
-
 
 
 	/**
@@ -151,9 +146,6 @@ class Router extends Router\Base{
 		}
 
 	}
-
-
-
 
 
 	/**

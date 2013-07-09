@@ -151,7 +151,6 @@ class Model extends Injector {
      * @return Mixed key value
      */
     public function primaryKey () {
-        die(func_get_arg(0));
         if (func_num_args() === 1) $this->{$this->_primaryKey} = func_get_arg(0);
         return $this->__isset($this->_primaryKey) ? $this->{$this->_primaryKey} : null;
     }

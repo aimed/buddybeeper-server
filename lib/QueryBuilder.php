@@ -1,6 +1,6 @@
 <?php
 
-class QB {
+class QueryBuilder {
 
 
 	/**
@@ -172,7 +172,7 @@ class QB {
 	/**
 	 * Factory
 	 *
-	 * @return QB
+	 * @return QueryBuilder
 	 */
 	public static function __callStatic ($name, $args) {
 		return call_user_func_array(array(new static, $name), $args);

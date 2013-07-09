@@ -2,6 +2,36 @@
 
 class Model extends Injector {
 
+    
+    /**
+     * Contains the db instance
+     */
+    protected $db;
+    
+    
+    /**
+     * Primary Key
+     */
+    protected $_primaryKey;
+
+
+    /**
+     * List of keys
+     */
+    protected $_keys;
+
+
+    /**
+     * List of models belonging to this model
+     */
+    protected $_childModels;
+
+
+    /**
+     * Stores modified attributes
+     */
+    private $_modified = array();
+
 
     /**
      * Model table
@@ -22,31 +52,9 @@ class Model extends Injector {
 
 
     /**
-     * Primary Key
-     */
-    protected $__primaryKey;
-
-
-    /**
-     * List of keys
-     */
-    protected $__keys;
-
-
-    /**
-     * List of models belonging to this model
-     */
-    protected $__childModels;
-
-
-    /**
-     * Stores modified attributes
-     */
-    private $_modified = array();
-
-
-    /**
      * Constructor
+     *
+     * @param Array $initial Optional Data the model will be prefilled with
      */
     public function __construct ($initial = null) {
         
@@ -57,11 +65,11 @@ class Model extends Injector {
         if (!empty($this->define))
     	{
     		foreach ($this->define as $key => $val) {
-    			$this->__handleDefinition($key, $val);
+    			$this->_handleDefinition($key, $val);
     			$this->attributes[] = is_numeric($key) ? $val : $key;
     		}
     	}
-
+        
     	// set default table name
     	if (empty($this->table)) $this->table = $this->camelcaseToUnderscore(get_class($this)) . "s";
 
@@ -75,7 +83,7 @@ class Model extends Injector {
      * @param String $definitionKey
      * @param Mixed $definitionValue
      */
-    protected function __handleDefinition ($definitionKey, $definitionValue) {
+    protected function _handleDefinition ($definitionKey, $definitionValue) {
 
     	if (is_numeric($definitionKey)) return; // is key is numeric, we want to do nothing		
     	if (is_string($definitionValue)) $definitionValue = array($definitionValue);
@@ -83,9 +91,9 @@ class Model extends Injector {
 
     	foreach ($definitionValue as $key => $value) {
     		switch ($definitionValue) {
-    			case "key": $this->__setKey($definitionKey); break;
-    			case "model": $this->__setChildModel($definitionKey, is_numeric($key) ? null : $value); break;
-    			case "primaryKey": $this->__setPrimaryKey($definitionKey); break;
+    			case "key": $this->_setKey($definitionKey); break;
+    			case "model": $this->_setChildModel($definitionKey, is_numeric($key) ? null : $value); break;
+    			case "primaryKey": $this->_setPrimaryKey($definitionKey); break;
     		}
     	}
     }
@@ -96,19 +104,60 @@ class Model extends Injector {
      *
      * @param String $name
      */
-    protected function __setPrimaryKey ($name) {
-    	$this->__primaryKey = $name;
-    	$this->__setKey($this->__primaryKey);
+    protected function _setPrimaryKey ($name) {
+    	$this->_primaryKey = $name;
+    	$this->_setKey($this->_primaryKey);
     }
-
+    
+    
+    /**
+     * Gets the primary key and its value
+     *
+     * @return Array
+     */
+    protected function _getPrimaryKey () {
+        return $this->get($this->_primaryKey);
+    }
+    
+    
+    /**
+     * Model has a primary key
+     *
+     * @return Bool
+     */
+    protected function _hasPrimaryKey () {
+        return !empty($this->_primaryKey);
+    }
+    
 
     /**
      * Key setter
      *
      * @param String $name
      */
-    protected function __setKey ($name) {
-    	$this->__keys[] = $name;
+    protected function _setKey ($name) {
+    	$this->_keys[] = $name;
+    }
+    
+    
+    /**
+     * Gets all keys and their values
+     *
+     * @return Array
+     */
+    protected function _getKeys () {
+        return $this->get($this->_keys);
+    }
+    
+    
+    /**
+     * Check if attribute is a key
+     * 
+     * @param String $name
+     * @return Bool
+     */
+    protected function _isKey ($name) {
+        return in_array($name, $this);
     }
 
 
@@ -117,9 +166,9 @@ class Model extends Injector {
      *
      * @param String $name
      */
-    protected function __setChildModel ($column, $model = null) {
+    protected function _setChildModel ($column, $model = null) {
     	if (!$model) $model = $this->underscoreToCamelcase($column);
-    	$this->__childModels[$column] = $model;
+    	$this->_childModels[$column] = $model;
     }
 
 
@@ -129,15 +178,20 @@ class Model extends Injector {
      * @param String $name
      * @return Bool
      */
-    protected function __isChildModel ($name) {
-    	return array_key_exists($this->__childModels, $name);
+    protected function _isChildModel ($name) {
+    	return isset($this->_childModels[$name]);
     }
-
-
+    
+    
     /**
+     * Gets an array of model identifiers
      * 
+     * @return Array
      */
-
+    public function _getModelIdentifier () {
+        return $this->_hasPrimaryKey() ? $this->_getPrimaryKey() : $this->_getKeys();
+    }
+    
 
     /**
      * Sets attributes
@@ -154,18 +208,38 @@ class Model extends Injector {
         return $value;
     }
 
-
-    /**
-     * Defaults hooks
-     */
+    
+    // some default hooks
     public function beforeFind () {}
+
+
     public function afterFind () {}
-    public function beforeInsert () {}
+        
+        
+    public function beforeInsert () {}  
+        
+          
     public function afterInsert () {}
+        
+        
     public function beforeUpdate () {}
+        
+        
     public function afterUpdate () {}
+        
+        
     public function beforeDelete () {}
+        
+        
     public function afterDelete () {}
+        
+    
+    public function beforeSave () {}
+            
+            
+    public function afterSave () {}
+
+
     public function onError () {}
 
 
@@ -241,11 +315,11 @@ class Model extends Injector {
      */
     public function delete ($where) {
         $this->beforeDelete();
-
+        
         DB::delete($this->table, $where);
-
+        
         $this->afterDelete();
-
+        
         return DB::affectedRows() > 0;
     }
 
@@ -286,7 +360,7 @@ class Model extends Injector {
         $this->beforeFind();
 
         $ops = $this->camelcaseToUnderscore($ops);
-        $query = QB::select()->from($this->table)->where($ops,"=",$args[0]);
+        $query = QueryBuilder::select()->from($this->table)->where($ops,"=",$args[0]);
 
         $result = DB::row($query,$query->data);
         $this->store($result);
@@ -305,7 +379,7 @@ class Model extends Injector {
      */    
     public function findAllBy ($ops, $args) {
         $ops = $this->camelcaseToUnderscore($ops);
-        $query = QB::select()->from($this->table)->where($ops,"=",$args[0]);
+        $query = QueryBuilder::select()->from($this->table)->where($ops,"=",$args[0]);
 
         return DB::fetch($query,$query->data);
     }

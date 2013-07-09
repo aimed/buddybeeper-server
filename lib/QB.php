@@ -14,9 +14,6 @@ class QB {
 	 */
 	public $data = array();
 
-
-
-	
 	
 	/**
 	 * Constructor
@@ -28,8 +25,6 @@ class QB {
 	}
 	
 	
-	
-	
     /**
      * Creates a from statement
      *
@@ -39,8 +34,6 @@ class QB {
 		$this->query .= "FROM " . $this->wrap($table) . " ";
 		return $this;
 	}
-	
-	
 	
 	
 	/**
@@ -61,8 +54,6 @@ class QB {
 	}
 	
 	
-	
-	
 	/**
 	 * Where
 	 *
@@ -75,8 +66,6 @@ class QB {
 	    $this->data[] = $value;
 		return $this;
 	}
-	
-	
 	
 	
 	/**
@@ -98,8 +87,6 @@ class QB {
 	}
 
 
-
-
 	/**
 	 * Appends a String to the query
 	 *
@@ -110,8 +97,6 @@ class QB {
 		$this->query .= $str . " ";
 		return $this;
 	}
-	
-	
 	
 	
 	/**
@@ -127,8 +112,6 @@ class QB {
 	}
 	
 	
-	
-	
 	/**
 	 * Returns the query
 	 *
@@ -137,8 +120,6 @@ class QB {
 	public function __toString () {
 	    return $this->query;
 	}
-	
-	
 	
 	
 	/** 
@@ -158,8 +139,6 @@ class QB {
 	}
 	
 	
-	
-	
 	/**
 	 * Inserts the uppercased name
 	 *
@@ -170,8 +149,6 @@ class QB {
         $this->query .= strtoupper($name) . " ";
         return $this;
     }
-    
-
     
     
     /**

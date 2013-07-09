@@ -1,5 +1,10 @@
 <?php
 
+/*
+$hasMany = array(
+    "User"
+);
+*/
 class Model extends Injector {
 
 

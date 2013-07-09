@@ -152,6 +152,7 @@ class Vault {
 	 * @param String $password
 	 * @param String $alg Optional
 	 * @param String $mode Optional
+	 * @return String
 	 */
 	public static function encrypt ($plain, $password, $alg = "rijndael-256", $mode = "ofb") {
 		// append the plain texts hash
@@ -185,6 +186,7 @@ class Vault {
 	 * @param String $password
 	 * @param String $alg Optional
 	 * @param String $mode Optional
+	 * @return Mixed String on success null otherwise
 	 */
 	public static function decrypt ($encrypted, $password, $alg = "rijndael-256", $mode = "ofb") {
 		// prepare cipher and password

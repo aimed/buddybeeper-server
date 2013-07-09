@@ -57,19 +57,18 @@ class Mail extends Template {
 		mail($to, $this->subject, $this->render(array_merge($this->defaultData, $data)), $this->from);
 	}
 	
-	
+
 	/**
 	 * Sends an email
 	 * 
 	 * @param String $template
 	 * @param Array $data
 	 */
-    public static function send ($template, (array)$data) {
+	public static function send ($template, (array)$data) {
+
+	    $render  = self::compile($template, "mail.txt");
+	    $subject = self::load($template, "subject.txt");
     
-        $render  = self::compile($template, "mail.txt");
-        $subject = self::load($template, "subject.txt");
-        
-        if (isset($data["email"]))
-            mail($data["email"], $subject, $render($data), "From: noreply@buddybeeper.net");
-    }
+	    if (isset($data["email"])) mail($data["email"], $subject, $render($data), "From: noreply@buddybeeper.net");
+	}
 }

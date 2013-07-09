@@ -7,6 +7,7 @@ Utils::define("BUDDYBEPPER_API_URL", "http://api.buddybeeper.dev");
 
 // Mailer
 Utils::define("TEMPLATE_DIR", ROOT_DIR . DIRECTORY_SEPARATOR . "templates");
+Utils::define("MAIL_DEFAULT_FROM_ADDRESS", "noreply@buddybeeper.net");
 
 // Vault
 Utils::define("VAULT_SECRET", "");

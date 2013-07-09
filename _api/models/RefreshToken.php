@@ -1,10 +1,10 @@
 <?php
 
-class RefreshToken extends Entity {
+class RefreshToken extends Model {
     
-    public $key = "refresh_token";
     public $table = "client_refresh_tokens";
-    public $attributes = array(
+    public $define = array(
+        "refresh_token" => "key",
         "user",
         "client",
         "scope"

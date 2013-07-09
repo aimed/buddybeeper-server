@@ -1,17 +1,16 @@
 <?php
 
-class EventInvite extends Entity {
+class EventInvite extends Model {
 
-    public $key = "event_token";
-    public $table = "event_invites";
-    public $attributes = array(
+    public $define = array(
+        "event_token" => "key",
         "event",
         "user"
     );
     
     
     public function inviteByChannel ($val) {
-        @$this->key(null);
+        $this->primaryKey(null);
 
         $channel = new UserCommunicationChannel;
         $channel->findByValue($val);
@@ -57,7 +56,7 @@ class EventInvite extends Entity {
     
     
     public function isValid () {
-        return $this->event && $this->user && $this->key();
+        return $this->event && $this->user && $this->primaryKey();
     }
     
     

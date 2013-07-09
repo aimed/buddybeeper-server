@@ -120,7 +120,9 @@ class Injector {
      */
     public function get () {
         $args = func_get_args();
-        if(is_array($args[0])) $args = $args[0];
+        if(func_num_args() === 1 && is_array($args[0])) $args = $args[0];
+        
+        $data = array();
         foreach ($args as $attr) {
             $data[$attr] = $this->{$attr};
         }

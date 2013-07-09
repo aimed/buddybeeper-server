@@ -1,9 +1,9 @@
 <?php
 
-class UserCommunicationChannel extends Entity {
+class UserCommunicationChannel extends Model {
 
-    public $table = "user_communication_channels";
-    public $attributes = array(
+    public $define = array(
+        "id" => "primary"
         "user",
         "type",
         "value",

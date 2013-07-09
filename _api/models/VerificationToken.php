@@ -1,10 +1,9 @@
 <?php
 
-class VerificationToken extends Entity {
+class VerificationToken extends Model {
 
-    public $key = "token";
-    public $table = "verification_tokens";
-    public $attributes = array(
+    public $define = array(
+        "token" => "key",
         "type",
         "data",
         "date",

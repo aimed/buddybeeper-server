@@ -1,10 +1,10 @@
 <?php
 
-class AccessToken extends Entity {
+class AccessToken extends Model {
     
-    public $key = "access_token";
     public $table = "client_access_tokens";    
-    public $attributes = array(
+    public $define = array(
+        "access_token" => "key",
         "user",
         "client",
         "expires_at",

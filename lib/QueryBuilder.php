@@ -167,14 +167,4 @@ class QueryBuilder {
 		$this->query .= strtoupper($name) . " ";
 		return $this;
 	}
-
-
-	/**
-	 * Factory
-	 *
-	 * @return QueryBuilder
-	 */
-	public static function __callStatic ($name, $args) {
-		return call_user_func_array(array(new static, $name), $args);
-	}
 }

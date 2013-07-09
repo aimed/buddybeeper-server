@@ -1,9 +1,9 @@
 <?php
 
-class User extends Entity {
+class User extends Model {
 
-    public $table = "users";
-    public $attributes = array(
+    public $define = array(
+        "id" => "primaryKey",
         "first_name",
         "last_name",
         "password",

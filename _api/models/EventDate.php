@@ -1,9 +1,9 @@
 <?php
 
-class EventDate extends Entity {
+class EventDate extends Model {
 
-    public $table = "event_dates";
-    public $attributes = array(
+    public $define = array(
+        "id" => "primary",
         "event",
         "user",
         "start",

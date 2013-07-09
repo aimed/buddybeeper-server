@@ -1,6 +1,6 @@
 <?php
 
-class Event extends Entity {
+class Event extends Model {
     
     public $define = array(
         "id"   => "primaryKey",

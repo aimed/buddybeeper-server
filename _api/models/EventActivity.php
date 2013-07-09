@@ -1,9 +1,9 @@
 <?php
 
-class EventActivity extends Entity {
+class EventActivity extends Model {
     
-    public $table = "event_activities";
-    public $attributes = array(
+    public $define = array(
+        "id" => "primaryKey",
         "event",
         "user",
         "activity"

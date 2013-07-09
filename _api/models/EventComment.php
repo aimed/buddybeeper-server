@@ -1,9 +1,9 @@
 <?php
 
-class EventComment extends Entity {
+class EventComment extends Model {
 
-    public $table = "event_comments";
-    public $attributes = array(
+    public $define = array(
+        "id" => "primaryKey",
         "user",
         "event",
         "text",

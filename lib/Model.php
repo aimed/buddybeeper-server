@@ -12,8 +12,14 @@ class Model extends Injector {
     /**
      * Primary Key
      */
-    protected $_primaryKey;
-
+    protected $_primaryKey = "";
+    
+    
+    /**
+     * Model loaded
+     */
+    protected $_modelLoaded = false;
+    
 
     /**
      * List of keys
@@ -71,8 +77,23 @@ class Model extends Injector {
     	}
         
     	// set default table name
-    	if (empty($this->table)) $this->table = $this->camelcaseToUnderscore(get_class($this)) . "s";
-
+    	if (empty($this->table)) $this->table = $this->_camelcaseToUnderscore(get_class($this)) . "s";
+        
+        // set primary
+        if (is_string($initial))
+        {
+            if ($this->_hasPrimaryKey()) 
+            {
+                $this->primaryKey($initial);
+            }
+            else 
+            {
+                $keys = $this->_getKeys();
+                if (count($keys) === 1) $this->{current($keys)} = $initial;
+            }
+            $initial = null;
+        }
+    
         parent::__construct($initial);
     }
 
@@ -84,16 +105,16 @@ class Model extends Injector {
      * @param Mixed $definitionValue
      */
     protected function _handleDefinition ($definitionKey, $definitionValue) {
-
+        
     	if (is_numeric($definitionKey)) return; // is key is numeric, we want to do nothing		
     	if (is_string($definitionValue)) $definitionValue = array($definitionValue);
     	if (!is_array($definitionValue)) return;
 
     	foreach ($definitionValue as $key => $value) {
-    		switch ($definitionValue) {
+    		switch ($value) {
     			case "key": $this->_setKey($definitionKey); break;
     			case "model": $this->_setChildModel($definitionKey, is_numeric($key) ? null : $value); break;
-    			case "primaryKey": $this->_setPrimaryKey($definitionKey); break;
+    			case "primaryKey": $this->_setPrimaryKeyName($definitionKey); break;
     		}
     	}
     }
@@ -104,7 +125,7 @@ class Model extends Injector {
      *
      * @param String $name
      */
-    protected function _setPrimaryKey ($name) {
+    protected function _setPrimaryKeyName ($name) {
     	$this->_primaryKey = $name;
     	$this->_setKey($this->_primaryKey);
     }
@@ -126,9 +147,22 @@ class Model extends Injector {
      * @return Bool
      */
     protected function _hasPrimaryKey () {
-        return !empty($this->_primaryKey);
+        return $this->_primaryKey !== "";
     }
     
+    
+    /**
+     * Gets the key value
+     *
+     * @param String $key Optional
+     * @return Mixed key value
+     */
+    public function primaryKey () {
+        die(func_get_arg(0));
+        if (func_num_args() === 1) $this->{$this->_primaryKey} = func_get_arg(0);
+        return $this->__isset($this->_primaryKey) ? $this->{$this->_primaryKey} : null;
+    }
+
 
     /**
      * Key setter
@@ -156,7 +190,7 @@ class Model extends Injector {
      * @param String $name
      * @return Bool
      */
-    protected function _isKey ($name) {
+    protected function _hasKey ($name) {
         return in_array($name, $this);
     }
 
@@ -167,7 +201,7 @@ class Model extends Injector {
      * @param String $name
      */
     protected function _setChildModel ($column, $model = null) {
-    	if (!$model) $model = $this->underscoreToCamelcase($column);
+    	if (!$model) $model = $this->_underscoreToCamelcase($column);
     	$this->_childModels[$column] = $model;
     }
 
@@ -192,11 +226,25 @@ class Model extends Injector {
         return $this->_hasPrimaryKey() ? $this->_getPrimaryKey() : $this->_getKeys();
     }
     
+    
+    /**
+     * Checks if the model is identifiable by its keys
+     *
+     * @return Bool
+     */
+    public function _isIdentifiable () {
+        $identifier = @$this->_getModelIdentifier();
+        foreach ($identifier as $val) {
+            if(empty($val)) return false;
+        }
+        return true;
+    }
+    
 
     /**
      * Sets attributes
      * if the key is an attribute, the result gets passed
-     * to the modified array and will be saved to the db 
+     * to the modified array and will be saved to the db
      *
      * @param String $key
      * @param Mixed $value
@@ -207,7 +255,26 @@ class Model extends Injector {
         if ($this->hasAttribute($key)) $this->_modified[$key] = $value;
         return $value;
     }
-
+    
+    
+    /**
+     * Override getter
+     *
+     * @param String $name
+     * @return Mixed value
+     */
+    public function __get ($name) {
+        if (($val = parent::__get($name)) !== null) return $val;
+        if ($this->hasAttribute($name) && $this->_modelLoaded === false && $this->_isIdentifiable())
+        {
+            $this->load();
+            $this->_modelLoaded = true;
+            return $this->__get($name);
+        }
+        
+        return null;
+    }
+    
     
     // some default hooks
     public function beforeFind () {}
@@ -269,7 +336,23 @@ class Model extends Injector {
 
         return $fetched;
     }
-
+    
+    
+    /**
+     * Loads the model from set keys
+     * 
+     * @return Array query result
+     */
+    public function load () {
+        $identifier = $this->_getModelIdentifier();
+        if (empty($identifier)) return null;
+        
+        $result = $this->find($identifier);
+        if (!$result) $this->primaryKey(null);
+        
+        return $result;
+    }
+    
 
     /**
      * Updates the model
@@ -277,8 +360,9 @@ class Model extends Injector {
      * @param Array $where
      * @return Integer affected rows
      */
-    public function update ($where) {
+    public function update ($where = null) {
         if (empty($this->_modified)) return 0;
+        if (empty($where)) $where = $this->_getModelIdentifier;
         
         DB::update($this->table, $this->_modified, $where);
         $this->_modified = array();
@@ -296,25 +380,46 @@ class Model extends Injector {
      */
     public function insert () {
         $this->beforeInsert();
-
+        
         $id = DB::insert($this->table, $this->_modified);
         $this->_modified = array();
 
-        if (DB::affectedRows() === 0) $this->onError();         
-
+        if (DB::affectedRows() === 0) 
+        {
+            $this->onError();         
+        }
+        elseif ($this->_hasPrimaryKey()) {
+            $this->primaryKey($id);
+        }
+        
         $this->afterInsert();
 
         return $id;
     }
-
+    
+    
+    /**
+     * Saves a model
+     *
+     * If it's identifiable, so the primary or all keys have been set
+     * it will be updated and inserted otherwise.
+     */
+    public function save () {
+        $this->beforeSave();
+        if ($this->_isIdentifiable()) $this->update();
+        else $this->insert();
+    }
+    
 
     /**
      * Deletes the object
      *
      * @return Bool Success
      */
-    public function delete ($where) {
+    public function delete ($where = null) {
         $this->beforeDelete();
+        
+        if (empty($where)) $where = $this->_getModelIdentifier;
         
         DB::delete($this->table, $where);
         
@@ -330,7 +435,7 @@ class Model extends Injector {
      * @param String $s
      * @return String Converted string
      */
-    protected function camelcaseToUnderscore ($s) {
+    protected function _camelcaseToUnderscore ($s) {
         return preg_replace_callback("/[A-Z]+/", function ($s) { 
     		return "_" . strtolower($s[0]); 
     	}, lcfirst($s));
@@ -343,12 +448,39 @@ class Model extends Injector {
      * @param String $s
      * @return String
      */
-    protected function underscoreToCamelcase ($s) {
+    protected function _underscoreToCamelcase ($s) {
     	return ucfirst(preg_replace_callback("/_[a-z]/", function ($k) {
     		return strtoupper(substr($k[0],1));
     	}, $s));
     }
-
+    
+    
+    /**
+     * Translates a wildcard to a valid query
+     *
+     * @param String $wildcard
+     * @param Array $args
+     * @return QueryBuilder $query
+     */
+    protected function _translateFindWildcard ($wildcard, $args) {
+        
+        $validArg = array("where", "and", "or");        
+        $query    = new QueryBuilder;
+        $query->select()->from($this->table);
+        
+        $wildcard = "where_" . $this->_camelcaseToUnderscore($wildcard);
+        $wildcard = explode("_", $wildcard);
+        
+        $partNumb = count($wildcard);
+        for ($i = 0; $i < $partNumb; $i = $i + 2) {
+            if (in_array($wildcard[$i], $validArg)) {
+                $query->where($wildcard[$i+1], "=", $args[$i/2], $wildcard[$i]);
+            }
+        }
+        
+        return $query;
+    }
+    
 
     /**
      * Finds a model by given arguments
@@ -359,12 +491,10 @@ class Model extends Injector {
     public function findBy ($ops, $args) {
         $this->beforeFind();
 
-        $ops = $this->camelcaseToUnderscore($ops);
-        $query = QueryBuilder::select()->from($this->table)->where($ops,"=",$args[0]);
-
+        $query = $this->_translateFindWildcard($ops,$args);
         $result = DB::row($query,$query->data);
         $this->store($result);
-
+        
         $this->afterFind();
 
         return $result;
@@ -378,9 +508,7 @@ class Model extends Injector {
      * @param Array $args
      */    
     public function findAllBy ($ops, $args) {
-        $ops = $this->camelcaseToUnderscore($ops);
-        $query = QueryBuilder::select()->from($this->table)->where($ops,"=",$args[0]);
-
+        $query = $this->_translateFindWildcard($ops,$args);
         return DB::fetch($query,$query->data);
     }
 }

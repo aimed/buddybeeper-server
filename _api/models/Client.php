@@ -1,9 +1,9 @@
 <?php
 
-class Client extends Entity {
+class Client extends Model {
     
-    public $table = "clients";
-    public $attributes = array(
+    public $define = array(
+        "id" => "primaryKey",
         "name",
         "description",
         "secret"

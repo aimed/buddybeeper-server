@@ -1,20 +1,20 @@
 <?php
 
 class QB {
-	
-	
+
+
 	/**
 	 * Contains the query String
 	 */
 	public $query = "";
-	
-	
+
+
 	/**
 	 * Stores values for selective queries
 	 */
 	public $data = array();
 
-	
+
 	/**
 	 * Constructor
 	 *
@@ -23,8 +23,8 @@ class QB {
 	public function __construct ($initial = null) {
 		if ($initial) $this->query = $initial . " ";
 	}
-	
-	
+
+
 	/**
 	 * Creates a from statement
 	 *
@@ -35,7 +35,7 @@ class QB {
 		return $this;
 	}
 
-	
+
 	/**
 	 * Creates a join
 	 *
@@ -49,11 +49,11 @@ class QB {
 	    $this->query .= 
 	        "JOIN " . $this->wrap($table) . 
 	        " ON " . $this->wrap($col1)  . "=" . $this->wrap($col2) . " ";
-	    
+    
 	    return $this;
 	}
-	
-	
+
+
 	/**
 	 * Where
 	 *
@@ -62,12 +62,12 @@ class QB {
 	 * @param String $value
 	 */
 	public function where ($column, $operator, $value, $key = "where") {
-        $this->query .= strtoupper($key) . " " . $this->wrap($column) . $operator . "? ";
-	    $this->data[] = $value;
+		$this->query .= strtoupper($key) . " " . $this->wrap($column) . $operator . "? ";
+		$this->data[] = $value;
 		return $this;
 	}
-	
-	
+
+
 	/**
 	 * In
 	 *
@@ -75,11 +75,11 @@ class QB {
 	 */
 	public function where_in ($column, $arr) {
 		$argNum = sizeof($arr);
-		
+
 		if ($argNum == 0) return $this;
-			
+
 		if (strpos($this->query, "WHERE") === false) $this->query .= "WHERE ";
-		
+
 		$this->query .= $this->wrap($column) . " IN (" . rtrim(str_repeat("?,", $argNum),",") . ") ";
 		$this->data = array_merge($this->data, $arr);
 
@@ -97,8 +97,8 @@ class QB {
 		$this->query .= $str . " ";
 		return $this;
 	}
-	
-	
+
+
 	/**
 	 * Wraps a table name
 	 *
@@ -106,12 +106,12 @@ class QB {
 	 * @return String Tablename
 	 */
 	public function wrap ($table) {
-        $keys = explode(".", $table);
-        array_walk($keys, function (&$k) { $k = "`" . $k . "`";} );
-        return  implode(".", $keys);
+	    $keys = explode(".", $table);
+	    array_walk($keys, function (&$k) { $k = "`" . $k . "`";} );
+	    return  implode(".", $keys);
 	}
-	
-	
+
+
 	/**
 	 * Returns the query
 	 *
@@ -120,8 +120,8 @@ class QB {
 	public function __toString () {
 	    return $this->query;
 	}
-	
-	
+
+
 	/** 
 	 * Add a command to the query
 	 *
@@ -129,44 +129,44 @@ class QB {
 	 * @return this
 	 */
 	public function __call ($name, $args) {
-	    $func = explode("_", $name, 2);
-	    if (count($func) === 2) $args[] = $func[1];
+		$func = explode("_", $name, 2);
+		if (count($func) === 2) $args[] = $func[1];
 		if (method_exists($this, $func[0])) return call_user_func_array(array($this, $func[0]), $args);
-		
+
 		$this->query .= strtoupper($name) . "()";
 		$this->query .= " ";
 		return $this;
 	}
-	
-	
+
+
 	/**
 	 * Inserts the uppercased name
 	 *
 	 * @param String $name
 	 * @return this
 	 */
-    public function __get ($name) {
-        $this->query .= strtoupper($name) . " ";
-        return $this;
-    }
+	public function __get ($name) {
+	    $this->query .= strtoupper($name) . " ";
+	    return $this;
+	}
+
+
+	/**
+	 * Select Factory
+	 *
+	 * @param String $cloumn1,... Cloumns to select
+	 */
+	public static function select () {
+	    $q = new static("SELECT");
     
+	    if (func_num_args() == 0) return $q->append("*");
+	    elseif(func_num_args() == 1 && is_array(func_get_arg(0))) $columns = func_get_arg(0);
+	    else $columns = func_get_args();	
     
-    /**
-     * Select Factory
-     *
-     * @param String $cloumn1,... Cloumns to select
-     */
-    public static function select () {
-        $q = new static("SELECT");
-        
-        if (func_num_args() == 0) return $q->append("*");
-        elseif(func_num_args() == 1 && is_array(func_get_arg(0))) $columns = func_get_arg(0);
-        else $columns = func_get_args();	
-        
-        foreach ($columns as &$col) {
-            if (strpos($col, " ") === false) $col = $q->wrap($col);
-        }
-        	
-        return $q->append(implode(",", $columns));
-    }
+	    foreach ($columns as &$col) {
+	        if (strpos($col, " ") === false) $col = $q->wrap($col);
+	    }
+    	
+	    return $q->append(implode(",", $columns));
+	}
 }

@@ -42,7 +42,7 @@ class Mail extends Template {
 	public function __construct ($template, $from = MAIL_DEFAULT_FROM_ADDRESS, $subject = null, $defaultData = array()) {
 		$this->render      = static::compile($template, "mail.txt");
 		$this->form        = $from;
-		$this->subject     = $subject ? $subject === null : static::load($template, "subject.txt");
+		$this->subject     = $subject === null ? $subject : static::load($template, "subject.txt");
 		$this->defaultData = $defaultData;
 	}
 	

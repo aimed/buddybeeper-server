@@ -1,29 +1,26 @@
 <?php
 
 class DB {
-    
-    
-    /**
-     * PDO Object
-     */
+
+
+	/**
+	 * PDO Object
+	 */
 	public static $driver;
-	
-	
-    /**
-     * Last query
-     */
-    private static $_queries = array();
-        
+
+
+	/**
+	 * Last query
+	 */
+	private static $_queries = array();
     
-    /**
-     * Last statement
-     */
-    private static $lastStatement = null;
-    
-    
-    
-    
-	
+
+	/**
+	 * Last statement
+	 */
+	private static $lastStatement = null;
+
+
 	/**
 	 * PDO Factory
 	 *
@@ -35,10 +32,8 @@ class DB {
 	public static function connect ($ns, $username = "", $password = "", $options = null) {
 		self::$driver = new PDO($ns, $username, $password, $options);
 	}
-	
-	
-	
-	
+
+
 	/**
 	 * Executes a query
 	 * 
@@ -61,9 +56,7 @@ class DB {
 		return $statement;
 	}
 	
-	
-	
-	
+
 	/**
 	 * Fetches a single row
 	 *
@@ -76,9 +69,7 @@ class DB {
 		return $statement ? $statement->fetch($type) : null;
 	}
 	
-	
-	
-	
+
 	/**
 	 * Fetches all results
 	 * 
@@ -90,10 +81,8 @@ class DB {
 		$statement = self::query($query, $data);
 		return ($statement) ? $statement->fetchAll($type) : null;
 	}
-	
-	
-	
-	
+
+
 	/** 
 	 * Inserts a set of data
 	 *
@@ -117,9 +106,7 @@ class DB {
 		return (self::affectedRows() > 0) ? self::insertId() : null;
 	}
 	
-	
-	
-	
+
 	/**
 	 * Deletes a set of data
 	 *
@@ -130,14 +117,12 @@ class DB {
 	public static function delete ($table, $condition) {
 	    $query  = "DELETE FROM `" . $table . "` WHERE ";
 	    $query .= self::serialize($condition, " AND ");
-	    
+    
 	    self::query($query);
 	    return self::affectedRows();
 	}
 	
-	
-	
-	
+
 	/**
 	 * Prepares a select query
 	 *
@@ -146,53 +131,47 @@ class DB {
 	 * @param Array $where
 	 * @return String Query
 	 */
-    public static function prepareSelect ($table, $attrs, $where = null) {
+	public static function prepareSelect ($table, $attrs, $where = null) {
+
+	    if ($attrs && !is_array($attrs)) {
+	        $attrs = array($attrs);
+	    }
     
-        if ($attrs && !is_array($attrs)) {
-            $attrs = array($attrs);
-        }
-        
-        $query  = " SELECT " . implode(", ", $attrs);
-        $query .= " FROM " . self::table($table);
-        
-        if($where)
-        {
-            $query .= " WHERE " . self::serialize($where, " AND ");
-        }
-        
-        return $query;
-    }	
-
-
-
+	    $query  = " SELECT " . implode(", ", $attrs);
+	    $query .= " FROM " . self::table($table);
     
-    /**
-     * Grabs multiple sets of data
-     *
-     * @param String $table
-     * @param Array $attrs
-     * @param Array $where
-     */
-    public static function grab ($table, $attrs, $where = null) {
-        return self::fetch(self::prepareSelect($table, $attrs, $where));
-    }
+	    if($where)
+	    {
+	        $query .= " WHERE " . self::serialize($where, " AND ");
+	    }
+    
+	    return $query;
+	}	
+	
 
+	/**
+	 * Grabs multiple sets of data
+	 *
+	 * @param String $table
+	 * @param Array $attrs
+	 * @param Array $where
+	 */
+	public static function grab ($table, $attrs, $where = null) {
+	    return self::fetch(self::prepareSelect($table, $attrs, $where));
+	}
+	
 
-
-
-    /**
-     * Grabs a set of data
-     *
-     * @param String $table
-     * @param Array $attrs
-     * @param Array $where
-     */
-    public static function grabOne ($table, $attrs, $where = null) {
-        return self::row(self::prepareSelect($table, $attrs, $where));
-    }
-    	
-    	
-    	
+	/**
+	 * Grabs a set of data
+	 *
+	 * @param String $table
+	 * @param Array $attrs
+	 * @param Array $where
+	 */
+	public static function grabOne ($table, $attrs, $where = null) {
+	    return self::row(self::prepareSelect($table, $attrs, $where));
+	}
+	
 	
 	/**
 	 * Updates a set of data
@@ -204,21 +183,18 @@ class DB {
 	 */
 	public static function update ($table, $data, $condition = false) {
 	    $query = "UPDATE `".$table."` SET " . self::serialize($data);
-	    
+    
 	    if ($condition) 
 	    {
 	        $query .= " WHERE " . self::serialize($condition, " AND ");
 	    }
-	    
+    
 	    self::query($query);
-	    
+    
 	    return DB::affectedRows();
 	}
-	
-	
-	
-	
-	
+
+
 	/**
 	 * Returns the number of rows affected by the last query
 	 * 
@@ -227,10 +203,8 @@ class DB {
 	public static function affectedRows () {
 	    return is_null(self::$lastStatement) ? null : self::$lastStatement->rowCount();
 	}
-	
-	
-	
-	
+
+
 	/**
 	 * Gets the last inserted id
 	 *
@@ -239,10 +213,8 @@ class DB {
 	public static function insertId () {
 		return self::$driver->lastInsertId();
 	}
-	
-	
-	
-	
+
+
 	/**
 	 * Counts rows for the query
 	 * 
@@ -252,9 +224,7 @@ class DB {
 	    return count(self::fetch($query, $data));
 	}
 	
-	
-	
-	
+
 	/**
 	 * Escapes a table/cloumn name
 	 *
@@ -262,14 +232,12 @@ class DB {
 	 * @return String Escaped name
 	 */
 	public static function table ($table) {
-        $keys = explode(".", $table);
-        array_walk($keys, function (&$k) { $k = "`" . $k . "`";} );
-        return  implode(".", $keys);
+	    $keys = explode(".", $table);
+	    array_walk($keys, function (&$k) { $k = "`" . $k . "`";} );
+	    return  implode(".", $keys);
 	}
-	
-	
-	
-	
+
+
 	/**
 	 * Serializes and escapes a pair auf keys and values
 	 *
@@ -282,7 +250,7 @@ class DB {
 	    {
 	        $pairs[] = self::table($key) . "=" . self::$driver->quote($value);
 	    }
-	    
+    
 	    return implode($glue, $pairs);
 	}
 }

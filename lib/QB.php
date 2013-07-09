@@ -23,7 +23,26 @@ class QB {
 	public function __construct ($initial = null) {
 		if ($initial) $this->query = $initial . " ";
 	}
+	
+	
+	/**
+	 * Select
+	 *
+	 * @param String $cloumn1,... Cloumns to select
+	 */
+	public function select () {
+		$this->query .= "SELECT ";
+		if (func_num_args() == 0) return $this->append("*");
+		elseif(func_num_args() == 1 && is_array(func_get_arg(0))) $columns = func_get_arg(0);
+		else $columns = func_get_args();	
 
+		foreach ($columns as &$col) {
+		    if (strpos($col, " ") === false) $col = $this->wrap($col);
+		}
+
+		return $this->append(implode(",", $columns));		
+	}
+	
 
 	/**
 	 * Creates a from statement
@@ -75,9 +94,7 @@ class QB {
 	 */
 	public function where_in ($column, $arr) {
 		$argNum = sizeof($arr);
-
 		if ($argNum == 0) return $this;
-
 		if (strpos($this->query, "WHERE") === false) $this->query .= "WHERE ";
 
 		$this->query .= $this->wrap($column) . " IN (" . rtrim(str_repeat("?,", $argNum),",") . ") ";
@@ -153,21 +170,11 @@ class QB {
 
 
 	/**
-	 * Select Factory
+	 * Factory
 	 *
-	 * @param String $cloumn1,... Cloumns to select
+	 * @return QB
 	 */
-	public static function select () {
-		$q = new static("SELECT");
-
-		if (func_num_args() == 0) return $q->append("*");
-		elseif(func_num_args() == 1 && is_array(func_get_arg(0))) $columns = func_get_arg(0);
-		else $columns = func_get_args();	
-
-		foreach ($columns as &$col) {
-		    if (strpos($col, " ") === false) $col = $q->wrap($col);
-		}
-
-		return $q->append(implode(",", $columns));
+	public static function __callStatic ($name, $args) {
+		return call_user_func_array(array(new static, $name), $args);
 	}
 }

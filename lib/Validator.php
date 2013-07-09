@@ -235,12 +235,12 @@ class Validator {
 
 
 	/**
-	* Validate email
-	*
-	* Credits to http://www.linuxjournal.com/article/9585
-	*
-	* @param String $errMsg Optional
-	*/	
+	 * Validate email
+	 *
+	 * Credits to http://www.linuxjournal.com/article/9585
+	 *
+	 * @param String $errMsg Optional
+	 */	
 	public function isEmail ($errMsg = "Is no email") {
 		if ($this->str == "") return $this;
 

@@ -82,15 +82,8 @@ class Model extends Injector {
         // set primary
         if (is_string($initial))
         {
-            if ($this->_hasPrimaryKey()) 
-            {
-                $this->primaryKey($initial);
-            }
-            else 
-            {
-                $keys = $this->_getKeys();
-                if (count($keys) === 1) $this->{current($keys)} = $initial;
-            }
+            if ($this->_hasPrimaryKey()) $this->primaryKey($initial);
+            elseif (count($this->_keys) === 1) $this->{current($this->_keys)} = $initial;
             $initial = null;
         }
     
@@ -233,10 +226,8 @@ class Model extends Injector {
      * @return Bool
      */
     public function _isIdentifiable () {
-        $identifier = @$this->_getModelIdentifier();
-        foreach ($identifier as $val) {
-            if(empty($val)) return false;
-        }
+        $identifier = $this->_getModelIdentifier();
+        foreach ($identifier as $val) if(empty($val)) return false;
         return true;
     }
     

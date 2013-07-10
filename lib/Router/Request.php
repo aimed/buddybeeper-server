@@ -30,14 +30,16 @@ class Request {
     
     
     /**
-     * body getter
+     * Getter and validator
      *
      * @param String $name
      * @param String|Array $rules
      * @return Mixed Value
      */
-    public function body ($name, $filter = null) {
-        $val = isset($this->body->{$name}) ? $this->body->{$name} : null;
+    public function __call ($prop, $args) {
+        $name   = $args[0];
+        $filter = isset($args[1]) ? $args[1] : null;
+        $val = isset($this->{$prop}->{$name}) ? $this->{$prop}->{$name} : null;
         if ($filter) $this->_applyRules($filter, $val, $name);
         return $val;
     }
@@ -59,8 +61,8 @@ class Request {
         
         foreach ($rules as $rule) 
         {
-            $this->_getValidatorOptions ($rule, $args);
-            if (method_exists($validator, $rule))
+            $this->_getValidatorOptions($rule, $args);
+            if (method_exists($validator, $rule)) 
                 $validator = call_user_func_array(array($validator,$rule), $args);
         }
         
@@ -88,8 +90,7 @@ class Request {
      */
    protected function _getValidatorOptions (&$fnc, &$ops) {
        $ops = array();
-       $needlePos = strpos($fnc, "[");
-       if ($needlePos) {
+       if ($needlePos = strpos($fnc, "[")) {
            $ops = substr($fnc, $needlePos + 1, -1);
            $ops = explode(",", $ops);
            $fnc = substr($fnc, 0, $needlePos);

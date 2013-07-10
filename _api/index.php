@@ -44,8 +44,7 @@ $router->get("/test", function (&$req, &$res) {
     /* /HARDCODED*/
     
     $token = new EventInvite($req->body->event_token);
-    var_dump($token);
-    //if (!$token->isValid()) throw new TokenException();
+    if (!$token->isValid()) throw new TokenException();
    
 });
 

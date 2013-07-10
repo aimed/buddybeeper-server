@@ -318,10 +318,8 @@ class Model extends Injector {
      */
     public function find ($where) {
         $this->beforeFind();
-
         $fetched = DB::grabOne($this->table, $this->attributes, $where);
         $this->store($fetched);
-
         $this->afterFind();
 
         return $fetched;
@@ -477,6 +475,7 @@ class Model extends Injector {
      *
      * @param String $ops
      * @param Array $args
+     * @return Array
      */    
     public function findBy ($ops, $args) {
         $this->beforeFind();
@@ -496,6 +495,7 @@ class Model extends Injector {
      *
      * @param String $ops
      * @param Array $args
+     * @return Array
      */    
     public function findAllBy ($ops, $args) {
         $query = $this->_translateFindWildcard($ops,$args);

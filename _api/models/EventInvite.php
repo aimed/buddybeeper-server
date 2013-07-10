@@ -56,7 +56,7 @@ class EventInvite extends Model {
     
     
     public function isValid () {
-        return $this->event && $this->user && $this->primaryKey();
+        return $this->event && $this->user && $this->event_token;
     }
     
     

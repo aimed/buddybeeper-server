@@ -45,7 +45,12 @@ $router->get("/test", function (&$req, &$res) {
     
     $token = new EventInvite($req->body->event_token);
     if (!$token->isValid()) throw new TokenException();
-   
+    
+    $event = new Event(1);
+    $res->success($event->get(
+        "id", "description", "dates", "activities", "invites", 
+        "final_date", "final_location", "final_activity", "deadline", "created_at"
+    ));
 });
 
 

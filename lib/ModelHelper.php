@@ -13,7 +13,7 @@ class ModelHelper {
      * adds an instance
      */
     protected static function __addInstance ($instance) {
-        self::$__instances[get_class_name($instance)] = $instance;
+        self::$__instances[get_class($instance)] = $instance;
         return $instance;
     }
     
@@ -22,7 +22,7 @@ class ModelHelper {
      * gets an instance
      */
     protected static function __getInstance ($name) {
-        return (isset(self::$__instances[$name])) ? self::$__instances[$name] : self::__addInstance($name);
+        return (isset(self::$__instances[$name])) ? self::$__instances[$name] : self::__addInstance(new $name);
     }
     
     

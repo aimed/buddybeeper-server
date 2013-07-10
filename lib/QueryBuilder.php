@@ -37,7 +37,10 @@ class QueryBuilder {
 		else $columns = func_get_args();	
 
 		foreach ($columns as &$col) {
-		    if (strpos($col, " ") === false) $col = $this->wrap($col);
+		    $parts = explode(" AS ", $col);
+		    $parts[0] = $this->wrap($parts[0]);
+		    if (isset($parts[1])) $parts[1] = "`".$parts[1]."`";
+		    $col = implode(" AS ", $parts);
 		}
 
 		return $this->append(implode(",", $columns));		

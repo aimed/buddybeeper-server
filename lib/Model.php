@@ -80,7 +80,7 @@ class Model extends Injector {
     	if (empty($this->table)) $this->table = $this->_camelcaseToUnderscore(get_class($this)) . "s";
         
         // set primary
-        if (is_string($initial))
+        if (!is_array($initial))
         {
             if ($this->_hasPrimaryKey()) $this->primaryKey($initial);
             elseif (count($this->_keys) === 1) $this->{current($this->_keys)} = $initial;
@@ -107,6 +107,7 @@ class Model extends Injector {
     		switch ($value) {
     			case "key": $this->_setKey($definitionKey); break;
     			case "model": $this->_setChildModel($definitionKey, is_numeric($key) ? null : $value); break;
+    			case "primary":
     			case "primaryKey": $this->_setPrimaryKeyName($definitionKey); break;
     		}
     	}

@@ -267,6 +267,15 @@ class Model extends Injector {
     }
     
     
+    /**
+     *
+     */
+    public function __toString () {
+        return $this->_hasPrimaryKey() ? 
+            $this->primaryKey() :
+            (count($this->_keys) === 1) ? $this->{current($this->_keys)} : "";
+    }
+    
     // some default hooks
     public function beforeFind () {}
 

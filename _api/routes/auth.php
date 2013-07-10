@@ -12,7 +12,7 @@ $router->post(v0 . "/auth/token", function (&$req, &$res) {
         throw new ClientException("Invalid client credentials");
     
     $channel = new UserCommunicationChannel;
-    if (!$channel->find(array("value" => $req->body->username)) || !$channel->is_bound) 
+    if (!$channel->findByValue($req->body->username) || !$channel->is_bound) 
         throw new ParameterException("Invalid user credentials");
     
     $user = new User($channel->user);
@@ -20,7 +20,7 @@ $router->post(v0 . "/auth/token", function (&$req, &$res) {
         throw new ParameterException("Invalid user credentials");
     
     $refresh_token = new RefreshToken;
-    if (!$refresh_token->find(array("user" => $user->id, "client" => $client->id))) {
+    if (!$refresh_token->findByUserAndClient($user->id, $client->id)) {
         $refresh_token->refresh_token = Vault::token();
         $refresh_token->user = $user->id;
         $refresh_token->client = $client->id;

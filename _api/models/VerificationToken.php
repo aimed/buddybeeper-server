@@ -11,7 +11,7 @@ class VerificationToken extends Model {
     );
     
     public function beforeInsert () {
-        $this->key(Vault::token());
+        $this->token = Vault::token();
         $this->data = serialize($this->data);
     }
     

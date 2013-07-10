@@ -51,7 +51,7 @@ class EventInvite extends Model {
         }
         
         
-        return $this->key();
+        return $this->event_token;
     }
     
     
@@ -61,7 +61,7 @@ class EventInvite extends Model {
     
     
     public function beforeInsert () {
-        $this->key(Vault::token());
+        $this->event_token = Vault::token();
         $this->event = $this->event; // fixes event not beeing added to the modified array
     }
     
@@ -72,6 +72,6 @@ class EventInvite extends Model {
     
     
     private function buildLink () {
-        return BUDDYBEEPER_WEB_URL . "/event?token=" . $this->key();
+        return BUDDYBEEPER_WEB_URL . "/event?token=" . $this->event_token;
     }
 }

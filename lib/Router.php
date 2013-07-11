@@ -85,10 +85,9 @@ class Router extends Router\Base{
 	 * @param Function $callback The callback function
 	 * @param String|Array $provide
 	 */	
-	private function when ($method, $route, $callback, $provide = array("request", "response")) { 
-
+	public function when ($route, $callback, $provide = array("request", "response"), $method = "") { 
 		// if the route was already matched, don't proceed
-		if ($this->applied === true || $this->request->requestMethod !== strtoupper($method)) {
+		if ($this->applied == true || ($method !== "" && $this->request->requestMethod !== strtoupper($method))) {
 			return null;
 		}		
 
@@ -105,19 +104,19 @@ class Router extends Router\Base{
 	
 	// Bind request methods
 	public function get ($route, $callback, $provide = array("request", "response")) {
-		$this->when("get", $route, $callback, $provide);
+		$this->when($route, $callback, $provide, "get");
 	}
 	
 	public function post ($route, $callback, $provide = array("request", "response")) {
-		$this->when("post", $route, $callback, $provide);
+		$this->when($route, $callback, $provide, "post");
 	}
 
 	public function put ($route, $callback, $provide = array("request", "response")) {
-		$this->when("put", $route, $callback, $provide);
+		$this->when($route, $callback, $provide, "put");
 	}
 
 	public function delete ($route, $callback, $provide = array("request", "response")) {
-		$this->when("delete", $route, $callback, $provide);
+		$this->when($route, $callback, $provide, "delete");
 	}
 
 

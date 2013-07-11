@@ -10,23 +10,24 @@ class Response {
         $this->request = $request;
     }
     
-    public function jsonp ($data) {
+    public function jsonp ($data, $status = null) {
         @$callback = $this->request->query->callback;
         if (!$callback) return $this->json($data);
         
         $json = json_encode($data);
         $json = "\")]}',\n\"" . $callback . "(" . $json . ")";
         $this->header("Content-Type","application/javascript");
-        $this->response = $json;
+        $this->send($json);
     }
     
-    public function json ($data) {
+    public function json ($data, $status = null) {
         $this->header("Content-Type","application/json");
-        $this->response = json_encode($data);
+        $this->send(json_encode($data));
     }
     
-    public function send ($str) {
+    public function send ($str, $status = null) {
         $this->response = $str;
+        if ($status !== null) http_response_code($status); 
     }
     
     public function header ($headerKey, $headerValue, $override = true, $status = null) {
@@ -48,7 +49,7 @@ class Response {
     }
     
     public function error (ApiException $e) {
-        $this->jsonp(array("error" => $e->get()));
+        $this->jsonp(array("error" => $e->get()), $e->responseCode);
     }
   
 }

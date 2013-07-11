@@ -37,20 +37,9 @@ $router->get("/test", function (&$req, &$res) {
     /* HARDCODED */
     $req->body = (object)array();
     $req->params = (object)array();
-    $req->headers = (object)array();
-    $req->headers->{"X-Access-Token"} = "extjNBulUSBKCbalNcxEM4DgZyq/XZPZC39nlKRemxF3xKgST8OIudPcBOBjuRjz";
-    $req->headers->{"X-Event-Token"}  = "ec3N1PNntWkmVgMY8arnYb64WJpc33gCyE2uG1WIY5C_k-j-dLP9fx4BVhohwQje";
-    $req->body->email = "test@localhost";
-    $req->body->password = "password";
-    $req->body->first_name = "Max";
-    $req->body->last_name  = "T";
-    $req->body->description = "My Event";
-    $req->body->invite = array("test@localhost");
+    $req->headers->{"X-ACCESS-TOKEN"} = "extjNBulUSBKCbalNcxEM4DgZyq/XZPZC39nlKRemxF3xKgST8OIudPcBOBjuRjz";
     /* /HARDCODED*/
 
-    $access_token = new AccessToken($req->headers("X-Access-Token"));
-    if (!$access_token->isValid()) throw new TokenException();
-	
 	
 });
 
@@ -72,3 +61,14 @@ Routing
 -----*/
 include "routes/auth.php";
 include "routes/user.php";
+include "routes/event.php";
+
+
+
+
+/*---
+404 Fallback
+---*/
+$router->when("/*", function (&$req, &$res) {
+	$res->send("404 Not Found",404);
+});

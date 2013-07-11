@@ -2,50 +2,50 @@
 namespace Router;
 
 class Request {
-    
-	
+
+
 	/**
 	 * Cookies
 	 */
-    public $cookies;
-	
-	
+	public $cookies;
+
+
 	/**
 	 * Query parameters
 	 */
-    public $query;
-	
-	
+	public $query;
+
+
 	/**
 	 * Request body
 	 */
-    public $body;
-	
-	
+	public $body;
+
+
 	/**
 	 * Request parameters
 	 *
 	 * /path/:someValue -> /path/123 will set $request->params->someValue to 123
 	 */
-    public $params;
-	
-	
+	public $params;
+
+
 	/**
 	 * Stores headers
 	 */
 	public $headers;
-	
-	
+
+
 	/**
 	 * Server data
 	 */
-    public $server;
-	
-	
+	public $server;
+
+
 	/**
 	 * Stores input validation errors
 	 */
-    public $validationErrors = array();
+	public $validationErrors = array();
     
     
     /**

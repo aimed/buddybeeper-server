@@ -54,7 +54,7 @@ class Mail extends Template {
 	 * @param String $val
 	 */
 	public function header ($name, $val) {
-	    $this->_headers[$name] = $val;
+		$this->_headers[$name] = $val;
 	}
 	
 	
@@ -64,11 +64,11 @@ class Mail extends Template {
 	 * @return String
 	 */
 	public function getHeaderString () {
-	    $headers = array();
-	    foreach ($this->_headers as $name => $value) {
-	        $headers[] = $name . ": " . $value;
-	    }
-	    return implode("\r\n", $headers);
+		$headers = array();
+		foreach ($this->_headers as $name => $value) {
+		    $headers[] = $name . ": " . $value;
+		}
+		return implode("\r\n", $headers);
 	}
 	
 	

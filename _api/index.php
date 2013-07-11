@@ -40,8 +40,22 @@ $router->get("/test", function (&$req, &$res) {
     $req->headers->{"X-ACCESS-TOKEN"} = "extjNBulUSBKCbalNcxEM4DgZyq/XZPZC39nlKRemxF3xKgST8OIudPcBOBjuRjz";
     /* /HARDCODED*/
 
-	
 });
+
+
+
+
+/*---
+Allow API calls via JS
+---*/
+$router->uses("/*", function (&$req, &$res, &$self) {
+	if ($req->requestMethod === "OPTIONS") $self->cancel(); // for firefox
+	$res->header("Access-Control-Allow-Origin","*");
+	$res->header("Access-Control-Allow-Headers","X-Requested-With");
+	$res->header("Access-Control-Allow-Headers","X-Access-Token");
+	$res->header("Access-Control-Allow-Headers","X-Event-Token");
+}, array("req", "res", "self"));
+
 
 
 
@@ -50,7 +64,7 @@ Set up exception handling
 -----*/
 set_exception_handler(function ($e) use (&$router) {
     $response = $router->getResponse();
-    $response->json($e->get());
+    $response->json($e->get(), $e->responseCode);
 });
 
 

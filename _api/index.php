@@ -34,23 +34,17 @@ Prepare routing
 $router = new Router();
 $router->route($_SERVER["REQUEST_URI"]);
 $router->get("/test", function (&$req, &$res) {
-    error_reporting(E_ALL);
-
     /* HARDCODED */
     $req->body = (object)array();
     $req->params = (object)array();
     $req->body->access_token = "extjNBulUSBKCbalNcxEM4DgZyq/XZPZC39nlKRemxF3xKgST8OIudPcBOBjuRjz";
     $req->body->event_token  = "ec3N1PNntWkmVgMY8arnYb64WJpc33gCyE2uG1WIY5C_k-j-dLP9fx4BVhohwQje";
+    $req->body->email = "test@localhost";
+    $req->body->password = "password";
+    $req->body->first_name = "Max";
+    $req->body->last_name  = "T";
     /* /HARDCODED*/
     
-    $token = new EventInvite($req->body->event_token);
-    if (!$token->isValid()) throw new TokenException();
-    
-    $event = new Event(1);
-    $res->success($event->get(
-        "id", "description", "dates", "activities", "invites", 
-        "final_date", "final_location", "final_activity", "deadline", "created_at"
-    ));
 });
 
 

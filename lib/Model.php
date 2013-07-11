@@ -70,7 +70,9 @@ class Model extends Injector {
         // handle model definition
 		foreach ($this->define as $key => $val) {
 			$this->_handleDefinition($key, $val);
-			$this->attributes[] = is_numeric($key) ? $val : $key;
+
+			$attr = is_numeric($key) ? $val : $key;
+			$this->attributes[] = $attr;
             // @TODO: REVERT so we fill storage directly
 		}
         
@@ -85,6 +87,7 @@ class Model extends Injector {
             elseif (count($this->_keys) === 1) $this->_storage[current($this->_keys)] = $initial;
             $initial = null;
         }
+        
         parent::__construct($initial);
     }
 
@@ -129,7 +132,7 @@ class Model extends Injector {
      * @return Array
      */
     protected function _getPrimaryKey () {
-        return $this->get($this->_primaryKey);
+        return @$this->get($this->_primaryKey); //@TODO: why silence?
     }
     
     
@@ -275,39 +278,6 @@ class Model extends Injector {
             (count($this->_keys) === 1) ? $this->{current($this->_keys)} : "";
     }
     
-    // some default hooks
-    public function beforeFind () {}
-
-
-    public function afterFind () {}
-        
-        
-    public function beforeInsert () {}  
-        
-          
-    public function afterInsert () {}
-        
-        
-    public function beforeUpdate () {}
-        
-        
-    public function afterUpdate () {}
-        
-        
-    public function beforeDelete () {}
-        
-        
-    public function afterDelete () {}
-        
-    
-    public function beforeSave () {}
-            
-            
-    public function afterSave () {}
-
-
-    public function onError () {}
-
 
     /**
      * Checks entity has attribute
@@ -510,4 +480,40 @@ class Model extends Injector {
         $query = $this->_translateFindWildcard($ops,$args);
         return DB::fetch($query,$query->data);
     }
+    
+    
+    // some default hooks
+    public function beforeFind () {}
+
+
+    public function afterFind () {}
+        
+        
+    public function beforeInsert () {}  
+        
+          
+    public function afterInsert () {}
+        
+        
+    public function beforeUpdate () {}
+        
+        
+    public function afterUpdate () {}
+        
+        
+    public function beforeDelete () {}
+        
+        
+    public function afterDelete () {}
+        
+    
+    public function beforeSave () {}
+            
+            
+    public function afterSave () {}
+
+
+    public function onError () {}
+
+
 }

@@ -19,8 +19,7 @@ class Request {
         $this->query   = (object) $_GET;
         $this->server  = (object) $_SERVER;
         $this->cookies = (object) $_COOKIE;
-        
-        $this->contentType = $this->server->CONTENT_TYPE;
+                
         $this->requestMethod = $this->server->REQUEST_METHOD;
         
         $this->body = (object)$this->bodyparser();
@@ -102,10 +101,11 @@ class Request {
     /**
      * Bodyparser
      *
-     * @return Body Content
+     * @return stdObject Body Content
      */
     protected function bodyparser () {
-        switch ($this->contentType) {
+        if (!isset($this->server->CONTENT_TYPE)) return null;
+        switch ($this->server->CONTENT_TYPE) {
             case "application/x-www-form-urlencoded":
             case "multipart/form-data":
                 return (object) $_POST;

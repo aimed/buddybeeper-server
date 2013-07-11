@@ -43,7 +43,7 @@ class Mail extends Template {
 		$this->render      = self::compile($template, "mail.txt");
 		$this->subject     = $subject !== null ? $subject : static::load($template, "subject.txt");
 		$this->defaultData = $defaultData;
-		$this->header("From", $from !== null ? $from : MAIL_DEFAULT_FROM_ADDRESS);
+		$this->from($from);
 	}
 	
 	
@@ -55,6 +55,16 @@ class Mail extends Template {
 	 */
 	public function header ($name, $val) {
 		$this->_headers[$name] = $val;
+	}
+	
+	
+	/**
+	 * Sets the "From" header
+	 *
+	 * @param String $from Optional Will default to MAIL_DEFAULT_FROM_ADDRESS
+	 */
+	public function from ($from = null) {
+		$this->header("From", empty($from) == false ? $from : MAIL_DEFAULT_FROM_ADDRESS);
 	}
 	
 	

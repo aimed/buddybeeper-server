@@ -3,13 +3,49 @@ namespace Router;
 
 class Request {
     
+	
+	/**
+	 * Cookies
+	 */
     public $cookies;
+	
+	
+	/**
+	 * Query parameters
+	 */
     public $query;
+	
+	
+	/**
+	 * Request body
+	 */
     public $body;
+	
+	
+	/**
+	 * Request parameters
+	 *
+	 * /path/:someValue -> /path/123 will set $request->params->someValue to 123
+	 */
     public $params;
+	
+	
+	/**
+	 * Stores headers
+	 */
+	public $headers;
+	
+	
+	/**
+	 * Server data
+	 */
     public $server;
+	
+	
+	/**
+	 * Stores input validation errors
+	 */
     public $validationErrors = array();
-    protected $_errors = array();
     
     
     /**
@@ -17,15 +53,13 @@ class Request {
      */
     public function __construct () {
         $this->query   = (object) $_GET;
-        $this->server  = (object) $_SERVER;
         $this->cookies = (object) $_COOKIE;
-                
+        $this->server  = (object) $_SERVER;
         $this->requestMethod = $this->server->REQUEST_METHOD;
         
-        $this->body = (object)$this->bodyparser();
+        $this->body    = $this->_bodyparser();
+		$this->headers = $this->_getHeaders();
     }
-    
-    
     
     
     /**
@@ -38,12 +72,10 @@ class Request {
     public function __call ($prop, $args) {
         $name   = $args[0];
         $filter = isset($args[1]) ? $args[1] : null;
-        $val = isset($this->{$prop}->{$name}) ? $this->{$prop}->{$name} : null;
+        $val    = isset($this->$prop->$name) ? $this->$prop->$name : null;
         if ($filter) $this->_applyRules($filter, $val, $name);
         return $val;
-    }
-    
-    
+    }  
     
     
     /**
@@ -79,8 +111,6 @@ class Request {
     }
     
     
-    
-    
     /**
      * Compiles the rules string to valid operations
      *
@@ -95,15 +125,14 @@ class Request {
            $fnc = substr($fnc, 0, $needlePos);
        }
    } 
-    
-    
+
     
     /**
      * Bodyparser
      *
      * @return stdObject Body Content
      */
-    protected function bodyparser () {
+    protected function _bodyparser () {
         if (!isset($this->server->CONTENT_TYPE)) return null;
         switch ($this->server->CONTENT_TYPE) {
             case "application/x-www-form-urlencoded":
@@ -117,8 +146,29 @@ class Request {
         return null;
     }
     
-    
-    
+	
+	/**
+	 * Gets headers
+	 *
+	 * @return stdObject Headers
+	 */
+	protected function _getHeaders () {
+		$server  = $_SERVER;
+		$headers = array();
+		foreach ($server as $key => $value) {
+			if (substr($key, 0, 5) === "HTTP_") 
+			{
+				$headers[str_replace("_","-",substr($key, 5))] = $value;
+			}
+			elseif (substr($key, 0, 7) === "X_HTTP_") 
+			{
+				$headers["X-" . str_replace("_","-",substr($key, 7))] = $value;
+			}
+		}
+		
+		return (object) $headers;
+	}
+	
     
     /**
      * Gets request body

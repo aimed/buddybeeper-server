@@ -45,6 +45,7 @@ class Template {
      * @return Function takes data as argument and returns string
      */
     public static function compile ($templateName, $filename) {
+        // @TODO: does not allow us to compile mail.txt and sms.txt
         if (isset(self::$_collection[$templateName])) return self::$_collection[$templateName];
         $template = self::load($templateName, $filename);       
         $template = preg_replace_callback("/\{\{([a-zA-Z0-9_\-\.]*)\}\}/", function ($match) {

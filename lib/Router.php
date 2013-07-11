@@ -85,19 +85,20 @@ class Router extends Router\Base{
 	 * @param Function $callback The callback function
 	 * @param String|Array $provide
 	 */	
-	public function when ($route, $callback, $provide = array("request", "response"), $method = "") { 
-		// if the route was already matched, don't proceed
-		if ($this->applied == true || ($method !== "" && $this->request->requestMethod !== strtoupper($method))) {
-			return null;
-		}		
-
-		// set up the parameter
-		$params = array();
-
-		// match the route, in case it matches -> set route as applied
-		if ($this->applied = self::matchRoute($this->requestedRoute, $route, $params)) {
-			$this->request->params = (object) $params;
-			call_user_func_array($callback, $this->inject($provide));
+	public function when ($routes, $callback, $provide = array("request", "response"), $method = "") { 
+		if ($this->applied === true) return null;
+		if ($method !== "" && $this->request->requestMethod !== strtoupper($method)) return null;
+		
+		$i 		= 0;
+		$routes = (array) $routes;
+		$count  = sizeof($routes);
+		while ($this->applied == false && $i < $count) {
+			$params = array();
+			if ($this->applied = self::matchRoute($this->requestedRoute, $routes[$i], $params)) {
+				$this->request->params = (object) $params;
+				call_user_func_array($callback, $this->inject($provide));
+			}
+			$i++;
 		}
 	}
 
@@ -117,6 +118,10 @@ class Router extends Router\Base{
 
 	public function delete ($route, $callback, $provide = array("request", "response")) {
 		$this->when($route, $callback, $provide, "delete");
+	}
+
+	public function options ($route, $callback, $provide = array("request", "response")) {
+		$this->when($route, $callback, $provide, "options");
 	}
 
 
@@ -189,7 +194,6 @@ class Router extends Router\Base{
 			}
 
 		}
-		
 		return $provide;
 	}
 

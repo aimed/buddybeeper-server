@@ -163,11 +163,9 @@ class Request {
 			{
 				$headers[str_replace("_","-",substr($key, 5))] = $value;
 			}
-
 			elseif (substr($key, 0, 7) === "X_HTTP_")
 			{
 				$headers["X-" . str_replace("_","-",substr($key, 7))] = $value;
-
 			}
 
 		}

@@ -43,8 +43,12 @@ $router->get("/test", function (&$req, &$res) {
     $req->body->password = "password";
     $req->body->first_name = "Max";
     $req->body->last_name  = "T";
+    $req->body->description = "My Event";
+    $req->body->invite = array("test@localhost");
     /* /HARDCODED*/
     
+    $access_token = new AccessToken($req->body->access_token);
+    if (!$access_token->isValid()) throw new TokenException();
 });
 
 

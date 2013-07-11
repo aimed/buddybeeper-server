@@ -58,7 +58,7 @@ class Request {
 		$this->requestMethod = $this->server->REQUEST_METHOD;
     	
 		$this->body    = $this->_bodyparser();
-		$this->headers = $this->_getHeaders();
+		$this->headers = (object) getallheaders();
 	}
 
 
@@ -92,7 +92,7 @@ class Request {
 		foreach ($rules as $rule) 
 		{
 			$this->_getValidatorOptions($rule, $args);
-			if (method_exists($validator, $rule)) $validator = call_user_func_array(array($validator,$rule), $args);
+			$validator = call_user_func_array(array($validator,$rule), $args);
 		}
     	
 		if (!$validator->please()) $this->validationErrors[$name] = $validator->errors();
@@ -143,38 +143,6 @@ class Request {
     	
 		return null;
 	}
-
-
-	/**
-	 * Gets headers
-	 *
-	 * @return stdObject Headers
-	 */
-	protected function _getHeaders () {
-
-		$server  = $_SERVER;
-
-		$headers = array();
-		
-
-		foreach ($server as $key => $value) {
-
-			if (substr($key, 0, 5) === "HTTP_")
-			{
-				$headers[str_replace("_","-",substr($key, 5))] = $value;
-			}
-			elseif (substr($key, 0, 7) === "X_HTTP_")
-			{
-				$headers["X-" . str_replace("_","-",substr($key, 7))] = $value;
-			}
-
-		}
-		
-
-
-		return (object) $headers;
-	}
-
 
 
 	/**

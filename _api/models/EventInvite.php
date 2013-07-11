@@ -23,7 +23,7 @@ class EventInvite extends Model {
             
             $channel->user = $user->id;
             
-            if(!Validate::that($val)->isMail()->please()) return false;
+            if(!Validator::that($val)->isEmail()->please()) return false;
             $channel->value = $val;
             $channel->type  = "email";
             $channel->save();

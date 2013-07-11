@@ -79,7 +79,7 @@ class Mail extends Template {
 	 * @param Array $data Optional
 	 */
 	public function send ($to, $data = array()) {
-        $body = call_user_func($this->render,array_merge($this->defaultData, $data));
-        mail($to, $this->subject, $body, $this->getHeaderString());
+		$body = call_user_func($this->render,array_merge($this->defaultData, $data));
+		mail($to, $this->subject, $body, $this->getHeaderString());
 	}
 }

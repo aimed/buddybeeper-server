@@ -253,11 +253,12 @@ $router->post(v0 . "/events", function (&$req, &$res) {
     $user = new User($access_token->user);
     
     // create event
-    $event = new Event();
+    $event = new Event;
     $event->user        = $user;
     $event->description = $description;
-    $event->deadline    = $req->deadline;
+    $event->deadline    = $deadline;
     $event->save();
+    
     if (!$event->id) throw new DatabaseException();
     
     // invite host
@@ -265,7 +266,8 @@ $router->post(v0 . "/events", function (&$req, &$res) {
     $invite->event = $event;
     $invite->user  = $user;
     $invite->insert();
-    $host_token = $invite->key();
+    
+    $host_token = $invite->event_token;
     
     // invite everybody else
     if (isset($req->body->invite))
@@ -280,6 +282,7 @@ $router->post(v0 . "/events", function (&$req, &$res) {
     $response["token"] = $host_token;
 
     $res->success($response);
+
 });
 
 $router->get(v0 . "/events", function (&$req, &$res) {

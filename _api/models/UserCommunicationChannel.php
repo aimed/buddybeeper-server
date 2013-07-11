@@ -3,7 +3,7 @@
 class UserCommunicationChannel extends Model {
 
     public $define = array(
-        "id" => "primary"
+        "id" => "primaryKey",
         "user",
         "type",
         "value",

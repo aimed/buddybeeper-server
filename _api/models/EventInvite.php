@@ -46,8 +46,8 @@ class EventInvite extends Model {
         // send email
         if ($channel->type == "email")
         {
-            $notificationData["email"] = $channel->value;
-            Mail::send("invite", $notificationData);
+            $mail = new Mail("invite");
+            $mail->send($channel->value, $notificationData);
         }
         
         
@@ -56,7 +56,7 @@ class EventInvite extends Model {
     
     
     public function isValid () {
-        return $this->event && $this->user && $this->event_token;
+        return !!$this->findByEventToken($this->event_token);
     }
     
     
@@ -66,8 +66,8 @@ class EventInvite extends Model {
     }
     
     public function afterFind () {
-        $this->user  = new User($this->_storage["user"]);
-        $this->event = new Event($this->_storage["event"]); // @TODO: why?
+        if (isset($this->_storage["user"])) $this->user  = new User($this->_storage["user"]);
+        if (isset($this->_storage["event"])) $this->event = new Event($this->_storage["event"]); // @TODO: why?
     }
     
     

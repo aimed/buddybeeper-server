@@ -18,30 +18,26 @@ $router->post(v0 . "/users", function (&$req, &$res) {
     $email      = $req->body("email",      "required|email");
     $password   = $req->body("password",   "required|len[6]");    
     $first_name = $req->body("first_name", "required|len[2,50]|hasNoSpechialChar");
-    $last_name  = $req->body("last_name",  "len[2,50]|hasNoSpechialChar");
+    $last_name  = $req->body("last_name",  "len[1,50]|hasNoSpechialChar");
     if (!$req->isValid()) throw new ParameterException($req->validationErrors);
     
     $channel = new UserCommunicationChannel;
     $channelexists = !!$channel->findByValue($email);
-    
     if ($channel->is_bound) throw new ParameterException("Email already in use");
     elseif ($channelexists) 
     {
         $data = (object) compact($first_name, $last_name, $password);
         $data->user = $channel->user;
-        
         $token = new VerificationToken;
         $token->type      = "signup";
         $token->reference = $channel;
         $token->data      = $data;
         $token->insert();
         
-        Mail::send("verification", array(
-            "email"      => $email,
-            "first_name" => $first_name,
-            "link"       => BASE_URL. v0 . "/verify?token=" . $token->token
-        ));
+        $link = BASE_URL. v0 . "/verify?token=" . $token->token;
         
+        $mail = new Mail("verification");
+        $mail->send($email, compact("first_name", "link"));
         
         $response = array("status"=>"confirm");
     }

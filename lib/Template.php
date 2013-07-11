@@ -6,6 +6,12 @@ if (!defined("TEMPLATE_ARRAY_NAME")) define("TEMPLATE_ARRAY_NAME", "\$_DATA");
 
 class Template {
 	
+	
+	/**
+	 * Stores compiled templates
+	 */
+	protected static $_collection = array();
+    
     
     /**
      * Loads the template file
@@ -38,16 +44,18 @@ class Template {
      * @param String template location
      * @return Function takes data as argument and returns string
      */
-    public static function compile ($template, $filename) {
-        $template = self::load($template, $filename);       
+    public static function compile ($templateName, $filename) {
+        if (isset(self::$_collection[$templateName])) return self::$_collection[$templateName];
+        $template = self::load($templateName, $filename);       
         $template = preg_replace_callback("/\{\{([a-zA-Z0-9_\-\.]*)\}\}/", function ($match) {
 						return isset($match[1]) ? '".' . Template::parseVar($match[1]) . '."': "";
                     }, $template);
         
         $args = TEMPLATE_ARRAY_NAME . " = array()";
         $code = "return \"" . $template . "\";";
-
-        return create_function($args, $code);
+        $function = create_function($args, $code);
+        self::$_collection[$templateName] = $function;
+        return $function;
     }
     
 }

@@ -10,25 +10,25 @@ class Mail extends Template {
 	/**
 	 * Contains the email subject
 	 */
-	public $subject;
-	
-	
-	/**
-	 * Contains the from header
-	 */
-	public $from;
-	
-	
-	/**
-	 * Contains the subject
-	 */
-	public $subject;
+	public $subject = "";
 	
 	
 	/**
 	 * Contains default data
 	 */
-	public $defaultData;
+	public $defaultData = array();
+	
+	
+	/**
+	 * Contains the header string
+	 */
+	protected $_headers = array(); 
+	 
+	
+	/**
+	 * Stores the compiled rendering function
+	 */
+	protected $render;
 	
 	
 	/**
@@ -39,11 +39,36 @@ class Mail extends Template {
 	 * @param String $subject Optional
 	 * @param Array $defaultData Optional
 	 */
-	public function __construct ($template, $from = MAIL_DEFAULT_FROM_ADDRESS, $subject = null, $defaultData = array()) {
-		$this->render      = static::compile($template, "mail.txt");
-		$this->form        = $from;
-		$this->subject     = $subject === null ? $subject : static::load($template, "subject.txt");
+	public function __construct ($template, $subject = null, $from = null, $defaultData = array()) {
+		$this->render      = self::compile($template, "mail.txt");
+		$this->subject     = $subject !== null ? $subject : static::load($template, "subject.txt");
 		$this->defaultData = $defaultData;
+		$this->header("From", $from !== null ? $from : MAIL_DEFAULT_FROM_ADDRESS);
+	}
+	
+	
+	/**
+	 * Sets a header
+	 *
+	 * @param String $name
+	 * @param String $val
+	 */
+	public function header ($name, $val) {
+	    $this->_headers[$name] = $val;
+	}
+	
+	
+	/**
+	 * Gets the header string
+	 *
+	 * @return String
+	 */
+	public function getHeaderString () {
+	    $headers = array();
+	    foreach ($this->_headers as $name => $value) {
+	        $headers[] = $name . ": " . $value;
+	    }
+	    return implode("\r\n", $headers);
 	}
 	
 	
@@ -54,21 +79,7 @@ class Mail extends Template {
 	 * @param Array $data Optional
 	 */
 	public function send ($to, $data = array()) {
-		mail($to, $this->subject, $this->render(array_merge($this->defaultData, $data)), $this->from);
-	}
-	
-
-	/**
-	 * Sends an email
-	 * 
-	 * @param String $template
-	 * @param Array $data
-	 */
-	public static function send ($template, (array)$data) {
-
-	    $render  = self::compile($template, "mail.txt");
-	    $subject = self::load($template, "subject.txt");
-    
-	    if (isset($data["email"])) mail($data["email"], $subject, $render($data), "From: noreply@buddybeeper.net");
+	    $body = call_user_func($this->render,array_merge($this->defaultData, $data));
+		mail($to, $this->subject, $body, $this->getHeaderString());
 	}
 }

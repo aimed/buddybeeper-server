@@ -54,7 +54,7 @@ class Model extends Injector {
     /**
      * Model definition
      */
-    public $define;
+    public $define = array();
 
 
     /**
@@ -68,13 +68,12 @@ class Model extends Injector {
         $this->registerWildcardFunction("findAllBy");
 
         // handle model definition
-        if (!empty($this->define))
-    	{
-    		foreach ($this->define as $key => $val) {
-    			$this->_handleDefinition($key, $val);
-    			$this->attributes[] = is_numeric($key) ? $val : $key;
-    		}
-    	}
+		foreach ($this->define as $key => $val) {
+			$this->_handleDefinition($key, $val);
+			$this->attributes[] = is_numeric($key) ? $val : $key;
+            // @TODO: REVERT so we fill storage directly
+		}
+        
         
     	// set default table name
     	if (empty($this->table)) $this->table = $this->_camelcaseToUnderscore(get_class($this)) . "s";
@@ -83,10 +82,9 @@ class Model extends Injector {
         if (!is_array($initial))
         {
             if ($this->_hasPrimaryKey()) $this->primaryKey($initial);
-            elseif (count($this->_keys) === 1) $this->{current($this->_keys)} = $initial;
+            elseif (count($this->_keys) === 1) $this->_storage[current($this->_keys)] = $initial;
             $initial = null;
         }
-    
         parent::__construct($initial);
     }
 
@@ -153,7 +151,8 @@ class Model extends Injector {
      */
     public function primaryKey () {
         if (func_num_args() === 1) $this->{$this->_primaryKey} = func_get_arg(0);
-        return $this->__isset($this->_primaryKey) ? $this->{$this->_primaryKey} : null;
+        return $this->__isset($this->_primaryKey) ? $this->_storage[$this->_primaryKey] : null; 
+        //@TODO: throws notice when access via __get. why?
     }
 
 

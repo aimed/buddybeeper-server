@@ -48,6 +48,18 @@ class Mail extends Template {
 	
 	
 	/**
+	 * Use overloading to set default data
+	 *
+	 * @param String $key
+	 * @param String $value
+	 */
+	public function __set ($key, $value) {
+		$this->defaultData[$key] = $value;
+		return $value;
+	}
+	
+	
+	/**
 	 * Sets a header
 	 *
 	 * @param String $name

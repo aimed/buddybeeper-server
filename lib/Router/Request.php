@@ -58,7 +58,7 @@ class Request {
 		$this->requestMethod = $this->server->REQUEST_METHOD;
     	
 		$this->body    = $this->_bodyparser();
-		$this->headers = (object) getallheaders();
+		$this->headers = $this->_getHeaders();
 	}
 
 
@@ -143,7 +143,23 @@ class Request {
     	
 		return null;
 	}
-
+	
+	
+	/**
+	 * Gets headers
+	 *
+	 * @return stdObject headers
+	 */
+	protected function _getHeaders () {
+		$true    = getallheaders();
+		$headers = array();
+		foreach ($true as $key => $value) {
+			$headers[strtolower($key)] = $value;
+		}
+		
+		return (object) $headers;
+	}
+	
 
 	/**
 	 * Gets request body

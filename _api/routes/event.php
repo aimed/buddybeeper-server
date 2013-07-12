@@ -6,7 +6,7 @@ Unpin comment
 ---*/
 $router->delete(v0 . "/events/comment/:comment/pin", function () {
     
-    $token  = new EventInvite($req->headers("X-EVENT-TOKEN"));
+    $token  = new EventInvite($req->headers("x-event-token"));
     if (!$token->key()) throw new TokenException();
     
     if (!is_numeric($req->params->comment)) throw new ParameterException("Invalid comment");
@@ -30,7 +30,7 @@ Pin comment
 ---*/
 $router->post(v0 . "/events/comment/:comment/pin", function () {
     
-    $token  = new EventInvite($req->headers("X-EVENT-TOKEN"));
+    $token  = new EventInvite($req->headers("x-event-token"));
     if (!$token->key()) throw new TokenException();
     
     
@@ -54,7 +54,7 @@ $router->post(v0 . "/events/comment/:comment/pin", function () {
 Delete comment
 ---*/
 $router->delete(v0 . "/events/comment/:comment", function (&$req, &$res) {
-    $token  = new EventInvite($req->headers("X-EVENT-TOKEN"));
+    $token  = new EventInvite($req->headers("x-event-token"));
     if (!$token->key()) throw new TokenException();
     
     if (!is_numeric($req->params->comment)) throw new ParameterException("Invalid comment");
@@ -75,7 +75,7 @@ Post comment
 ---*/
 $router->post(v0 . "/events/comment", function (&$req, &$res) {
 
-    $token  = new EventInvite($req->headers("X-EVENT-TOKEN"));
+    $token  = new EventInvite($req->headers("x-event-token"));
     if (!$token->key()) throw new TokenException();
     
     $text = $req->body("text","required");
@@ -102,9 +102,8 @@ $router->post(v0 . "/events/comment", function (&$req, &$res) {
 Invite
 ---*/
 $router->post(v0 . "/events/invite", function (&$req, &$res) {
-
-    $token  = new EventInvite($req->headers("X-EVENT-TOKEN"));
-    if (!$token->key()) throw new TokenException();
+    $token  = new EventInvite($req->headers("x-event-token"));
+    if (!$token->isValid()) throw new TokenException();
     
     if (empty($req->body->invite)) throw new ParameterException("Missing required argument invite");
     
@@ -126,7 +125,7 @@ Vote Date or Activity
 ---*/
 $router->post(v0 . "/events/:type/:id", function (&$req, &$res) {
 
-    $token = new EventInvite($req->headers("X-EVENT-TOKEN"));
+    $token = new EventInvite($req->headers("x-event-token"));
     if (!$token->isValid()) throw new TokenException();
     
     
@@ -156,7 +155,7 @@ $router->post(v0 . "/events/:type/:id", function (&$req, &$res) {
 
 $router->delete(v0 . "/events/:type/:id", function (&$req, &$res) {
 
-    $token = new EventInvite($req->headers("X-EVENT-TOKEN"));
+    $token = new EventInvite($req->headers("x-event-token"));
     if (!$token->isValid()) throw new TokenException();
     
     switch ($req->params->type) {
@@ -189,7 +188,7 @@ Create Date or Activity
 ---*/
 $router->post(v0 . "/events/:type", function (&$req, &$res) {
     
-    $token = new EventInvite($req->headers("X-EVENT-TOKEN"));
+    $token = new EventInvite($req->headers("x-event-token"));
     if (!$token->isValid()) throw new TokenException();
     
     switch ($req->params->type) {
@@ -243,7 +242,7 @@ Event
 ---*/
 $router->post(v0 . "/events", function (&$req, &$res) {
 
-    $access_token = new AccessToken($req->headers("X-ACCESS-TOKEN"));
+    $access_token = new AccessToken($req->headers("x-access-token"));
     if (!$access_token->isValid()) throw new TokenException();
 
     
@@ -291,7 +290,7 @@ $router->post(v0 . "/events", function (&$req, &$res) {
 });
 
 $router->get(v0 . "/events", function (&$req, &$res) {
-    $token = new EventInvite($req->headers("X-EVENT-TOKEN"));
+    $token = new EventInvite($req->headers("x-event-token"));
     if (!$token->isValid()) throw new TokenException();
     $res->success($token->event->get(
         "id", "description", "dates", "activities", "invites", 

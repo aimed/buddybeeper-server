@@ -56,7 +56,7 @@ class EventInvite extends Model {
     
     
     public function isValid () {
-        return !!$this->findByEventToken($this->event_token);
+        return !!$this->find(array("event_token"=>$this->event_token));
     }
     
     

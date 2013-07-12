@@ -1,7 +1,23 @@
 <?php
 
-$router->get(v0 . "/users/:id", function (&$req, &$res) {
+$router->get(v0 . "/users/me", function (&$req, &$res) {
+	
+	$token = new AccessToken($req->headers("x-access-token"));
+	if (!$token->isValid()) throw new TokenExceoption();
+	
+	$user = new User($token->user);
+	$response = $user->info();
+	$response["events"] = $user->events;
+	
+	$res->success($response);
+	
+});
 
+
+
+
+$router->get(v0 . "/users/:id", function (&$req, &$res) {
+	
     $user = new User($req->params->id);
     $response = $user->info();
     

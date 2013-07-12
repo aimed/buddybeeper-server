@@ -25,7 +25,7 @@ class AccessToken extends Model {
     
     
     public function isValid () {
-        return !empty($this->access_token) && $this->expires_at > time();
+        return !empty($this->access_token) && $this->expires_at > time() && !!$this->user;
     }
     
     

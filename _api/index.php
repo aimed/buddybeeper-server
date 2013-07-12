@@ -37,9 +37,20 @@ $router->get("/test", function (&$req, &$res) {
     /* HARDCODED */
     $req->body = (object)array();
     $req->params = (object)array();
-    $req->headers->{"X-ACCESS-TOKEN"} = "extjNBulUSBKCbalNcxEM4DgZyq/XZPZC39nlKRemxF3xKgST8OIudPcBOBjuRjz";
+    $req->headers = (object)array();
+    $req->headers->{"x-access-token"} = "extjNBulUSBKCbalNcxEM4DgZyq/XZPZC39nlKRemxF3xKgST8OIudPcBOBjuRjz";
+    $req->headers->{"x-event-token"} = "ec3N1PNntWkmVgMY8arnYb64WJpc33gCyE2uG1WIY5C_k-j-dLP9fx4BVhohwQje";
     /* /HARDCODED*/
-
+    
+	$token = new AccessToken($req->headers("x-access-token"));
+	if (!$token->isValid()) throw new TokenExceoption();
+	
+	$user = new User($token->user);
+	$response = $user->info();
+	$response["events"] = $user->events;
+	
+	$res->success($response);
+	
 });
 
 
@@ -48,13 +59,18 @@ $router->get("/test", function (&$req, &$res) {
 /*---
 Allow API calls via JS
 ---*/
-$router->uses("/*", function (&$req, &$res, &$self) {
-	if ($req->requestMethod === "OPTIONS") $self->cancel(); // for firefox
+$router->uses("/*", function (&$req, &$res) {
+	if (!$req->headers("ORIGIN")) return;
 	$res->header("Access-Control-Allow-Origin","*");
 	$res->header("Access-Control-Allow-Headers","X-Requested-With");
 	$res->header("Access-Control-Allow-Headers","X-Access-Token");
 	$res->header("Access-Control-Allow-Headers","X-Event-Token");
-}, array("req", "res", "self"));
+	if ($req->requestMethod === "OPTIONS") 
+	{
+		$res->send("",200);
+		exit(0);
+	}
+});
 
 
 

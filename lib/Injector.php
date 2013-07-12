@@ -78,10 +78,9 @@ class Injector {
         $getter = $this->_getter($attr);
         if (method_exists($this, $getter)) 
         {
-            $this->_storage[$attr] = $this->{$getter}();
+            $this->_storage[$attr] = $this->$getter();
             return $this->__get($attr);
         }
-                
         return null;
     }
     
@@ -124,7 +123,7 @@ class Injector {
 
         $data = array();
         foreach ($args as $attr) {
-            $data[$attr] = $this->$attr;
+            @$data[$attr] = $this->$attr;
         }
         
         return $data;

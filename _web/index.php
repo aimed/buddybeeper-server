@@ -7,5 +7,5 @@ $router = new Router();
 $router->route($_SERVER["REQUEST_URI"]);
 
 $router->get("/*", function (&$req, &$res) {
-    $res->send("Hi");
+    include __DIR__ . DIRECTORY_SEPARATOR . "static" . DIRECTORY_SEPARATOR . "index.html";
 });

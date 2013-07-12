@@ -292,8 +292,10 @@ $router->post(v0 . "/events", function (&$req, &$res) {
 $router->get(v0 . "/events", function (&$req, &$res) {
     $token = new EventInvite($req->headers("x-event-token"));
     if (!$token->isValid()) throw new TokenException();
-    $res->success($token->event->get(
+    $response = $token->event->get(
         "id", "description", "dates", "activities", "invites", 
         "final_date", "final_location", "final_activity", "deadline", "created_at"
-    ));
+    );
+    $response["user"] = $token->user->info();
+    $res->success($response);
 });

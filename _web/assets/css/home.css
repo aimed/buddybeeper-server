@@ -1,0 +1,39 @@
+.home {}
+	.home h1 {
+		text-align: center;
+	}
+	.home .hero {
+		background-image: url(/assets/img/friends_bg.jpg);
+		padding: 70px 0;
+		text-align: center;
+	}
+		.home .hero .buddybeeper {
+			display: inline-block;
+			margin-bottom: 80px;
+/*			padding-left: 100px;*/
+/*			background: url(/assets/img/logo_shadow_small.png) no-repeat left center;*/
+			
+		}
+			.home .hero .buddybeeper h1 {
+				font-size: 3em;
+				margin-bottom: 0px;
+			}
+			.home .hero .buddybeeper h2 {
+				margin-top: 0;
+			}
+		.home .hero .join {
+			text-align: center;
+		}
+		.home .hero .join .button {
+			padding: 20px;
+		}
+	.home .signup {}
+		.home .signup .row {
+			margin: 10px;
+		}
+		.home .signup .signup-form {
+			margin: 10px;
+		}
+		.home .signup .input-container {
+			margin: 3px;
+		}

@@ -31,10 +31,10 @@ $router->get(v0 . "/users/:id", function (&$req, &$res) {
 
 $router->post(v0 . "/users", function (&$req, &$res) {
     
-    $email      = $req->body("email",      "required|email");
+    $email      = $req->body("email",      "required|isEmail");
     $password   = $req->body("password",   "required|len[6]");    
-    $first_name = $req->body("first_name", "required|len[2,50]|hasNoSpechialChar");
-    $last_name  = $req->body("last_name",  "len[1,50]|hasNoSpechialChar");
+    $first_name = $req->body("first_name", "required|len[2,50]|hasNoSpecialChar");
+    $last_name  = $req->body("last_name",  "len[1,50]|hasNoSpecialChar");
     if (!$req->isValid()) throw new ParameterException($req->validationErrors);
     
     $channel = new UserCommunicationChannel;

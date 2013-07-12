@@ -26,10 +26,8 @@ class User extends Model {
     public function getEvents () {
     	$query = new QueryBuilder;
     	$query
-    	->select(
-    		"id", "final_date", "final_location", "final_activity", "description",
-    		"deadline", "event_token"
-    	)
+    	->select("id", "final_date", "final_location", 
+    			 "final_activity", "description", "deadline", "event_token")
     	->from("event_invites")
     	->join("events","event","id")
     	->where("event_invites.user","=",$this->id);

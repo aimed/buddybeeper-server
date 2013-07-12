@@ -7,7 +7,7 @@ Unpin comment
 $router->delete(v0 . "/events/comment/:comment/pin", function () {
     
     $token  = new EventInvite($req->headers("x-event-token"));
-    if (!$token->key()) throw new TokenException();
+    if (!$token->isValid()) throw new TokenException();
     
     if (!is_numeric($req->params->comment)) throw new ParameterException("Invalid comment");
     
@@ -31,7 +31,7 @@ Pin comment
 $router->post(v0 . "/events/comment/:comment/pin", function () {
     
     $token  = new EventInvite($req->headers("x-event-token"));
-    if (!$token->key()) throw new TokenException();
+    if (!$token->isValid()) throw new TokenException();
     
     
     if (!is_numeric($req->params->comment)) throw new ParameterException("Invalid comment");
@@ -55,7 +55,7 @@ Delete comment
 ---*/
 $router->delete(v0 . "/events/comment/:comment", function (&$req, &$res) {
     $token  = new EventInvite($req->headers("x-event-token"));
-    if (!$token->key()) throw new TokenException();
+    if (!$token->isValid()) throw new TokenException();
     
     if (!is_numeric($req->params->comment)) throw new ParameterException("Invalid comment");
     
@@ -76,7 +76,7 @@ Post comment
 $router->post(v0 . "/events/comment", function (&$req, &$res) {
 
     $token  = new EventInvite($req->headers("x-event-token"));
-    if (!$token->key()) throw new TokenException();
+    if (!$token->isValid()) throw new TokenException();
     
     $text = $req->body("text","required");
     if (!$req->isValid()) throw new ParameterException($req->validationErrors);

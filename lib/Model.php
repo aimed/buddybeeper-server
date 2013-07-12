@@ -297,6 +297,11 @@ class Model extends Injector {
      */
     public function find ($where) {
         $this->beforeFind();
+        $query = new QueryBuilder;
+        $query->select($this->attributes)->from($this->table);
+        foreach ($where as $key => $value) {
+        	$query->where($key,"=",$value);
+        }
         $fetched = DB::grabOne($this->table, $this->attributes, $where);
         $this->store($fetched);
         $this->afterFind();

@@ -1,3 +1,4 @@
 testsuite/tests/_log
+config
 *.yml
 codekit*

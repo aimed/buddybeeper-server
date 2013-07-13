@@ -99,7 +99,7 @@
 	.event .section {
 		border-bottom: 1px solid #efefef;
 	}
-	.event .item {
+	.event.item {
 		background: #e7e7e7;
 		overflow: hidden;
 	}
@@ -177,7 +177,7 @@
 		padding: 28px 0 28px;
 	}
 	.event-editor textarea,
-	.event-editor input[type="text"] {
+	.event-editor input[type="text"].inline {
 		border: none;
 		font: inherit;
 		color: #ff0039;
@@ -185,8 +185,7 @@
 		width: 100%;
 	}
 	.event-editor textarea,
-	.event-editor input[type="text"]:focus {
-	}
+	.event-editor input[type="text"]:focus {}
 	.event-editor textarea {
 		overflow-x: hidden;
 		resize: vertical;

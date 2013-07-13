@@ -5,13 +5,19 @@ html,
 body {
 	margin: 0;
 	padding: 0;
+	height: 100%;
 }
 html {
 	color: #004356;
 	font-family: "Source Sans Pro", sans-serif;
+	background-color: #F9F9F9;
+}
+#container {
+	height: 100%;
 }
 a {
-	color: #004356;	
+	color: inherit;
+	text-decoration: none;	
 }
 
 /*---
@@ -19,12 +25,12 @@ Head
 ---*/
 .head {}
 	.head .nav {
-		box-shadow: 0px 1px 2px #ccc;
+		box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.50);
 	}
 	.head .nav-inner {
 		height: 60px;
-		
-		background: url(/assets/img/bb_pattern.png);
+		background-color: #fff;
+/*		background: url(/assets/img/bb_pattern.png);*/
 	}
 	.head .company {
 		line-height: 1;
@@ -39,7 +45,27 @@ Head
 			font-weight: bold;
 			text-decoration: none;
 		}
-		
+
+/*---
+Body
+---*/
+.body {
+	width: 800px;
+	margin: auto;
+}
+.sidebar,
+.content {
+	display: inline-block;
+	vertical-align: top;
+}
+.sidebar {
+	width: 200px;
+	margin-right: 50px;
+}
+.content {
+	width: 550px;
+}
+
 /*---
 Foot
 ---*/
@@ -81,7 +107,6 @@ Grid
 			width: 49.8%;
 			display: inline-block;
 		}
-		
 @media (max-width: 740px) {
 	.row .col {
 		display: block !important;
@@ -123,3 +148,15 @@ Hero units
 		text-shadow: 0px 1px 2px #000;		
 	}
 
+/*---
+Pagelets
+---*/
+.pagelet {
+	border-radius: 3px;
+	background: #FFFFFF;
+	margin: 15px 10px;
+	
+	-moz-box-shadow:    1px 0px 1px 0px rgba(0,0,0,0.07), -1px 0px 1px 0px rgba(0,0,0,0.11), 0px 1px 1px 0px rgba(0,0,0,0.50);
+	-webkit-box-shadow: 1px 0px 1px 0px rgba(0,0,0,0.07), -1px 0px 1px 0px rgba(0,0,0,0.11), 0px 1px 1px 0px rgba(0,0,0,0.50);
+	box-shadow:         1px 0px 1px 0px rgba(0,0,0,0.07), -1px 0px 1px 0px rgba(0,0,0,0.11), 0px 1px 1px 0px rgba(0,0,0,0.50);
+}

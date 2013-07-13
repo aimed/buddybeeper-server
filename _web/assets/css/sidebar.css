@@ -1,0 +1,39 @@
+.sidebar .user.pagelet {}
+	.sidebar .user.pagelet .image,
+	.sidebar .user.pagelet .text {
+		display: inline-block;
+		vertical-align: middle;
+	}
+	.sidebar .user.pagelet .text {
+		font-weight: lighter;
+	}
+	.sidebar .user.pagelet .image {
+		margin: 10px;
+		height: 60px;
+		width: 60px;
+		background-size: cover;	
+		background-position: center;
+		background-repeat: no-repeat;
+		border-radius: 3px;
+		-moz-box-shadow:    0px 1px 1px 0px rgba(0,0,0,0.50), 0px -1px 1px 0px rgba(255,255,255,0.36);
+		-webkit-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.50), 0px -1px 1px 0px rgba(255,255,255,0.36);
+		box-shadow:         0px 1px 1px 0px rgba(0,0,0,0.50), 0px -1px 1px 0px rgba(255,255,255,0.36);	
+	}
+
+.sidebar .menu.pagelet {
+	font-size: 14px;
+}
+	.sidebar .menu.pagelet .item {
+		border-bottom: 1px solid #eee;		
+	}
+	.sidebar .menu.pagelet .item:last-child {
+		border: 0;
+	}
+	.sidebar .menu.pagelet a {
+		display: block;
+		padding: 7px 0px 7px 25px;
+	}
+	.sidebar .menu.pagelet a.active {
+		color: #ffcc00;
+	}
+	

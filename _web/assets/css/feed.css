@@ -1,0 +1,50 @@
+.feed {}
+	.feed .banner {
+		height: 80px;
+		background-size: cover;
+	}
+	.feed .details {
+		background-color: #fafafa;
+		padding: 5px;
+	}
+		.feed .host {
+			font-size: 10px;
+			color: #7e7e7e;
+		}
+			.feed .host span {
+				font-weight: 600;
+			}
+	.feed blockquote {
+		font-size: 12px;
+		margin: 0;
+	}
+	.feed h2 {
+		margin: 0;
+		padding: 10px;
+	}
+	.feed .section {
+		border-bottom: 1px solid #efefef;
+	}
+	.feed .item {
+		background: #e7e7e7;
+		overflow: hidden;
+	}
+	.feed .person {
+		display: block;
+		height: 60px;
+		width: 60px;
+	}
+	.feed .desc {
+		width: 449px;
+		background: #fff;
+		border-radius: 3px 0px 0px 3px;
+		border-right: 1px solid #b5b5b5;
+	}
+	.feed .invited {
+		width: 80px;
+	}
+	.feed .desc,
+	.feed .invited {
+		display: inline-block;
+		vertical-align: top;
+	}

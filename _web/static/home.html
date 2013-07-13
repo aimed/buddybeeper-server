@@ -1,31 +1,94 @@
 <!-- HOME -->
 <div class="feed">
-	<div class="item pagelet">
+	
+	<!-- editor item -->
+	<div class="item event event-editor pagelet">
+		<div class="inner">
+			<div class="desc">
+			
+				<div class="title section">
+					<h2><input type="text" name="" value="Add a title" /></h2>
+				</div>
+				
+				<div class="details section">
+					<div class="host">This is your event. Tell your friends a little about it.</div>
+					<blockquote><textarea>If you want, type in a description</textarea></blockquote>
+				</div>
+				
+				<div class="banner section" style="background-image: url(/assets/img/event_blurred.jpg);"></div>
+				
+				<div class="date votes hasVote section">
+					<div class="heading">
+						<div class="icon"></div>
+						<div class="text">Dates<span class="vote add"></span></div>
+					</div>
+					<div class="inlay">
+						<i class="tip"></i>
+						<input type="date" name="" value="" />
+						<button class="button">Add</button>
+					</div>
+					<div class="data">
+						<div class="icon"></div>
+						<div class="text">Tuesday, May 24th<span class="vote voted"></span></div>
+					</div>
+				</div>
+				
+				<div class="activity hasVote votes section">
+					<div class="heading">
+						<div class="icon"></div>
+						<div class="text">Activities<span class="vote add"></span></div>
+					</div>
+					<div class="data">
+						<div class="icon"></div>
+						<div class="text">Whale watching<span class="vote"></span></div>						
+					</div>
+					<div class="data">
+						<div class="icon"></div>
+						<div class="text">Zombie hunting<span class="vote"></span></div>						
+					</div>
+				</div>
+				
+				<div class="save-or-cancel">
+					<button class="button yellow">Save</button>
+					<button class="button">Cancel</button>
+				</div>
+			</div><!--
+			
+			--><div class="invited">
+				<div class="person" style="background-image: url(/assets/img/sample_image_1.jpg);"></div>
+				<div class="person list">+</div>
+			</div>
+			
+		</div>
+	</div>
+	
+	<!-- feed item -->
+	<div class="item event event-overview pagelet">
 		<div class="inner">
 			<div class="desc">
 				<div class="title section">
 					<h2>Zombie hunting?</h2>
 				</div>
 				<div class="details section">
-					<div class="host">You've been invited by <span>Max</span>. He says:</div>
+					<div class="host">You've been invited by <span>Max</span>.</div>
 					<blockquote>Hey guys, we haven't been zombie hunting in a while. Or would you rather go and rob a sperm bank? Also: when are you free?</blockquote>
 				</div>
 				<div class="banner section" style="background-image: url(/assets/img/event_blurred.jpg);"></div>
-				<div class="date votes section">
+				<div class="date votes hasVote section">
 					<div class="data">
 						<div class="icon"></div>
-						<div class="text">Tuesday, May 24th<span class="vote voted"></span></div>						
+						<div class="text">Tuesday, May 24th<span class="vote voted"></span></div>
 					</div>
 					<div class="expand">Show all options</div>
 				</div>
-				<div class="activity votes section">
+				<div class="activity hasVote votes section">
 					<div class="data">
 						<div class="icon"></div>
 						<div class="text">Zombie hunting<span class="vote"></span></div>						
 					</div>
 					<div class="expand">Show all options</div>
 				</div>
-				<div class="comments section">
+				<div class="comments">
 					<div class="comment">
 						<div class="image" style="background-image: url(/assets/img/sample_image_1.jpg);"></div>
 						<div class="message">

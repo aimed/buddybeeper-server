@@ -85,13 +85,25 @@ Buttons
 	box-shadow: 0px 1px 2px #444, 0px 1px 1px 0px #fff inset;
 	text-shadow: 0px -1px 1px #f9f9f9;
 	
+	color: #747474;
 	background: #f5f5f5;
+	background-image: -o-linear-gradient(-90deg, rgba(255,255,255,0.50) 0%, rgba(230,230,230,0.50) 100%);
+	background-image: -moz-linear-gradient(-90deg, rgba(255,255,255,0.50) 0%, rgba(230,230,230,0.50) 100%);
+	background-image: -webkit-linear-gradient(-90deg, rgba(255,255,255,0.50) 0%, rgba(230,230,230,0.50) 100%);
+	background-image: -ms-linear-gradient(-90deg, rgba(255,255,255,0.50) 0%, rgba(230,230,230,0.50) 100%);
+	background-image: linear-gradient(-180deg, rgba(255,255,255,0.50) 0%, rgba(230,230,230,0.50) 100%);
 }
 
 .button.yellow {
 	color: #fff;
-	background-color: #ffcc00;
 	text-shadow: 0px -1px 0px #cea500;
+	border-radius: 3px;
+	background: #FFCC00;
+	background-image: -o-linear-gradient(-90deg, rgba(255,244,63,0.50) 0%, rgba(226,199,0,0.50) 100%);
+	background-image: -moz-linear-gradient(-90deg, rgba(255,244,63,0.50) 0%, rgba(226,199,0,0.50) 100%);
+	background-image: -webkit-linear-gradient(-90deg, rgba(255,244,63,0.50) 0%, rgba(226,199,0,0.50) 100%);
+	background-image: -ms-linear-gradient(-90deg, rgba(255,244,63,0.50) 0%, rgba(226,199,0,0.50) 100%);
+	background-image: linear-gradient(-180deg, rgba(255,244,63,0.50) 0%, rgba(226,199,0,0.50) 100%);
 }
 
 /*---

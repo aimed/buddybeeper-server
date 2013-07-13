@@ -1,101 +1,114 @@
-.feed {}
-	.feed .comment {
+.event {}
+	.event .comment {
 		padding: 5px;
 		overflow: auto;
 		clear: both;
 	}
-		.feed .comment .image,
-		.feed .comment .message {
+		.event .comment .image,
+		.event .comment .message {
 			display: inline-block;
 			vertical-align: top;
 		}
-		.feed .comment .image {
+		.event .comment .image {
 			padding: 1em;
 			margin: 5px;
+			background-size: cover;	
 			background-position: center;
-			background-size: cover;
+			background-repeat: no-repeat;
+			border-radius: 3px;
+			-moz-box-shadow:    0px 1px 1px 0px rgba(0,0,0,0.50), 
+								0px -1px 1px 0px rgba(255,255,255,0.36);
+			-webkit-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.50), 
+								0px -1px 1px 0px rgba(255,255,255,0.36);
+			box-shadow:         0px 1px 1px 0px rgba(0,0,0,0.50), 
+								0px -1px 1px 0px rgba(255,255,255,0.36);	
 		}
-		.feed .comment .text {
+		.event .comment .text {
 			font-weight: lighter;
 		}
-	.feed .votes {
+	.event .votes {
 		text-align: center;
 	}
-		.feed .votes .data {
+		.event .votes .data {
 			position: relative;
 		}
-			.feed .votes .icon {
+			.event .votes .icon {
 				
 			}
-			.feed .votes .text {
+			.event .votes .text {
 				vertical-align: middle;
-				padding: 25px 0;
-				margin-left: 50px;
+				padding: 28px 0 28px;
+				margin-left: 50px;				
 			}
-			.feed .votes .vote {
+			.event .votes .vote {
 				padding: 10px;
 				float: right;
 				border: 1px solid #ccc;
 				border-radius: 50%;
 				margin-right: 30px;
 				opacity: 0.4;
+				transition: 0.1s opacity linear;
 			}
-				.feed .votes .voted {
+				.event .votes .voted {
 					background-color: #79CF19;
+					background-image: url(/assets/img/okay.png);
+					background-position: center;
+					background-repeat: no-repeat;
 					border: 1px solid #79CF19;
 				}
-				.feed .votes:hover .vote {
+				.event .votes:hover .vote {
 					opacity: 1;
 				}
-		.feed .votes .expand {
+		.event .votes .expand {
 			font-size: 9px;
+			padding: 3px;
 			font-weight: lighter;
 			color: #d7d7d7;
 			background: #f7f7f7;
-			overflow: hidden;
-			height: 0px;
-			transition: 0.1s height linear;
 			line-height: 1.6666666667;
+			opacity: 0;
+			transition: 0.1s opacity linear;
 		}
-			.feed .votes:hover .expand {
-				height: 15px;
+			.event .votes:hover .expand {
+				opacity: 1;
 			}
-	.feed .banner {
+	.event .banner {
 		height: 80px;
 		background-size: cover;
 		border-bottom: 0 !important;
 	}
-	.feed .details {
+	.event .details {
 		background-color: #fafafa;
-		padding: 5px;
+		padding: 7px;
 	}
-		.feed .host {
+		.event .host {
 			font-size: 10px;
 			color: #7e7e7e;
 		}
-			.feed .host span {
+			.event .host span {
 				font-weight: 600;
 			}
-	.feed blockquote {
+	.event blockquote {
 		font-size: 12px;
 		margin: 0;
 	}
-	.feed h2 {
+	.event h2 {
 		margin: 0;
 		padding: 10px;
 	}
-	.feed .section {
+	.event .section {
 		border-bottom: 1px solid #efefef;
 	}
-	.feed .item {
+	.event .item {
 		background: #e7e7e7;
 		overflow: hidden;
 	}
-	.feed .person {
+	.event .person {
 		display: block;
 		height: 60px;
 		width: 60px;
 		margin: 10px;
+		box-sizing: border-box;
 		background-size: cover;
 		border-radius: 3px;
 		border: 1px solid #979797;
@@ -103,25 +116,78 @@
 		-webkit-box-shadow: 0px 1px 1px 0px #FFFFFF;
 		box-shadow:         0px 1px 1px 0px #FFFFFF;
 	}
-	.feed .person.list {
+	.event .person.list {
 		font-size: 20px;
 		vertical-align: middle;
 		text-align: center;
 		line-height: 3;
+		font-weight: bold;
+		color: #7e7e7e;
 		box-shadow: 0px 1px 1px 0px #FFFFFF,
 					0px 1px 1px 0px #FFFFFF inset;
 	}
-	.feed .desc {
+	.event .desc {
 		width: 449px;
 		background: #fff;
 		border-radius: 3px 0px 0px 3px;
 		border-right: 1px solid #b5b5b5;
 	}
-	.feed .invited {
+	.event .invited {
 		width: 80px;
 	}
-	.feed .desc,
-	.feed .invited {
+	.event .desc,
+	.event .invited {
 		display: inline-block;
 		vertical-align: top;
+	}
+	
+.event-overview {}
+	.event-overview .votes .data .text {
+		padding: 28px 0 8px;
+	}
+	
+.event-editor {}
+	.event-editor .save-or-cancel .button {
+		margin: 8px;
+		padding: 10px;
+		min-width: 100px;
+	}
+	.event-editor .votes .data .text {
+		font-weight: lighter;
+	}
+	.event-editor .inlay {
+		background-color: #f1f1f1;
+		padding: 10px 0;
+		position: relative;
+	}
+		.event-editor .inlay i.tip {
+			position: absolute;
+			top: -8px;
+			right: 32px;
+			width: 0; 
+			height: 0; 
+			border-left: 8px solid transparent;
+			border-right: 8px solid transparent;
+			border-bottom: 8px solid #f1f1f1;
+		}
+	.event-editor .vote.add {
+		border: 1px solid #004255;
+	}
+	.event-editor .votes .heading .text {
+		padding: 28px 0 28px;
+	}
+	.event-editor textarea,
+	.event-editor input[type="text"] {
+		border: none;
+		font: inherit;
+		color: #ff0039;
+		background: inherit;
+		width: 100%;
+	}
+	.event-editor textarea,
+	.event-editor input[type="text"]:focus {
+	}
+	.event-editor textarea {
+		overflow-x: hidden;
+		resize: vertical;
 	}

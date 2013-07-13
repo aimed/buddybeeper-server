@@ -1,7 +1,69 @@
 .feed {}
+	.feed .comment {
+		padding: 5px;
+		overflow: auto;
+		clear: both;
+	}
+		.feed .comment .image,
+		.feed .comment .message {
+			display: inline-block;
+			vertical-align: top;
+		}
+		.feed .comment .image {
+			padding: 1em;
+			margin: 5px;
+			background-position: center;
+			background-size: cover;
+		}
+		.feed .comment .text {
+			font-weight: lighter;
+		}
+	.feed .votes {
+		text-align: center;
+	}
+		.feed .votes .data {
+			position: relative;
+		}
+			.feed .votes .icon {
+				
+			}
+			.feed .votes .text {
+				vertical-align: middle;
+				padding: 25px 0;
+				margin-left: 50px;
+			}
+			.feed .votes .vote {
+				padding: 10px;
+				float: right;
+				border: 1px solid #ccc;
+				border-radius: 50%;
+				margin-right: 30px;
+				opacity: 0.4;
+			}
+				.feed .votes .voted {
+					background-color: #79CF19;
+					border: 1px solid #79CF19;
+				}
+				.feed .votes:hover .vote {
+					opacity: 1;
+				}
+		.feed .votes .expand {
+			font-size: 9px;
+			font-weight: lighter;
+			color: #d7d7d7;
+			background: #f7f7f7;
+			overflow: hidden;
+			height: 0px;
+			transition: 0.1s height linear;
+			line-height: 1.6666666667;
+		}
+			.feed .votes:hover .expand {
+				height: 15px;
+			}
 	.feed .banner {
 		height: 80px;
 		background-size: cover;
+		border-bottom: 0 !important;
 	}
 	.feed .details {
 		background-color: #fafafa;
@@ -33,6 +95,21 @@
 		display: block;
 		height: 60px;
 		width: 60px;
+		margin: 10px;
+		background-size: cover;
+		border-radius: 3px;
+		border: 1px solid #979797;
+		-moz-box-shadow:    0px 1px 1px 0px #FFFFFF;
+		-webkit-box-shadow: 0px 1px 1px 0px #FFFFFF;
+		box-shadow:         0px 1px 1px 0px #FFFFFF;
+	}
+	.feed .person.list {
+		font-size: 20px;
+		vertical-align: middle;
+		text-align: center;
+		line-height: 3;
+		box-shadow: 0px 1px 1px 0px #FFFFFF,
+					0px 1px 1px 0px #FFFFFF inset;
 	}
 	.feed .desc {
 		width: 449px;

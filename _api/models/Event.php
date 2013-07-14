@@ -31,6 +31,10 @@ class Event extends Model {
         return DB::fetch($query,$query->data);
     }
     
+    public function getComments () {
+    	return array();
+    }
+    
     public function getActivities () {
         $query = new QueryBuilder;
         $query

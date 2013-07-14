@@ -1,5 +1,3 @@
-.event {}
-
 /* @group Comments */
 .event .comment {
 	padding: 5px;
@@ -87,7 +85,17 @@
 /* @end */
 
 /* @group Title */
-.event h2 { margin: 0; padding: 10px; }
+.event .title { position: relative; }
+.event .title h2 { margin: 0; padding: 10px; }
+.event .title span { 
+	font-size: 10px; 
+	color: #6f6f6f; 
+	position: absolute; 
+	top: 5px; 
+	right: 10px; 
+	display: none; }
+.event .desc:focus .title span,
+.event .desc:hover .title span { display: block; }
 /* @end */
 
 /* @group General */
@@ -106,8 +114,8 @@
 	background: #fff;
 	border-radius: 3px 0px 0px 3px;
 	border-right: 1px solid #b5b5b5;
-	transition: width 0.1s linear; }
-.event .desc-wrapper { transition: margin 0.1s linear; }
+	/*transition: width 0.1s linear;*/ }
+.event .desc-wrapper { /*transition: margin 0.1s linear;*/ }
 .event .show-people-list .desc { width: 20px; }
 .event .show-people-list .desc-wrapper { margin-left: -430px; }
 .event .show-people-list .person-counter { display: none; }
@@ -157,11 +165,6 @@
 	width: 49.574%; 
 	display: inline-block;}
 .event .user-invite-submit .button { width: 120px; height: 100%; }
-/* @end */
-
-/* @group Overview */
-.event-overview {}
-.event-overview .votes .data .text { padding: 28px 0 8px; }
 /* @end */
 
 /* @group Editor */

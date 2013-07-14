@@ -1,5 +1,75 @@
 <!-- HOME -->
-<div class="feed">
+<div class="feed" ng-if="isLoggedIn === true && toggleSideBar(true)">
+		
+		<!-- feed item -->
+		<div class="item event event-overview pagelet" ng-repeat="event in user.events" ng-controller="event">
+			<div class="inner" ng-class="{'show-people-list':showPeopleList}">
+				<div class="desc" ng-click="togglePeopleList(false)">
+					<div class="desc-wrapper">
+						<div class="title section">
+							<h2>{{event.title}}</h2>
+							<span>Expand<i ng-if="isHost(event)"> | Edit</i></span>
+						</div>
+						<div class="details section">
+							<div class="host">You've been invited by <span>{{event.host.first_name}}</span>.</div>
+							<blockquote>{{event.description}}</blockquote>
+						</div>
+						<div class="banner section" style="background-image: url(/assets/img/event_blurred.jpg);"></div>
+						<div class="date votes hasVote section">
+							<div class="data" ng-repeat="date in event.dates | limitTo:1">
+								<div class="icon"></div>
+								<div class="text">{{date.start | date:'fullDate'}}<span class="vote" ng-class="{'voted':hasVotedOn(date)}" ng-click="toggleVote(event,date,'date')"></span></div>
+							</div>
+						</div>
+						<div class="activity hasVote votes section">
+							<div class="data" ng-repeat="activity in event.activities | limitTo:1">
+								<div class="icon"></div>
+								<div class="text">{{activity.name}}<span class="vote" ng-class="{'voted':hasVotedOn(activity)}"></span></div>						
+							</div>
+						</div>
+						<div class="comments">
+							<div class="comment" ng-repeat="comment in event.comments">
+								<div class="image" style="background-image: url({{comment.user.profile_image}});"></div>
+								<div class="message">
+									<div class="user">{{comment.user.first_name}} {{comment.user.last_name}}:</div>
+									<div class="text">{{comment.text}}</div>
+								</div>
+							</div>
+							<div class="comment create-comment">
+								<div class="image" style="background-image: url({{user.profile_image}});"></div>
+								<div class="message user-input">
+									<input type="text" name="" value="" placeholder="Type something.." />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="invited" ng-click="togglePeopleList(true)">
+					<form class="new-invite form" ng-if="isHost(event)">
+						<div class="user-invite-data">
+							<div class="data-block email">
+								<input type="email" placeholder="E-Mail" name="" value="" />
+							</div>
+							<div class="data-block personal">
+								<input type="text" placeholder="First name" name="" value="" />
+								<input type="text" placeholder="Last name" name="" value="" />
+							</div>
+						</div>
+						<div class="user-invite-submit"><button class="button yellow">Invite</button></div>
+					</form>
+					<div class="people">
+						<div class="person" ng-repeat="person in event.invites">
+							<div class="image" style="background-image: url({{person.profile_image}});"></div>
+							<div class="name">Some Guy</div>
+						</div>
+						<div class="person person-counter">{{event.invites.length}}+</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
 	
 	<!-- editor item -->
 	<div class="item event event-editor pagelet">
@@ -58,6 +128,23 @@
 						<button class="button">Cancel</button>
 					</div>
 				</div>
+				
+				<div class="comments">
+					<div class="comment">
+						<div class="image" style="background-image: url(/assets/img/sample_image_1.jpg);"></div>
+						<div class="message">
+							<div class="user">That Guy:</div>
+							<div class="text">I'm gonna bring fast food. Zombies hate it.</div>
+						</div>
+					</div>
+					<div class="comment create-comment">
+						<div class="image" style="background-image: url(/assets/img/sample_image_1.jpg);"></div>
+						<div class="message user-input">
+							<input type="text" name="" value="" placeholder="Type something.." />
+						</div>
+					</div>
+				</div>
+				
 			</div>
 			
 			<div class="invited">
@@ -84,80 +171,10 @@
 			
 		</div>
 	</div>
-	
-	<!-- feed item -->
-	<div class="item event event-overview pagelet">
-		<div class="inner">
-			<div class="desc">
-				<div class="desc-wrapper">
-					<div class="title section">
-						<h2>Zombie hunting?</h2>
-					</div>
-					<div class="details section">
-						<div class="host">You've been invited by <span>Max</span>.</div>
-						<blockquote>Hey guys, we haven't been zombie hunting in a while. Or would you rather go and rob a sperm bank? Also: when are you free?</blockquote>
-					</div>
-					<div class="banner section" style="background-image: url(/assets/img/event_blurred.jpg);"></div>
-					<div class="date votes hasVote section">
-						<div class="data">
-							<div class="icon"></div>
-							<div class="text">Tuesday, May 24th<span class="vote voted"></span></div>
-						</div>
-						<div class="expand">Show all options</div>
-					</div>
-					<div class="activity hasVote votes section">
-						<div class="data">
-							<div class="icon"></div>
-							<div class="text">Zombie hunting<span class="vote"></span></div>						
-						</div>
-						<div class="expand">Show all options</div>
-					</div>
-					<div class="comments">
-						<div class="comment">
-							<div class="image" style="background-image: url(/assets/img/sample_image_1.jpg);"></div>
-							<div class="message">
-								<div class="user">That Guy:</div>
-								<div class="text">I'm gonna bring fast food. Zombies hate it.</div>
-							</div>
-						</div>
-						<div class="comment create-comment">
-							<div class="image" style="background-image: url(/assets/img/sample_image_1.jpg);"></div>
-							<div class="message user-input">
-								<input type="text" name="" value="" placeholder="Type something.." />
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="invited">
-				<form class="new-invite form">
-					<div class="user-invite-data">
-						<div class="data-block email">
-							<input type="email" placeholder="E-Mail" name="" value="" />
-						</div>
-						<div class="data-block personal">
-							<input type="text" placeholder="First name" name="" value="" />
-							<input type="text" placeholder="Last name" name="" value="" />
-						</div>
-					</div>
-					<div class="user-invite-submit"><button class="button yellow">Invite</button></div>
-				</form>
-				<div class="people">
-					<div class="person">
-						<div class="image" style="background-image: url(/assets/img/sample_image_1.jpg);"></div>
-						<div class="name">Some Guy</div>
-					</div>
-					<div class="person person-counter">+</div>
-				</div>
-			</div>
-			
-		</div>
-	</div>
-</div>
 
 <!-- LANDING -->
-<!--	<div class="home">
-	<div class="hero parallax apps">
+<div class="home" ng-if="isLoggedIn === false && toggleSideBar(false)" ng-controller="landingPage">
+	<div class="apps hero parallax">
 		<div class="buddybeeper">
 			<h1>buddybeeper</h1>
 			<h2>events with friends.</h2>
@@ -165,31 +182,24 @@
 		<div class="join">
 			<div class="button yellow">Join today</div>
 		</div>
-	</div>
-	<div class="info"></div>
+	</div><!-- @end apps hero parallax -->
+	<div class="info"></div><!-- @end info -->
 	<div class="signup">
 		<h1>Join buddybeeper today.</h1>
-		<div class="row">
-			<div class="colspan2">
-				<div class="col">
-					<p>buddybeeper helps you to catch up with your friends.</p>
-				</div>
-				<div class="col">
-					<div class="signup-form">
-						<form class="form">
-							<div class="input-container">
-								<div class="input"><input type="email" name="email" placeholder="E-Mail" value="" /></div>
-							</div>
-							<div class="input-container">
-								<div class="input"><input type="password" name="password" placeholder="Password" value="" /></div>
-							</div>
-							<div class="submit">
-								<button class="button yellow">Sign Up</button>
-							</div>
-						</form>
+		<div class="infobox">
+			<div class="text"><p>buddybeeper helps you to catch up with your friends.</p></div>
+			<div class="signup-form">
+				<form class="form" name="loginForm" ng-submit="login()">
+					<div class="input-notice invalid">{{loginForm.$error.message}}</div>
+					<div class="input">
+						<input type="email" ng-required ng-model="email" placeholder="E-Mail" value="" />
 					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>-->
+					<div class="input">
+						<input type="password" ng-required ng-model="password" placeholder="Password" value="" />
+					</div>
+					<div class="submit"><button type="submit" class="button yellow">Sign In</button></div>
+				</form>
+			</div> <!-- @end signup-form -->
+		</div><!-- @end infobox -->
+	</div><!-- @end signup -->
+</div>

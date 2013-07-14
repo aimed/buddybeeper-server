@@ -32,13 +32,13 @@ Head
 }
 
 /*---
-Body
+Sidebar
 ---*/
-.body { width: 800px; margin: auto; }
-.sidebar,
-.content { display: table-cell; vertical-align: top; }
-.sidebar { width: 200px; margin-right: 50px; }
-.content { width: 550px; }
+.body > .sidebar { display: none; width: 200px; margin-right: 50px; }
+.side-bar-enabled.body    { width: 800px; margin: auto; }
+.side-bar-enabled > .sidebar,
+.side-bar-enabled > .content { display: table-cell; vertical-align: top; }
+.side-bar-enabled > .content { width: 550px; }
 
 /*---
 Foot

@@ -294,7 +294,8 @@ $router->get(v0 . "/events", function (&$req, &$res) {
     if (!$token->isValid()) throw new TokenException();
     $response = $token->event->get(
         "id", "description", "dates", "activities", "invites", 
-        "final_date", "final_location", "final_activity", "deadline", "created_at"
+        "final_date", "final_location", "final_activity", "deadline", "created_at",
+        "comments"
     );
     $response["user"] = $token->user->info();
     $res->success($response);

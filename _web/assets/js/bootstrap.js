@@ -10,3 +10,13 @@ bb.config(["$locationProvider", "$routeProvider", "$httpProvider",
         $locationProvider.html5Mode(true);
         $routeProvider.otherwise({templateUrl: "/static/home.html"});
 }]);
+
+/**
+ * Controller: rootController
+ *
+ * 
+ */
+bb.controller("rootController",["$rootScope", "User", function (scope, user) {
+	scope.hasSideBar = false;
+	scope.toggleSideBar = function (bool) {scope.hasSideBar = !!bool; return true;}
+}]);

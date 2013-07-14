@@ -71,7 +71,7 @@ class Injector {
      * @param String $attr
      * @return Mixed Value 
      */
-    public function __get ($attr) {
+    public function &__get ($attr) {
         if ($this->__isset($attr)) return $this->_storage[$attr];
      
         // has getter
@@ -79,9 +79,10 @@ class Injector {
         if (method_exists($this, $getter)) 
         {
             $this->_storage[$attr] = $this->$getter();
-            return $this->__get($attr);
+            return $this->_storage[$attr];
         }
-        return null;
+        $null = null;
+        return $null; // @TODO: memory leak?
     }
     
     

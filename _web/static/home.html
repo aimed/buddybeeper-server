@@ -3,65 +3,83 @@
 	
 	<!-- editor item -->
 	<div class="item event event-editor pagelet">
-		<div class="inner">
+		<div class="inner"><!-- show-people-list -->
 			<div class="desc">
+				<div class="desc-wrapper">
+					<div class="title section">
+						<h2><input type="text" class="inline" name="" value="Add a title" /></h2>
+					</div>
+					
+					<div class="details section">
+						<div class="host">This is your event. Tell your friends a little about it.</div>
+						<blockquote><textarea>If you want, type in a description</textarea></blockquote>
+					</div>
+					
+					<div class="banner section" style="background-image: url(/assets/img/event_blurred.jpg);"></div>
+					
+					<div class="date votes hasVote section">
+						<div class="heading">
+							<div class="icon"></div>
+							<div class="text">Dates<span class="vote add"></span></div>
+						</div>
+						<div class="inlay">
+							<i class="tip"></i>
+							<input type="date" name="" value="" />
+							<button class="button">Add</button>
+						</div>
+						<div class="data">
+							<div class="icon"></div>
+							<div class="text">Tuesday, May 24th<span class="vote voted"></span></div>
+						</div>
+					</div>
+					
+					<div class="activity hasVote votes section">
+						<div class="heading">
+							<div class="icon"></div>
+							<div class="text">Activities<span class="vote add"></span></div>
+						</div>
+						<div class="inlay">
+							<i class="tip"></i>
+							<input type="text" name="" value="" />
+							<button class="button">Add</button>
+						</div>
+						<div class="data">
+							<div class="icon"></div>
+							<div class="text">Whale watching<span class="vote"></span></div>						
+						</div>
+						<div class="data">
+							<div class="icon"></div>
+							<div class="text">Zombie hunting<span class="vote"></span></div>						
+						</div>
+					</div>
+					
+					<div class="save-or-cancel">
+						<button class="button yellow">Save</button>
+						<button class="button">Cancel</button>
+					</div>
+				</div>
+			</div>
 			
-				<div class="title section">
-					<h2><input type="text" class="inline" name="" value="Add a title" /></h2>
+			<div class="invited">
+				<form class="new-invite form">
+					<div class="user-invite-data">
+						<div class="data-block email">
+							<input type="email" placeholder="E-Mail" name="" value="" />
+						</div>
+						<div class="data-block personal">
+							<input type="text" placeholder="First name" name="" value="" />
+							<input type="text" placeholder="Last name" name="" value="" />
+						</div>
+					</div>
+					<div class="user-invite-submit"><button class="button yellow">Invite</button></div>
+				</form>
+				<div class="people">
+					<div class="person">
+						<div class="image" style="background-image: url(/assets/img/sample_image_1.jpg);"></div>
+						<div class="name">Some Guy</div>
+					</div>
+					<div class="person person-counter">+</div>
 				</div>
-				
-				<div class="details section">
-					<div class="host">This is your event. Tell your friends a little about it.</div>
-					<blockquote><textarea>If you want, type in a description</textarea></blockquote>
-				</div>
-				
-				<div class="banner section" style="background-image: url(/assets/img/event_blurred.jpg);"></div>
-				
-				<div class="date votes hasVote section">
-					<div class="heading">
-						<div class="icon"></div>
-						<div class="text">Dates<span class="vote add"></span></div>
-					</div>
-					<div class="inlay">
-						<i class="tip"></i>
-						<input type="date" name="" value="" />
-						<button class="button">Add</button>
-					</div>
-					<div class="data">
-						<div class="icon"></div>
-						<div class="text">Tuesday, May 24th<span class="vote voted"></span></div>
-					</div>
-				</div>
-				
-				<div class="activity hasVote votes section">
-					<div class="heading">
-						<div class="icon"></div>
-						<div class="text">Activities<span class="vote add"></span></div>
-					</div>
-					<div class="inlay">
-						<i class="tip"></i>
-						<input type="text" name="" value="" />
-						<button class="button">Add</button>
-					</div>
-					<div class="data">
-						<div class="icon"></div>
-						<div class="text">Whale watching<span class="vote"></span></div>						
-					</div>
-					<div class="data">
-						<div class="icon"></div>
-						<div class="text">Zombie hunting<span class="vote"></span></div>						
-					</div>
-				</div>
-				
-				<div class="save-or-cancel">
-					<button class="button yellow">Save</button>
-					<button class="button">Cancel</button>
-				</div>
-			</div><!--
-			
-			--><div class="invited">
-				<div class="person" style="background-image: url(/assets/img/sample_image_1.jpg);"></div>
-				<div class="person list">+</div>
 			</div>
 			
 		</div>
@@ -71,42 +89,68 @@
 	<div class="item event event-overview pagelet">
 		<div class="inner">
 			<div class="desc">
-				<div class="title section">
-					<h2>Zombie hunting?</h2>
-				</div>
-				<div class="details section">
-					<div class="host">You've been invited by <span>Max</span>.</div>
-					<blockquote>Hey guys, we haven't been zombie hunting in a while. Or would you rather go and rob a sperm bank? Also: when are you free?</blockquote>
-				</div>
-				<div class="banner section" style="background-image: url(/assets/img/event_blurred.jpg);"></div>
-				<div class="date votes hasVote section">
-					<div class="data">
-						<div class="icon"></div>
-						<div class="text">Tuesday, May 24th<span class="vote voted"></span></div>
+				<div class="desc-wrapper">
+					<div class="title section">
+						<h2>Zombie hunting?</h2>
 					</div>
-					<div class="expand">Show all options</div>
-				</div>
-				<div class="activity hasVote votes section">
-					<div class="data">
-						<div class="icon"></div>
-						<div class="text">Zombie hunting<span class="vote"></span></div>						
+					<div class="details section">
+						<div class="host">You've been invited by <span>Max</span>.</div>
+						<blockquote>Hey guys, we haven't been zombie hunting in a while. Or would you rather go and rob a sperm bank? Also: when are you free?</blockquote>
 					</div>
-					<div class="expand">Show all options</div>
-				</div>
-				<div class="comments">
-					<div class="comment">
-						<div class="image" style="background-image: url(/assets/img/sample_image_1.jpg);"></div>
-						<div class="message">
-							<div class="user">That Guy:</div>
-							<div class="text">I'm gonna bring fast food. Zombies hate it.</div>
+					<div class="banner section" style="background-image: url(/assets/img/event_blurred.jpg);"></div>
+					<div class="date votes hasVote section">
+						<div class="data">
+							<div class="icon"></div>
+							<div class="text">Tuesday, May 24th<span class="vote voted"></span></div>
+						</div>
+						<div class="expand">Show all options</div>
+					</div>
+					<div class="activity hasVote votes section">
+						<div class="data">
+							<div class="icon"></div>
+							<div class="text">Zombie hunting<span class="vote"></span></div>						
+						</div>
+						<div class="expand">Show all options</div>
+					</div>
+					<div class="comments">
+						<div class="comment">
+							<div class="image" style="background-image: url(/assets/img/sample_image_1.jpg);"></div>
+							<div class="message">
+								<div class="user">That Guy:</div>
+								<div class="text">I'm gonna bring fast food. Zombies hate it.</div>
+							</div>
+						</div>
+						<div class="comment create-comment">
+							<div class="image" style="background-image: url(/assets/img/sample_image_1.jpg);"></div>
+							<div class="message user-input">
+								<input type="text" name="" value="" placeholder="Type something.." />
+							</div>
 						</div>
 					</div>
 				</div>
-			</div><!--
-			--><div class="invited">
-				<div class="person" style="background-image: url(/assets/img/sample_image_1.jpg);"></div>
-				<div class="person list">+7</div>
 			</div>
+			<div class="invited">
+				<form class="new-invite form">
+					<div class="user-invite-data">
+						<div class="data-block email">
+							<input type="email" placeholder="E-Mail" name="" value="" />
+						</div>
+						<div class="data-block personal">
+							<input type="text" placeholder="First name" name="" value="" />
+							<input type="text" placeholder="Last name" name="" value="" />
+						</div>
+					</div>
+					<div class="user-invite-submit"><button class="button yellow">Invite</button></div>
+				</form>
+				<div class="people">
+					<div class="person">
+						<div class="image" style="background-image: url(/assets/img/sample_image_1.jpg);"></div>
+						<div class="name">Some Guy</div>
+					</div>
+					<div class="person person-counter">+</div>
+				</div>
+			</div>
+			
 		</div>
 	</div>
 </div>

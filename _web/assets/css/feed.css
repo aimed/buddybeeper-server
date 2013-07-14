@@ -1,192 +1,201 @@
 .event {}
-	.event .comment {
-		padding: 5px;
-		overflow: auto;
-		clear: both;
-	}
-		.event .comment .image,
-		.event .comment .message {
-			display: inline-block;
-			vertical-align: top;
-		}
-		.event .comment .image {
-			padding: 1em;
-			margin: 5px;
-			background-size: cover;	
-			background-position: center;
-			background-repeat: no-repeat;
-			border-radius: 3px;
-			-moz-box-shadow:    0px 1px 1px 0px rgba(0,0,0,0.50), 
-								0px -1px 1px 0px rgba(255,255,255,0.36);
-			-webkit-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.50), 
-								0px -1px 1px 0px rgba(255,255,255,0.36);
-			box-shadow:         0px 1px 1px 0px rgba(0,0,0,0.50), 
-								0px -1px 1px 0px rgba(255,255,255,0.36);	
-		}
-		.event .comment .text {
-			font-weight: lighter;
-		}
-	.event .votes {
-		text-align: center;
-	}
-		.event .votes .data {
-			position: relative;
-		}
-			.event .votes .icon {
-				
-			}
-			.event .votes .text {
-				vertical-align: middle;
-				padding: 28px 0 28px;
-				margin-left: 50px;				
-			}
-			.event .votes .vote {
-				padding: 10px;
-				float: right;
-				border: 1px solid #ccc;
-				border-radius: 50%;
-				margin-right: 30px;
-				opacity: 0.4;
-				transition: 0.1s opacity linear;
-			}
-				.event .votes .voted {
-					background-color: #79CF19;
-					background-image: url(/assets/img/okay.png);
-					background-position: center;
-					background-repeat: no-repeat;
-					border: 1px solid #79CF19;
-				}
-				.event .votes:hover .vote {
-					opacity: 1;
-				}
-		.event .votes .expand {
-			font-size: 9px;
-			padding: 3px;
-			font-weight: lighter;
-			color: #d7d7d7;
-			background: #f7f7f7;
-			line-height: 1.6666666667;
-			opacity: 0;
-			transition: 0.1s opacity linear;
-		}
-			.event .votes:hover .expand {
-				opacity: 1;
-			}
-	.event .banner {
-		height: 80px;
-		background-size: cover;
-		border-bottom: 0 !important;
-	}
-	.event .details {
-		background-color: #fafafa;
-		padding: 7px;
-	}
-		.event .host {
-			font-size: 10px;
-			color: #7e7e7e;
-		}
-			.event .host span {
-				font-weight: 600;
-			}
-	.event blockquote {
-		font-size: 12px;
-		margin: 0;
-	}
-	.event h2 {
-		margin: 0;
-		padding: 10px;
-	}
-	.event .section {
-		border-bottom: 1px solid #efefef;
-	}
-	.event.item {
-		background: #e7e7e7;
-		overflow: hidden;
-	}
-	.event .person {
-		display: block;
-		height: 60px;
-		width: 60px;
-		margin: 10px;
-		box-sizing: border-box;
-		background-size: cover;
-		border-radius: 3px;
-		border: 1px solid #979797;
-		-moz-box-shadow:    0px 1px 1px 0px #FFFFFF;
-		-webkit-box-shadow: 0px 1px 1px 0px #FFFFFF;
-		box-shadow:         0px 1px 1px 0px #FFFFFF;
-	}
-	.event .person.list {
-		font-size: 20px;
-		vertical-align: middle;
-		text-align: center;
-		line-height: 3;
-		font-weight: bold;
-		color: #7e7e7e;
-		box-shadow: 0px 1px 1px 0px #FFFFFF,
-					0px 1px 1px 0px #FFFFFF inset;
-	}
-	.event .desc {
-		width: 449px;
-		background: #fff;
-		border-radius: 3px 0px 0px 3px;
-		border-right: 1px solid #b5b5b5;
-	}
-	.event .invited {
-		width: 80px;
-	}
-	.event .desc,
-	.event .invited {
+
+/* @group Comments */
+.event .comment {
+	padding: 5px;
+	overflow: auto;
+	clear: both; }
+	.event .comment .image,
+	.event .comment .message {
 		display: inline-block;
-		vertical-align: top;
-	}
-	
+		vertical-align: top; }
+	.event .comment .image {
+		padding: 1em;
+		margin: 5px;
+		border-radius: 3px;
+		-moz-box-shadow:    0px 1px 1px 0px rgba(0,0,0,0.50), 
+							0px -1px 1px 0px rgba(255,255,255,0.36);
+		-webkit-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.50), 
+							0px -1px 1px 0px rgba(255,255,255,0.36);
+		box-shadow:         0px 1px 1px 0px rgba(0,0,0,0.50), 
+							0px -1px 1px 0px rgba(255,255,255,0.36); }
+	.event .comment .text { font-weight: lighter; }
+	.event .comment .image,
+	.event .create-comment .image {
+		background-size: cover;	
+		background-position: center;
+		background-repeat: no-repeat;	 }
+	.event .create-comment .image { vertical-align: middle; }
+	.event .create-comment .user-input {
+		display: inline-block;
+		vertical-align: middle; }
+	.event .create-comment input {
+		border-radius: 3px;
+		border: 1px solid #D9D9D9;
+		padding: 5px;
+		width: 375px; }
+/* @end */
+
+/* @group Votes */
+.event .votes { text-align: center; }
+.event .votes .data { position: relative; }
+.event .votes .text {
+	vertical-align: middle;
+	padding: 28px 0 28px;
+	margin-left: 50px; }
+.event .votes .vote {
+	padding: 10px;
+	float: right;
+	border: 1px solid #ccc;
+	border-radius: 50%;
+	margin-right: 30px;
+	opacity: 0.4;
+	transition: 0.1s opacity linear; }
+.event .votes .voted {
+	background-color: #79CF19;
+	background-image: url(/assets/img/okay.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	border: 1px solid #79CF19; }
+.event .votes .expand {
+	font-size: 9px;
+	padding: 3px;
+	font-weight: lighter;
+	color: #d7d7d7;
+	background: #f7f7f7;
+	line-height: 1.6666666667;
+	opacity: 0;
+	transition: 0.1s opacity linear; }
+.event .votes:hover .vote { opacity: 1; }
+.event .votes:hover .expand { opacity: 1; }
+
+/* @end */
+
+/* @group Banner */
+.event .banner {
+	height: 80px;
+	background-position: center center;
+	background-size: cover;
+	border-bottom: 0 !important; }
+/* @end */
+
+/* @group Details */
+.event .details   { background-color: #fafafa; padding: 7px; }
+.event .host 	  { font-size: 10px; color: #7e7e7e; }
+.event .host span { font-weight: 600; }
+.event blockquote { font-size: 12px; margin: 0;	}
+/* @end */
+
+/* @group Title */
+.event h2 { margin: 0; padding: 10px; }
+/* @end */
+
+/* @group General */
+.event.item 	{ background: #e7e7e7; overflow: hidden; display: table; }
+.event .section { border-bottom: 1px solid #efefef; }
+.event .inner   { position: relative; display: table-row; }
+.event .desc,
+.event .invited { 
+	display: table-cell; 
+	vertical-align: top; 
+	position: relative;
+	overflow: hidden; }
+.event .invited { width: 80px; }
+.event .desc    {
+	width: 450px;
+	background: #fff;
+	border-radius: 3px 0px 0px 3px;
+	border-right: 1px solid #b5b5b5;
+	transition: width 0.1s linear; }
+.event .desc-wrapper { transition: margin 0.1s linear; }
+.event .show-people-list .desc { width: 20px; }
+.event .show-people-list .desc-wrapper { margin-left: -430px; }
+.event .show-people-list .person-counter { display: none; }
+
+/* @end */
+
+/* @group Invites */
+.event .person .name {display: none;}
+.event .person .image,
+.event .show-people-list .person .name { 
+	display: inline-block; vertical-align: middle; }
+.event .person-counter,
+.event .person .image {
+	height: 60px;
+	width: 60px;
+	margin: 10px;
+	box-sizing: border-box;
+	background-size: cover;
+	border-radius: 3px;
+	border: 1px solid #979797;
+	-moz-box-shadow:    0px 1px 1px 0px #FFFFFF;
+	-webkit-box-shadow: 0px 1px 1px 0px #FFFFFF;
+	box-shadow:         0px 1px 1px 0px #FFFFFF;}
+.event .person-counter {
+	font-size: 20px;
+	vertical-align: middle;
+	text-align: center;
+	line-height: 3;
+	font-weight: bold;
+	color: #7e7e7e;
+	box-shadow: 0px 1px 1px 0px #FFFFFF,
+				0px 1px 1px 0px #FFFFFF inset;}
+
+.event .new-invite {  display: none; }
+.event .show-people-list .new-invite { display: block; }
+.event .user-invite-data,
+.event .user-invite-submit { 
+	display: table-cell; 
+	height: 100%;
+	padding: 10px;
+	vertical-align: middle;}
+.event .user-invite-data .data-block { width: 350px;}
+.event .user-invite-data .data-block.email input { 
+	width: 100%; 
+	margin-bottom: 0.5em; }
+.event .user-invite-data .data-block.personal input { 
+	width: 49.574%; 
+	display: inline-block;}
+.event .user-invite-submit .button { width: 120px; height: 100%; }
+/* @end */
+
+/* @group Overview */
 .event-overview {}
-	.event-overview .votes .data .text {
-		padding: 28px 0 8px;
-	}
-	
+.event-overview .votes .data .text { padding: 28px 0 8px; }
+/* @end */
+
+/* @group Editor */
 .event-editor {}
-	.event-editor .save-or-cancel .button {
-		margin: 8px;
-		padding: 10px;
-		min-width: 100px;
+.event-editor .save-or-cancel .button {
+	margin: 8px;
+	padding: 10px;
+	min-width: 100px;
+}
+.event-editor .votes .data .text { font-weight: lighter; }
+.event-editor .inlay {
+	background-color: #f1f1f1;
+	padding: 10px 0;
+	position: relative;
+}
+	.event-editor .inlay i.tip {
+		position: absolute;
+		top: -8px;
+		right: 32px;
+		width: 0; 
+		height: 0; 
+		border-left: 8px solid transparent;
+		border-right: 8px solid transparent;
+		border-bottom: 8px solid #f1f1f1;
 	}
-	.event-editor .votes .data .text {
-		font-weight: lighter;
-	}
-	.event-editor .inlay {
-		background-color: #f1f1f1;
-		padding: 10px 0;
-		position: relative;
-	}
-		.event-editor .inlay i.tip {
-			position: absolute;
-			top: -8px;
-			right: 32px;
-			width: 0; 
-			height: 0; 
-			border-left: 8px solid transparent;
-			border-right: 8px solid transparent;
-			border-bottom: 8px solid #f1f1f1;
-		}
-	.event-editor .vote.add {
-		border: 1px solid #004255;
-	}
-	.event-editor .votes .heading .text {
-		padding: 28px 0 28px;
-	}
-	.event-editor textarea,
-	.event-editor input[type="text"].inline {
-		border: none;
-		font: inherit;
-		color: #ff0039;
-		background: inherit;
-		width: 100%;
-	}
-	.event-editor textarea,
-	.event-editor input[type="text"]:focus {}
-	.event-editor textarea {
-		overflow-x: hidden;
-		resize: vertical;
-	}
+.event-editor .vote.add { border: 1px solid #004255; }
+.event-editor .votes .heading .text { padding: 28px 0 28px; }
+.event-editor textarea,
+.event-editor input[type="text"].inline {
+	border: none;
+	font: inherit;
+	color: #ff0039;
+	background: inherit;
+	width: 100%;
+}
+.event-editor textarea { overflow-x: hidden; resize: vertical; }
+/* @end */

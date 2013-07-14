@@ -2,76 +2,48 @@
 General
 ---*/
 html,
-body {
-	margin: 0;
-	padding: 0;
-	height: 100%;
-}
+body { margin: 0; padding: 0; height: 100%; }
 html {
 	color: #004356;
 	font-family: "Source Sans Pro", sans-serif;
 	background-color: #F9F9F9;
 }
-#container {
-	height: 100%;
-}
-a {
-	color: inherit;
-	text-decoration: none;	
-}
+#container { height: 100%; }
+a { color: inherit; text-decoration: none; }
 
 /*---
 Head
 ---*/
 .head {}
-	.head .nav {
-		box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.50);
-	}
-	.head .nav-inner {
-		height: 60px;
-		background-color: #fff;
+.head .nav { box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.50); }
+.head .nav-inner {
+	height: 60px;
+	background-color: #fff;
 /*		background: url(/assets/img/bb_pattern.png);*/
-	}
-	.head .company {
-		line-height: 1;
-		display: inline-block;
-	}
-		.head .company a {
-			font-size: 20px;
-			padding: 20px;
-			display: block;
-			
-			text-shadow: 0px 1px 0px #fff;
-			font-weight: bold;
-			text-decoration: none;
-		}
+}
+.head .company { line-height: 1; display: inline-block; }
+.head .company a {
+	font-size: 20px;
+	padding: 20px;
+	display: block;
+	text-shadow: 0px 1px 0px #fff;
+	font-weight: bold;
+	text-decoration: none;
+}
 
 /*---
 Body
 ---*/
-.body {
-	width: 800px;
-	margin: auto;
-}
+.body { width: 800px; margin: auto; }
 .sidebar,
-.content {
-	display: inline-block;
-	vertical-align: top;
-}
-.sidebar {
-	width: 200px;
-	margin-right: 50px;
-}
-.content {
-	width: 550px;
-}
+.content { display: table-cell; vertical-align: top; }
+.sidebar { width: 200px; margin-right: 50px; }
+.content { width: 550px; }
 
 /*---
 Foot
 ---*/
-.foot {
-	margin-top: 5px;
-}
+.foot { margin-top: 5px; }
 
 /*---
 Buttons
@@ -80,11 +52,9 @@ Buttons
 	display: inline-block;
 	padding: 7px;
 	border-radius: 3px;
-	
 	border: 0;
-	box-shadow: 0px 1px 2px #444, 0px 1px 1px 0px #fff inset;
+	box-shadow: 0px 1px 1px #444, 0px 1px 1px 0px #fff inset;
 	text-shadow: 0px -1px 1px #f9f9f9;
-	
 	color: #747474;
 	background: #f5f5f5;
 	background-image: -o-linear-gradient(-90deg, rgba(255,255,255,0.50) 0%, rgba(230,230,230,0.50) 100%);
@@ -110,37 +80,29 @@ Buttons
 Grid
 ---*/
 .row {}
-	.row .col {
-		vertical-align: top;
-		overflow: auto;
-	}
-	.row .colspan2 {}
-		.row .colspan2 .col {
-			width: 49.8%;
-			display: inline-block;
-		}
+.row .col { vertical-align: top; overflow: auto; }
+.row .colspan2 {}
+.row .colspan2 .col { width: 49.8%; display: inline-block; }
+		
 @media (max-width: 740px) {
-	.row .col {
-		display: block !important;
-		width: auto !important;
-	}
+	.row .col { display: block !important; width: auto !important; }
 }
 
 /*---
 Form
 ---*/
 .form {}
-	.form input,
-	.form button {
-		box-sizing: border-box;
-		
-	}
-	.form input {
-		display: block;
-		margin: 0;
-		padding: 5px;
-		width: 100%;
-	}
+.form input,
+.form button,
+.form textarea { box-sizing: border-box; }
+.form input {
+	display: block;
+	margin: 0;
+	padding: 5px;
+	border-radius: 3px;
+	background: #FFFFFF;
+	border: 1px solid #D9D9D9;
+}
 
 /*---
 Hero units
@@ -148,17 +110,13 @@ Hero units
 .hero {}
 .hero.parallax {
 	overflow: auto;
-	
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
-	
 	color: #fff;
 }
-	.hero.parallax h1,
-	.hero.parallax h2 {
-		text-shadow: 0px 1px 2px #000;		
-	}
+.hero.parallax h1,
+.hero.parallax h2 { text-shadow: 0px 1px 2px #000; }
 
 /*---
 Pagelets
@@ -167,8 +125,13 @@ Pagelets
 	border-radius: 3px;
 	background: #FFFFFF;
 	margin: 15px 10px;
-	
-	-moz-box-shadow:    1px 0px 1px 0px rgba(0,0,0,0.07), -1px 0px 1px 0px rgba(0,0,0,0.11), 0px 1px 1px 0px rgba(0,0,0,0.50);
-	-webkit-box-shadow: 1px 0px 1px 0px rgba(0,0,0,0.07), -1px 0px 1px 0px rgba(0,0,0,0.11), 0px 1px 1px 0px rgba(0,0,0,0.50);
-	box-shadow:         1px 0px 1px 0px rgba(0,0,0,0.07), -1px 0px 1px 0px rgba(0,0,0,0.11), 0px 1px 1px 0px rgba(0,0,0,0.50);
+	-moz-box-shadow:    1px 0px 1px 0px rgba(0,0,0,0.07), 
+						-1px 0px 1px 0px rgba(0,0,0,0.11), 
+						0px 1px 1px 0px rgba(0,0,0,0.50);
+	-webkit-box-shadow: 1px 0px 1px 0px rgba(0,0,0,0.07),
+						-1px 0px 1px 0px rgba(0,0,0,0.11), 
+						0px 1px 1px 0px rgba(0,0,0,0.50);
+	box-shadow:         1px 0px 1px 0px rgba(0,0,0,0.07),
+						-1px 0px 1px 0px rgba(0,0,0,0.11),
+						0px 1px 1px 0px rgba(0,0,0,0.50);
 }

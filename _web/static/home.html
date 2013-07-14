@@ -1,79 +1,120 @@
 <!-- HOME -->
 <div class="feed" ng-if="isLoggedIn === true && toggleSideBar(true)">
-		
-		<!-- feed item -->
-		<div class="item event event-overview pagelet" ng-repeat="event in user.events" ng-controller="event">
-			<div class="inner" ng-class="{'show-people-list':showPeopleList}">
-				<div class="desc" ng-click="togglePeopleList(false)">
-					<div class="desc-wrapper">
-						<div class="title section">
-							<h2>{{event.title}}</h2>
-							<span>Expand<i ng-if="isHost(event)"> | Edit</i></span>
+
+	<div class="item event pagelet" ng-repeat="event in user.events" ng-controller="event" ng-class="mode">
+		<div class="inner" ng-class="{'show-people-list':showPeopleList}">
+			<div class="desc" ng-click="togglePeopleList(false)">
+				<div class="desc-wrapper">
+					<div class="title section">
+						<h2 ng-click="(mode == 'compact') && (mode = 'expanded')">{{event.title}}</h2>
+						<span>
+							<i ng-hide="mode === 'compact'" ng-click="mode = 'compact'"> Contract </i>
+							<i ng-hide="mode === 'expanded'" ng-click="mode = 'expanded'"> Expand </i>
+							<i ng-hide="mode === 'edit' || !isHost(event)" ng-click="mode = 'edit'"> Edit </i>
+						</span>
+					</div>
+					<!-- @end title -->
+					<div class="details section">
+						<div class="host">You've been invited by <span>{{event.host.first_name}}</span>.</div>
+						<blockquote>{{event.description}}</blockquote>
+					</div>
+					<!-- @end details -->
+					<div class="banner section" style="background-image: url(/assets/img/event_blurred.jpg);"></div>
+					<!-- @end banner -->
+					<div class="date votes hasVote section">
+						<div class="heading" ng-show="mode !== 'compact'">
+							<div class="icon"></div>
+							<div class="text">Dates<span class="vote add" ng-click="newDate = !newDate ? {} : null"></span></div>
 						</div>
-						<div class="details section">
-							<div class="host">You've been invited by <span>{{event.host.first_name}}</span>.</div>
-							<blockquote>{{event.description}}</blockquote>
-						</div>
-						<div class="banner section" style="background-image: url(/assets/img/event_blurred.jpg);"></div>
-						<div class="date votes hasVote section">
-							<div class="data" ng-repeat="date in event.dates | limitTo:1">
-								<div class="icon"></div>
-								<div class="text">{{date.start | date:'fullDate'}}<span class="vote" ng-class="{'voted':hasVotedOn(date)}" ng-click="toggleVote(event,date,'date')"></span></div>
-							</div>
-						</div>
-						<div class="activity hasVote votes section">
-							<div class="data" ng-repeat="activity in event.activities | limitTo:1">
-								<div class="icon"></div>
-								<div class="text">{{activity.name}}<span class="vote" ng-class="{'voted':hasVotedOn(activity)}"></span></div>						
-							</div>
-						</div>
-						<div class="comments">
-							<div class="comment" ng-repeat="comment in event.comments">
-								<div class="image" style="background-image: url({{comment.user.profile_image}});"></div>
-								<div class="message">
-									<div class="user">{{comment.user.first_name}} {{comment.user.last_name}}:</div>
-									<div class="text">{{comment.text}}</div>
-								</div>
-							</div>
-							<div class="comment create-comment">
-								<div class="image" style="background-image: url({{user.profile_image}});"></div>
-								<div class="message user-input">
-									<input type="text" name="" value="" placeholder="Type something.." />
-								</div>
-							</div>
+						<form class="inlay" ng-if="newDate && mode !== 'compact'" ng-submit="addDate(newDate); newDate = null;">
+							<i class="tip"></i>
+							<input type="date" ng-model="newDate.start" required value="" />
+							<button class="button">Add</button>
+						</form>
+						<div class="data" ng-repeat="date in event.dates | orderBy:'-votes.length'" ng-class="{'top-voted':$first}">
+							<div class="icon"></div>
+							<div class="text" ng-click="mode != 'compact' && toggleVote(date,event,'date')">{{date.start | date:'fullDate'}}<span class="vote" ng-click="mode == 'compact' && toggleVote(date,event,'date')" ng-class="{'voted':hasVotedOn(date)}"></span></div>
 						</div>
 					</div>
-				</div>
-				
-				<div class="invited" ng-click="togglePeopleList(true)">
-					<form class="new-invite form" ng-if="isHost(event)">
-						<div class="user-invite-data">
-							<div class="data-block email">
-								<input type="email" placeholder="E-Mail" name="" value="" />
-							</div>
-							<div class="data-block personal">
-								<input type="text" placeholder="First name" name="" value="" />
-								<input type="text" placeholder="Last name" name="" value="" />
-							</div>
+					<!-- @end dates -->
+					<div class="activity hasVote votes section">
+						<div class="heading" ng-show="mode !== 'compact'">
+							<div class="icon"></div>
+							<div class="text">Activities<span class="vote add" ng-click="newActivity = !newActivity ? {} : null"></span></div>
 						</div>
-						<div class="user-invite-submit"><button class="button yellow">Invite</button></div>
-					</form>
-					<div class="people">
-						<div class="person" ng-repeat="person in event.invites">
-							<div class="image" style="background-image: url({{person.profile_image}});"></div>
-							<div class="name">Some Guy</div>
+						<form class="inlay" ng-if="newActivity && mode !== 'compact'" ng-submit="addActivity(newActivity); newActivity = null;">
+							<i class="tip"></i>
+							<input type="text" ng-model="newActivity.name" required value="" />
+							<button class="button">Add</button>
+						</form>
+						<div class="data" ng-repeat="activity in event.activities | orderBy:'-votes.length'" ng-class="{'top-voted':$first}">
+							<div class="icon"></div>
+							<div class="text" ng-click="mode != 'compact' && toggleVote(activity,event,'activity')">{{activity.name}}<span class="vote" ng-click="mode == 'compact' && toggleVote(activity,event,'activity')" ng-class="{'voted':hasVotedOn(activity)}"></span></div>
 						</div>
-						<div class="person person-counter">{{event.invites.length}}+</div>
+					<!-- @end activites -->
 					</div>
+					<div class="save-or-cancel" ng-if="mode === 'edit'">
+						<button class="button yellow" ng-if="!!event.id">Save</button>
+						<button class="button yellow" ng-if="!!event.id" ng-click="togglePeopleList(1); $event.stopPropagation();">Next</button>
+						<button class="button" ng-if="event.id">Cancel</button>
+					</div>
+					<!-- @end save-or-cancel -->
+					<div class="comments" ng-hide="mode === 'edit'">
+						<div class="comment" ng-repeat="comment in event.comments">
+							<div class="image" style="background-image: url({{comment.user.profile_image}});"></div>
+							<div class="message">
+								<div class="user">{{comment.user.first_name}} {{comment.user.last_name}}:</div>
+								<div class="text">{{comment.text}}</div>
+							</div>
+						</div>
+						<!-- @end comment -->
+						<div class="comment create-comment">
+							<div class="image" style="background-image: url({{user.profile_image}});"></div>
+							<div class="message user-input">
+								<input type="text" ng-model="commentText" ng-keyup="($event.keyCode === 27) && (commentText = '') || ($event.keyCode === 13) && addComment()" placeholder="Type something.." />
+							</div>
+						</div>
+						<!-- @end create-comment -->
+					</div>
+					<!-- @end comments -->
 				</div>
-				
+			<!-- @end desc-wrapper -->
 			</div>
+			<!-- @end desc -->
+			<div class="invited" ng-click="togglePeopleList(1)">
+				<form class="new-invite form" ng-if="isHost(event)" ng-submit="invite.submit(event)">
+					<div class="user-invite-data">
+						<div class="data-block email">
+							<input type="text" placeholder="E-Mail" ng-model="invite.email" value="" />
+						</div>
+						<div class="data-block personal">
+							<input type="text" placeholder="First name" ng-model="invite.first_name" value="" />
+							<input type="text" placeholder="Last name" ng-model="invite.last_name" value="" />
+						</div>
+					</div>
+					<div class="user-invite-submit">
+						<button class="button yellow">Invite</button>
+					</div>
+				</form>
+				<!-- @end form -->
+				<div class="people">
+					<div class="person" ng-repeat="person in event.invites | limitTo:limitPeopleList">
+						<div class="image" style="background-image: url({{person.profile_image}});"></div>
+						<div class="name">{{person.first_name}} {{person.last_name}}</div>
+					</div>
+					<div class="person person-counter">{{event.invites.length > 2 ? event.invites.length -2 : ''}}+</div>
+				</div>
+				<!-- @end people -->
+			</div>
+			<!-- @end invites -->
 		</div>
+		<!-- @end inner -->
 	</div>
+	<!-- @end event -->
 	
 	<!-- editor item -->
-	<div class="item event event-editor pagelet">
-		<div class="inner"><!-- show-people-list -->
+<!--	<div class="item event event-editor pagelet">
+		<div class="inner"><!-- show-people-list --*>
 			<div class="desc">
 				<div class="desc-wrapper">
 					<div class="title section">
@@ -170,7 +211,8 @@
 			</div>
 			
 		</div>
-	</div>
+	</div>-->
+</div>
 
 <!-- LANDING -->
 <div class="home" ng-if="isLoggedIn === false && toggleSideBar(false)" ng-controller="landingPage">

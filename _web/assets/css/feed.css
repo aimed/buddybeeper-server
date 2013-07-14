@@ -36,11 +36,16 @@
 
 /* @group Votes */
 .event .votes { text-align: center; }
-.event .votes .data { position: relative; }
+.event .votes .data { position: relative; overflow: hidden; }
+.event.compact .votes .data { height: 0px; }
+.event.compact .votes .data.top-voted { height: inherit; }
 .event .votes .text {
 	vertical-align: middle;
 	padding: 28px 0 28px;
-	margin-left: 50px; }
+	margin-left: 50px; 
+	font-weight: lighter; }
+	.event .votes .heading .text { font-weight: normal; }
+	.event.compact .votes .data .text { font-weight: normal; }
 .event .votes .vote {
 	padding: 10px;
 	float: right;
@@ -66,7 +71,6 @@
 	transition: 0.1s opacity linear; }
 .event .votes:hover .vote { opacity: 1; }
 .event .votes:hover .expand { opacity: 1; }
-
 /* @end */
 
 /* @group Banner */
@@ -86,7 +90,8 @@
 
 /* @group Title */
 .event .title { position: relative; }
-.event .title h2 { margin: 0; padding: 10px; }
+.event .title h2 { margin: 5px 0; padding: 10px; }
+.event.compact h2 { cursor: pointer; }
 .event .title span { 
 	font-size: 10px; 
 	color: #6f6f6f; 
@@ -168,19 +173,9 @@
 /* @end */
 
 /* @group Editor */
-.event-editor {}
-.event-editor .save-or-cancel .button {
-	margin: 8px;
-	padding: 10px;
-	min-width: 100px;
-}
-.event-editor .votes .data .text { font-weight: lighter; }
-.event-editor .inlay {
-	background-color: #f1f1f1;
-	padding: 10px 0;
-	position: relative;
-}
-	.event-editor .inlay i.tip {
+.event .save-or-cancel .button { margin: 8px; padding: 10px; min-width: 100px; }
+.event .inlay { background-color: #f8f8f8; padding: 10px 0; position: relative; }
+	.event .inlay i.tip {
 		position: absolute;
 		top: -8px;
 		right: 32px;
@@ -188,17 +183,13 @@
 		height: 0; 
 		border-left: 8px solid transparent;
 		border-right: 8px solid transparent;
-		border-bottom: 8px solid #f1f1f1;
-	}
-.event-editor .vote.add { border: 1px solid #004255; }
-.event-editor .votes .heading .text { padding: 28px 0 28px; }
-.event-editor textarea,
-.event-editor input[type="text"].inline {
+		border-bottom: 8px solid #f8f8f8;}
+.event textarea,
+.event input[type="text"].inline {
 	border: none;
 	font: inherit;
 	color: #ff0039;
 	background: inherit;
-	width: 100%;
-}
-.event-editor textarea { overflow-x: hidden; resize: vertical; }
+	width: 100%;}
+.event textarea { overflow-x: hidden; resize: vertical; }
 /* @end */

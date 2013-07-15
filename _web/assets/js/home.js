@@ -39,6 +39,9 @@ bb.controller("event", ["$scope", function (scope) {
 			scope.limitPeopleList = scope.event.invites.length;
 		}
 	}
+	scope.saveEvent = function () {
+		scope.mode = "expanded";
+	}
 }]);
 
 bb.controller("landingPage", ["$scope","User", function (scope, user) {

@@ -184,8 +184,10 @@
 		border-left: 8px solid transparent;
 		border-right: 8px solid transparent;
 		border-bottom: 8px solid #f8f8f8;}
-.event textarea,
-.event input[type="text"].inline {
+.event .inline-edit input {
+	margin: 0;
+	padding: 0;
+	outline: none;
 	border: none;
 	font: inherit;
 	color: #ff0039;

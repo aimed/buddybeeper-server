@@ -14,9 +14,9 @@ bb.controller("event", ["$scope", function (scope) {
 			item.votes.push(scope.user.id);
 		}
 	}
-	scope.addComment = function () {
-		scope.event.comments.push({text:scope.commentText,user:scope.user,id:scope.event.comments.length*2});
-		scope.commentText = "";
+	scope.addComment = function (comment) {
+		comment.user = scope.user;
+		scope.event.comments.push(comment);
 	}
 	scope.addDate = function (date) {
 		date.votes = [scope.user.id];
@@ -41,6 +41,16 @@ bb.controller("event", ["$scope", function (scope) {
 	}
 	scope.saveEvent = function () {
 		scope.mode = "expanded";
+	}
+	scope.backup = {
+		store : function () {
+			scope.backup.item = angular.copy(scope.event);
+			scope.mode = "edit";
+		},
+		recover : function () {
+			scope.event = scope.backup.item;
+			scope.mode = "expanded";
+		}
 	}
 }]);
 

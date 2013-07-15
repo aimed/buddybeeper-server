@@ -30,7 +30,6 @@ $router->get(v0 . "/users/:id", function (&$req, &$res) {
 
 
 $router->post(v0 . "/users", function (&$req, &$res) {
-    
     $email      = $req->body("email",      "required|isEmail");
     $password   = $req->body("password",   "required|len[6]");    
     $first_name = $req->body("first_name", "required|len[2,50]|hasNoSpecialChar");
@@ -68,6 +67,7 @@ $router->post(v0 . "/users", function (&$req, &$res) {
         $channel->type  = "email";
         $channel->value = $email;
         $channel->user  = $user;
+        $channel->is_bound = 1;
         $channel->save();
 
         $response = $user->info();

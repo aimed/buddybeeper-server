@@ -5,6 +5,7 @@ class Event extends Model {
     public $define = array(
         "id"   => "primaryKey",
         "user" => "model",
+        "title",
         "description",
         "final_date",
         "final_activity",
@@ -13,10 +14,6 @@ class Event extends Model {
         "created_at"
     );
     
-    public function setDescription ($text) {
-        return Utils::htmlsafe($text);
-    }
-    
     public function afterFind () {
         $this->user = new User($this->_storage["user"]);
     }
@@ -24,7 +21,7 @@ class Event extends Model {
     public function getInvites () {
         $query = new QueryBuilder;
         $query
-        ->select("users.id", "first_name", "profile_image")
+        ->select("users.id", "first_name", "last_name", "profile_image")
         ->from("event_invites")
         ->join("users","user","users.id","left")
         ->where("event","=",$this->id);
@@ -32,13 +29,22 @@ class Event extends Model {
     }
     
     public function getComments () {
-    	return array();
+    	$query = new QueryBuilder;
+    	$query->select(
+    		"id",
+    		"user",
+    		"text",
+    		"pinned"
+    	)
+    	->from("event_comments")
+    	->where("event","=",$this->id);
+    	return DB::fetch($query,$query->data);
     }
     
     public function getActivities () {
         $query = new QueryBuilder;
         $query
-        ->select("id","activity")
+        ->select("id","name")
         ->append(", GROUP_CONCAT(DISTINCT `event_votes`.`user`) AS `votes`")
         ->from("event_activities")
         ->join("event_votes","id","choice", "left")

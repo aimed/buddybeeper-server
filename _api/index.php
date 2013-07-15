@@ -42,15 +42,8 @@ $router->get("/test", function (&$req, &$res) {
     $req->headers->{"x-event-token"} = "ec3N1PNntWkmVgMY8arnYb64WJpc33gCyE2uG1WIY5C_k-j-dLP9fx4BVhohwQje";
     /* /HARDCODED*/
     
-	$token = new AccessToken($req->headers("x-access-token"));
-	if (!$token->isValid()) throw new TokenExceoption();
-	
-	$user = new User($token->user);
-	$response = $user->info();
-	$response["events"] = $user->events;
-	
-	$res->success($response);
-	
+    $user = new User(1);
+    var_dump($user->events);
 });
 
 
@@ -59,12 +52,11 @@ $router->get("/test", function (&$req, &$res) {
 /*---
 Allow API calls via JS
 ---*/
-$router->uses("/*", function (&$req, &$res) {
-	if (!$req->headers("ORIGIN")) return;
+$router->uses(function (&$req, &$res) {
+	//if (!$req->headers("ORIGIN")) return; @TODO: yeah, what.
 	$res->header("Access-Control-Allow-Origin","*");
-	$res->header("Access-Control-Allow-Headers","X-Requested-With");
-	$res->header("Access-Control-Allow-Headers","X-Access-Token");
-	$res->header("Access-Control-Allow-Headers","X-Event-Token");
+	$res->header("Access-Control-Allow-Headers","X-Requested-With, X-Access-Token, X-Event-Token, Content-Type");
+	$res->header("Access-Control-Allow-Methods","GET, POST, DELETE");
 	if ($req->requestMethod === "OPTIONS") 
 	{
 		$res->send("",200);

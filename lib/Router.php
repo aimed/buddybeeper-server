@@ -12,7 +12,7 @@ class Router extends Router\Base{
 	/**
 	 * Contains the scope
 	 */
-	private $scope;
+	private $scope = array();
 
 
 	/**
@@ -194,6 +194,7 @@ class Router extends Router\Base{
 			}
 
 		}
+
 		return $provide;
 	}
 

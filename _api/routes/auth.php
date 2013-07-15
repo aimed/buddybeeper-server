@@ -36,6 +36,7 @@ $router->post(v0 . "/auth/token", function (&$req, &$res) {
         "expires_at" => $access_token->expires_at,
         "user" => $user->info()
     );
+    $response["user"]["events"] = $user->events;
     
     $res->success($response);
 });
@@ -57,6 +58,7 @@ $router->post(v0 . "/auth/refresh", function (&$req, &$res) {
     
     $response = $access_token->get("access_token", "expires_at");
     $response["user"] = $user->info();
+    $response["user"]["events"] = $user->events;
     
     $res->success($response);
 });

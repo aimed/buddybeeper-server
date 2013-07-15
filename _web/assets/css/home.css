@@ -12,6 +12,8 @@
 
 .home .signup .signup-form     { margin: 10px; }
 .home .signup .input { margin: 3px; }
+.home .login .login-form     { margin: 10px; }
+.home .login .input { margin: 3px; }
 .home .infobox { width: 100%; display: table; }
 .home .infobox .text,
 .home .infobox .signup-form { display: table-cell; width: 50%; padding: 10px; }

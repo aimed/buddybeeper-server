@@ -10,21 +10,30 @@ class EventInvite extends Model {
     
     
     public function inviteByChannel ($val) {
-        $this->primaryKey(null);
-
+        $this->event_token = null;
+        		
+		if (is_array($val)) $val = (object) $val;
+		$first_name = (is_object($val) && isset($val->first_name)) ? $val->first_name : null;
+		$last_name  = (is_object($val) && isset($val->last_name))  ? $val->last_name  : null;
+		$email      = (is_object($val) && isset($val->email))      ? $val->email      : $val;
+		
         $channel = new UserCommunicationChannel;
-        $channel->findByValue($val);
+        $channel->findByValue($email);
         
         // create a new dummy user
         if (!$channel->id) 
         {
+            if(!Validator::that($email)->isEmail()->please()) return false;
+
             $user = new User;
+            $user->first_name = $first_name;
+            $user->last_name  = $last_name;
             $user->save();
             
-            $channel->user = $user->id;
+            // @TODO: gravatar and shit
             
-            if(!Validator::that($val)->isEmail()->please()) return false;
-            $channel->value = $val;
+            $channel->user = $user->id;
+            $channel->value = $email;
             $channel->type  = "email";
             $channel->save();
         }
@@ -39,7 +48,7 @@ class EventInvite extends Model {
         $notificationData = array(
             "host"  => $this->event->user->info(),
             "link"  => $this->buildLink(),
-            "event" => $this->event->get("description")
+            "event" => $this->event->get("title","description")
         );
         
         

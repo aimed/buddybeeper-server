@@ -113,7 +113,8 @@ class Vault {
 	 * @param String $str
 	 * @param String $salt Optional
 	 */
-	public static function shortHash ($str, $salt = VAULT_SECRET) {
+	public static function shortHash ($str, $salt = "") {
+		if ($salt == "") $salt = VAULT_SECRET;
 		return substr(self::hash($str, $salt), 0, 12);
 	}
 
@@ -189,6 +190,8 @@ class Vault {
 	 * @return Mixed String on success null otherwise
 	 */
 	public static function decrypt ($encrypted, $password, $alg = "rijndael-256", $mode = "ofb") {
+		if (empty($encrypted)) return null;
+		
 		// prepare cipher and password
 		$cipher = mcrypt_module_open($alg, "", $mode, "");
 		$password = substr(md5($password), 0 , mcrypt_get_key_size($alg, $mode));

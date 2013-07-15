@@ -10,4 +10,4 @@ Utils::define("TEMPLATE_DIR", ROOT_DIR . DIRECTORY_SEPARATOR . "_api" . DIRECTOR
 Utils::define("MAIL_DEFAULT_FROM_ADDRESS", "noreply@buddybeeper.net");
 
 // Vault
-Utils::define("VAULT_SECRET", "");
+Utils::define("VAULT_SECRET", "NwatEwfN3y5C2DEUAqwbl20v1SwuxLQ9R5gtbOZy");

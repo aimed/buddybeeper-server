@@ -1,6 +1,9 @@
 Hey,
 
-{{host.first_name}} invited you to his event {{event.description}}.
+{{host.first_name}} invited you to an event.
+
+{{event.title}}
+{{event.description}}
 
 Join him and others at at
 

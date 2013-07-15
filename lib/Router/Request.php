@@ -131,8 +131,10 @@ class Request {
 	 * @return stdObject Body Content
 	 */
 	protected function _bodyparser () {
-		if (!isset($this->server->CONTENT_TYPE)) return null;
-		switch ($this->server->CONTENT_TYPE) {
+		if (!isset($this->server->CONTENT_TYPE)) return (object) $_POST;
+		// @TODO: i'm really ugly.
+		$type = (strpos($this->server->CONTENT_TYPE,";") !== false) ? strstr($this->server->CONTENT_TYPE, ";", true) : $this->server->CONTENT_TYPE;
+		switch ($type) {
 			case "application/x-www-form-urlencoded":
 			case "multipart/form-data":
 				return (object) $_POST;

@@ -7,7 +7,7 @@ class EventActivity extends Model {
         "id" => "primaryKey",
         "event",
         "user",
-        "activity"
+        "name"
     );
     
 }

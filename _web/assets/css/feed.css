@@ -120,7 +120,7 @@
 	border-radius: 3px 0px 0px 3px;
 	border-right: 1px solid #b5b5b5;
 	/*transition: width 0.1s linear;*/ }
-.event .desc-wrapper { /*transition: margin 0.1s linear;*/ }
+/*.event .desc-wrapper { transition: margin 0.1s linear; }*/
 .event .show-people-list .desc { width: 20px; }
 .event .show-people-list .desc-wrapper { margin-left: -430px; }
 .event .show-people-list .person-counter { display: none; }
@@ -170,6 +170,8 @@
 	width: 49.574%; 
 	display: inline-block;}
 .event .user-invite-submit .button { width: 120px; height: 100%; }
+.event .create-event { padding: 10px; }
+.event .create-event .button { display: block; width: 100%; line-height: 2.5; }
 /* @end */
 
 /* @group Editor */
@@ -193,5 +195,12 @@
 	color: #ff0039;
 	background: inherit;
 	width: 100%;}
+	.event .inline-edit input::-webkit-input-placeholder,	
+	.event .inline-edit input:-moz-placeholder,
+	.event .inline-edit input::-moz-placeholder,
+	.event .inline-edit input:-ms-input-placeholder,
+	.event .inline-edit input::placeholder {  
+	   color: #ff0039;
+	}
 .event textarea { overflow-x: hidden; resize: vertical; }
 /* @end */

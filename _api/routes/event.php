@@ -74,17 +74,17 @@ $router->delete(v0 . "/events/comment/:comment", function (&$req, &$res) {
 Post comment
 ---*/
 $router->post(v0 . "/events/comment", function (&$req, &$res) {
-
+	
     $token  = new EventInvite($req->headers("x-event-token"));
-    if (!$token->isValid()) throw new TokenException();
-    
+    if (!$token->isValid()) throw new TokenException("Invalid event token" . $req->headers("x-event-token"));
+
     $text = $req->body("text","required");
     if (!$req->isValid()) throw new ParameterException($req->validationErrors);
     
     $comment = new EventComment;
     $comment->user  = $token->user;
     $comment->event = $token->event;
-    $comment->text  = $text;
+    $comment->text  = Utils::htmlsafe($text);
     $comment->save();
     if (!$comment->id) throw new DatabaseException();
     
@@ -105,15 +105,14 @@ $router->post(v0 . "/events/invite", function (&$req, &$res) {
     $token  = new EventInvite($req->headers("x-event-token"));
     if (!$token->isValid()) throw new TokenException();
     
-    if (empty($req->body->invite)) throw new ParameterException("Missing required argument invite");
+    if (empty($req->body->invites)) throw new ParameterException("Missing required argument invites");
     
     $invites = (array) $req->body->invite;
     $invite = new EventInvite;
     $invite->event = $token->event;
-    for ($i = 0; $i < count($invites); $i++) 
-        $invite->inviteByChannel($req->body->invite[$i]);
+    for ($i = 0; $i < count($invites); $i++)  $invite->inviteByChannel($req->body->invite[$i]);
     
-    $res->success(array("status"=>"ok"));
+    $res->success(array("status"=>"ok","invites"=>$invite->event->invites));
     
 });
 
@@ -126,9 +125,8 @@ Vote Date or Activity
 $router->post(v0 . "/events/:type/:id", function (&$req, &$res) {
 
     $token = new EventInvite($req->headers("x-event-token"));
-    if (!$token->isValid()) throw new TokenException();
-    
-    
+    if (!$token->isValid()) throw new TokenException("Invalid event token");
+        
     switch ($req->params->type) {
         case "activity": $obj = new EventActivity; break;
         case "date":     $obj = new EventDate; break;
@@ -144,7 +142,7 @@ $router->post(v0 . "/events/:type/:id", function (&$req, &$res) {
     $vote = new EventVote;
     $vote->user   = $token->user;
     $vote->event  = $token->event;
-    $vote->choice = $req->body->id;
+    $vote->choice = $req->params->id;
     $vote->type   = $req->params->type;
     $vote->insert();
     
@@ -154,9 +152,10 @@ $router->post(v0 . "/events/:type/:id", function (&$req, &$res) {
 
 
 $router->delete(v0 . "/events/:type/:id", function (&$req, &$res) {
-
-    $token = new EventInvite($req->headers("x-event-token"));
-    if (!$token->isValid()) throw new TokenException();
+	
+	
+	$token = new EventInvite($req->query("token"));
+	if (!$token->isValid()) throw new TokenException("Invalid event token " . $req->headers("x-event-token"));
     
     switch ($req->params->type) {
         case "activity": $obj = new EventActivity; break;
@@ -165,15 +164,16 @@ $router->delete(v0 . "/events/:type/:id", function (&$req, &$res) {
     }
     
     $obj->id = $req->params->id;
-
-    if ($obj->event != $token->event->id || $obj->user != $token->user->id) 
-        throw new ParameterException("Not authorized");
+	
+	// @TODO: YEP
+    //if ($obj->event != $token->event->id || $obj->user != $token->user->id) 
+    //    throw new ParameterException("Not authorized");
     
     $vote = new EventVote;
     $vote->delete(array(
         "type"   => $req->params->type,
         "user"   => $token->user,
-        "choice" => $req->params->id
+        "choice" => $obj->id
     )); 
     
     $res->success(array("status" => DB::affectedRows() > 0 ? "ok" : "failed"));
@@ -208,16 +208,16 @@ $router->post(v0 . "/events/:type", function (&$req, &$res) {
             break;
         
         case "activity":
-            $activity = $req->body("activity", "required|string|len[1]");
+            $activity = $req->body("name", "required|string|len[1]");
             if (!$req->isValid()) throw new ParameterException($req->validationErrors);
             
             $obj = new EventActivity;
             $obj->user     = $token->user;
             $obj->event    = $token->event;
-            $obj->activity = $activity;
+            $obj->name     = $activity;
             $obj->save();
             
-            $response = $obj->get("id", "activity");
+            $response = $obj->get("id", "name");
             
             break;
         
@@ -244,11 +244,11 @@ $router->post(v0 . "/events", function (&$req, &$res) {
 
     $access_token = new AccessToken($req->headers("x-access-token"));
     if (!$access_token->isValid()) throw new TokenException();
-
     
-    $description = $req->body("description", "required|len[1]");
+    $title 		 = $req->body("title", "required|len[1]");
+    $description = $req->body("description", "len[1]");
     $deadline    = $req->body("deadline",    "isTimestamp");
-    if (isset($req->body->invite) && !is_array($req->body->invite))
+    if (isset($req->body->invites) && !is_array($req->body->invites))
         throw new ParameterException("Invalid argument invite");
     
     if (!$req->isValid()) throw new ParameterException($req->validationErrors);
@@ -259,6 +259,7 @@ $router->post(v0 . "/events", function (&$req, &$res) {
     // create event
     $event = new Event;
     $event->user        = $user;
+    $event->title       = $title;
     $event->description = $description;
     $event->deadline    = $deadline;
     $event->save();
@@ -274,15 +275,15 @@ $router->post(v0 . "/events", function (&$req, &$res) {
     $host_token = $invite->event_token;
     
     // invite everybody else
-    if (isset($req->body->invite))
+    if (isset($req->body->invites))
     {
-        $count = count($req->body->invite);
+        $count = count($req->body->invites);
         for ($i = 0; $i < $count; $i++) {
-            $invite->inviteByChannel($req->body->invite[$i]);
+            $invite->inviteByChannel($req->body->invites[$i]);
         }
     }
     
-    $response = $event->get("id", "description");
+    $response = $event->get("id", "title", "description");
     $response["token"] = $host_token;
 
     $res->success($response);

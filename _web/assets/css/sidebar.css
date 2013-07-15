@@ -14,10 +14,11 @@
 	-webkit-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.50), 0px -1px 1px 0px rgba(255,255,255,0.36);
 	box-shadow:         0px 1px 1px 0px rgba(0,0,0,0.50), 0px -1px 1px 0px rgba(255,255,255,0.36);	
 }
+.user.pagelet .menu { border-top: 1px solid #eee; }
 
-.menu.pagelet { font-size: 14px; }
-.menu.pagelet .item { border-bottom: 1px solid #eee; }
-.menu.pagelet .item:last-child { border: 0; }
-.menu.pagelet a { display: block; padding: 7px 0px 7px 25px; }
-.menu.pagelet a.active { color: #ffcc00; }
+.sidebar .menu { font-size: 14px; }
+.sidebar .menu .item { border-bottom: 1px solid #eee; }
+.sidebar .menu .item:last-child { border: 0; }
+.sidebar .menu a { display: block; padding: 7px 0px 7px 25px; }
+.sidebar .menu a.active { color: #ffcc00; }
 	

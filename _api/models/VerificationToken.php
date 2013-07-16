@@ -20,6 +20,6 @@ class VerificationToken extends Model {
     }
     
     public function afterFind () {
-        $this->data = unserialize($this->data);
+        $this->data = unserialize($this->_storage["data"]);
     }
 }

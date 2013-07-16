@@ -22,7 +22,7 @@
 			</div>
 			<!-- @end head -->
 			<div class="body" ng-class="{'side-bar-enabled':hasSideBar}">
-				<div class="sidebar" ng-controller="sidebar">
+				<div class="sidebar" ng-controller="sidebar" ng-if="isLoggedIn">
 					<div class="user pagelet">
 						<div class="profile">
 							<div class="picture">

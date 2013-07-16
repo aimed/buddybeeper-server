@@ -8,7 +8,9 @@ bb.config(["$locationProvider", "$routeProvider", "$httpProvider",
         Routing
         ---*/
         $locationProvider.html5Mode(true);
-        $routeProvider.otherwise({templateUrl: "/static/home.html"});
+        $routeProvider
+        .when("/event",{templateUrl: "/static/event.html"})
+        .otherwise({templateUrl: "/static/home.html"});
 }]);
 
 /**
@@ -18,5 +20,6 @@ bb.config(["$locationProvider", "$routeProvider", "$httpProvider",
  */
 bb.controller("rootController",["$rootScope", "User", function (scope, user) {
 	scope.hasSideBar = false;
+	scope.events     = null;
 	scope.toggleSideBar = function (bool) {scope.hasSideBar = !!bool; return true;}
 }]);

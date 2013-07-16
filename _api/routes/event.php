@@ -107,10 +107,10 @@ $router->post(v0 . "/events/invite", function (&$req, &$res) {
     
     if (empty($req->body->invites)) throw new ParameterException("Missing required argument invites");
     
-    $invites = (array) $req->body->invite;
+    $invites = (array) $req->body->invites;
     $invite = new EventInvite;
     $invite->event = $token->event;
-    for ($i = 0; $i < count($invites); $i++)  $invite->inviteByChannel($req->body->invite[$i]);
+    for ($i = 0; $i < count($invites); $i++)  $invite->inviteByChannel($invites[$i]);
     
     $res->success(array("status"=>"ok","invites"=>$invite->event->invites));
     

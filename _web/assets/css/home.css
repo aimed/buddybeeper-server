@@ -8,7 +8,7 @@
 .home .hero .buddybeeper h1 { font-size: 3em; margin-bottom: 0px; }
 .home .hero .buddybeeper h2 { margin-top: 0; }
 .home .hero .join 			{ text-align: center; }
-.home .hero .join .button 	{ padding: 20px; }
+.home .hero .join .button 	{ padding: 20px !important; }
 
 .home .signup .signup-form     { margin: 10px; }
 .home .signup .input { margin: 3px; }
@@ -18,7 +18,4 @@
 .home .infobox .text,
 .home .infobox .signup-form { display: table-cell; width: 50%; padding: 10px; }
 .home .infobox input { width: 100%; }
-.home .infobox button {
-	padding: 10px;
-	min-width: 200px;
-}
+.home .infobox button { padding: 10px; min-width: 200px; }

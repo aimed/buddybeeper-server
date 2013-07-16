@@ -1,7 +1,6 @@
-<!-- HOME -->
-<div class="feed" ng-if="isLoggedIn === true && toggleSideBar(true)" ng-controller="feed">
+<div class="feed" ng-if="toggleSideBar(true)" ng-controller="feed">
 
-	<div class="item event pagelet" ng-repeat="event in user.events | orderBy:calculateEventPriority" ng-controller="event" ng-class="mode">
+	<div class="item event pagelet" ng-repeat="event in events | orderBy:calculateEventPriority" ng-controller="event" ng-class="mode">
 		<div class="inner" ng-class="{'show-people-list':showPeopleList, 'new-event':!event.id}">
 			<div class="desc" ng-click="togglePeopleList(false)">
 				<div class="desc-wrapper">
@@ -117,74 +116,4 @@
 		<!-- @end inner -->
 	</div>
 	<!-- @end event -->
-</div>
-
-<!-- LANDING -->
-<div class="home" ng-if="isLoggedIn === false && toggleSideBar(false)" ng-controller="landingPage">
-	<div class="apps hero parallax">
-		<div class="buddybeeper">
-			<h1>buddybeeper</h1>
-			<h2>events with friends.</h2>
-		</div>
-		<div class="join">
-			<button type="button" class="button yellow" ng-click="setSignUpFormMode('signup')">Join today</button>
-		</div>
-	</div>
-	<!-- @end apps hero parallax -->
-	<div class="info"></div>
-	<!-- @end info -->
-	<div class="login" ng-if="signUpFormMode !== 'signup'">
-		<h1>Create new events with your friends and buddybeeper.</h1>
-		<div class="infobox">
-			<div class="text"><p>buddybeeper helps you to catch up with your friends.</p></div>
-			<div class="login-form">
-				<form class="form" name="signinForm" ng-submit="login(this)">
-					<div class="input-notice invalid">{{error}}</div>
-					<div class="input">
-						<input type="text" ng-required ng-model="email" placeholder="E-Mail" value="" />
-					</div>
-					<div class="input">
-						<input type="password" ng-required ng-model="password" placeholder="Password" value="" />
-					</div>
-					<div class="submit">
-						<button type="submit" class="button yellow">Sign In</button>
-						<button type="button" class="button" ng-click="setSignUpFormMode('signup')">Register</button>
-					</div>
-				</form>
-			</div>
-			<!-- @end signup-form -->
-		</div>
-		<!-- @end infobox -->
-	</div>
-	<!-- @end signup -->
-	
-	<div class="signup" ng-if="signUpFormMode === 'signup'">
-		<h1>Join buddybeeper for free.</h1>
-		<div class="infobox">
-			<div class="text"><p>buddybeeper helps you to catch up with your friends.</p></div>
-			<div class="signup-form">
-				<form class="form" name="signupForm" ng-submit="signup(this)">
-					<div class="input-notice invalid">{{error}}</div>
-					<div class="input">
-						<input type="text" ng-required ng-model="first_name" placeholder="First name" />
-					</div>
-					<div class="input">
-						<input type="text" ng-model="last_name" placeholder="Last name" />
-					</div>
-					<div class="input">
-						<input type="email" ng-required ng-model="email" placeholder="E-Mail" />
-					</div>
-					<div class="input">
-						<input type="password" ng-required ng-model="password" placeholder="Password" />
-					</div>
-					<div class="submit">
-						<button type="submit" class="button yellow">Sign Up</button>
-						<button type="button" class="button" ng-click="setSignUpFormMode('login')">Back</button>
-					</div>
-				</form>
-			</div>
-			<!-- @end register-form -->
-		</div>
-		<!-- @end infobox -->
-	</div>
 </div>

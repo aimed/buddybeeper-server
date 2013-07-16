@@ -1,4 +1,5 @@
 bb.controller("sidebar", ["$scope","$location", "$http", function (scope, location, http) {
+	
 	scope.newEvent = function () {
 		location.path("/");
 		scope.user.events.push({
@@ -15,4 +16,5 @@ bb.controller("sidebar", ["$scope","$location", "$http", function (scope, locati
 		http.get("/logout").success(function (r) {scope.$emit("loginstatechange");});
 		location.path("/");
 	}
+	
 }]);

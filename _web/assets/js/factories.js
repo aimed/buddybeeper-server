@@ -68,11 +68,12 @@ bb.factory("Event", ["$rootScope", "$http", function (scope, http) {
 		
 	}
 	
-	event.prototype.invite = function (list) {
+	event.prototype.invite = function (list,cb) {
 		console.log(list);
-		http.post(APIROOT + "/events/invite",list, {headers:{"X-Access-Token":scope.accessToken}})
+		http.post(APIROOT + "/events/invite",{invites:list}, {headers:{"X-Event-Token":this.token}})
 		.success(function (r) {
 			console.log(arguments);
+			if (cb) cb();
 		});
 	}
 	
@@ -132,6 +133,18 @@ bb.factory("User", ["$rootScope", "$http", function (scope, http) {
 			});
 			
 			return response;
+		},
+		
+		getMe : function (event_token,cb) {
+			
+			var response = {};
+			
+			http.get(APIROOT + "/users/me?event_token=" + event_token)
+			.success(function(r) { 
+				console.log("got user", arguments);
+				if (cb) cb(r);
+			});
+			
 		}
 	}
 	

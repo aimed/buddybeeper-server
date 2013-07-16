@@ -2,10 +2,23 @@
 
 $router->get(v0 . "/users/me", function (&$req, &$res) {
 	
-	$token = new AccessToken($req->headers("x-access-token"));
-	if (!$token->isValid()) throw new TokenExceoption();
+	if ($token = $req->query("event_token")) 
+	{
+		$token = new EventInvite($token);
+		if (!$token->isValid()) throw new TokenException("Invalid event token " . $req->headers($event_token));
+	}
+	else if ($token = $req->headers("x-access-token"))
+	{
+		$token = new AccessToken($req->headers("x-access-token"));
+		if (!$token->isValid()) throw new TokenExceoption();
+	}
+	else 
+	{
+		throw new TokenException("Not token set");
+	}
 	
-	$user = new User($token->user);
+	
+	$user = is_object($token->user) ? $token->user : new User($token->user);
 	$response = $user->info();
 	$response["events"] = $user->events;
 	

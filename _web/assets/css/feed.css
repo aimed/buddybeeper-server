@@ -77,7 +77,7 @@
 .event .banner {
 	height: 80px;
 	background-position: center center;
-	background-size: cover;
+/*	background-size: cover;*/
 	border-bottom: 0 !important; }
 /* @end */
 
@@ -104,7 +104,7 @@
 /* @end */
 
 /* @group General */
-.event.item 	{ background: #e7e7e7; overflow: hidden; display: table; }
+.event.item 	{ background: #e7e7e7; overflow: hidden; }
 .event .section { border-bottom: 1px solid #efefef; }
 .event .inner   { position: relative; display: table-row; }
 .event .desc,
@@ -113,7 +113,6 @@
 	vertical-align: top; 
 	position: relative;
 	overflow: hidden; }
-.event .invited { width: 80px; }
 .event .desc    {
 	width: 450px;
 	background: #fff;

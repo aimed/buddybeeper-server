@@ -1,4 +1,4 @@
-bb.controller("event", ["$scope", "Event", function (scope, Event) {
+bb.controller("event", ["$scope", "Event",  function (scope, Event) {
 
 	var event = new Event(scope.event.token);
 	
@@ -45,9 +45,11 @@ bb.controller("event", ["$scope", "Event", function (scope, Event) {
 				profile_image:"/assets/img/default_profile_image.png"
 			};
 			scope.event.invites.push(data);
-			event.invite([data], function (r) {
-				console.log(r);
-			});
+			if (scope.event.id) {
+				event.invite([data], function (r) { 
+					if (r && r.response) scope.event.invites = r.response.invites; 
+				});
+			}
 			this.first_name = "";
 			this.last_name = "";
 			this.email = "";
@@ -85,17 +87,38 @@ bb.controller("event", ["$scope", "Event", function (scope, Event) {
 			}
 		}
 	}
+	
+	
 }]);
 
 
-bb.controller("feed",["$scope", function (scope) {
+bb.controller("feed",["$scope", "$location", "User", function (scope, location, user) {
 	scope.calculateEventPriority = function (event) {
 		return !event.id || event.isNew ? 0 : event.id;
 	}
+	scope.setEvents = function () {
+		var searchResults = location.search();
+		if (searchResults.token) {
+			console.log(searchResults.token);
+			user.getMe(searchResults.token, function (r) {
+				if (r.response && r.response.events) {
+					scope.events = r.response.events;
+					scope.user   = r.response;
+				}
+			});
+			
+		} else if (scope.isLoggedIn) {
+			scope.events = scope.user.events;
+		}
+	}
+	scope.$on("$routeUpdate",scope.setEvents);
+	scope.setEvents();
 }]);
 
 
-bb.controller("landingPage", ["$scope","User", function (scope, user) {
+bb.controller("landingPage", ["$scope", "User", "$location", function (scope, user, location) {
+		
+	
 	scope.setSignUpFormMode = function (mode) { scope.signUpFormMode = mode; }
 
 	scope.login = function (form) {
@@ -110,7 +133,7 @@ bb.controller("landingPage", ["$scope","User", function (scope, user) {
 	scope.signup = function (form) {
 		console.log("email:",form.email);
 		response = user.signup(form, function (r) {
-			if (r.code == 1003) form.error = r.details;
+			if (r.code == 1003) form.error = "Invalid field";
 			else if (r.response.status != "ok") {
 				form.error = "You have already signed up and need to verify your email address.";
 			}

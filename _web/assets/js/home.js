@@ -1,6 +1,6 @@
 bb.controller("event", ["$scope", "Event",  function (scope, Event) {
 
-	var event = new Event(scope.event.token);
+	var event = new Event(scope.event.token,scope.user);
 	
 	scope.showPeopleList  = false;
 	scope.limitPeopleList = 2;

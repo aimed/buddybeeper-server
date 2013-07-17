@@ -63,7 +63,7 @@ bb.factory("Event", ["$rootScope", "$http", function (scope, http) {
 				self.token = r.token;
 				if (cb) cb(r);
 			}
-			data.invites.unshift(host[0]); // @TODO: what?
+			data.invites.unshift(host[0]);
 		});
 		
 	}
@@ -110,6 +110,7 @@ bb.factory("User", ["$rootScope", "$http", function (scope, http) {
 			
 			http.post("/login",{email:form.email,password:form.password})
 			.success(function (r) {
+				console.log("got user", arguments);
 				response = r;
 				scope.$emit("loginstatechange",response);
 				if (cb) cb(r);

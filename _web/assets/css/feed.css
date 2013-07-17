@@ -46,6 +46,9 @@
 	font-weight: lighter; }
 	.event .votes .heading .text { font-weight: normal; }
 	.event.compact .votes .data .text { font-weight: normal; }
+	.event .date .heading .icon {
+		background-image: url(/assets/img/date.png);
+	}
 .event .votes .vote {
 	padding: 10px;
 	float: right;

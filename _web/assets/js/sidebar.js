@@ -7,6 +7,7 @@ bb.controller("sidebar", ["$scope","$location", "$http", function (scope, locati
 			invites:[scope.user],
 			activities: [],
 			dates: [],
+			created_at : new Date(),
 			isNew : true
 		});
 	}

@@ -1,7 +1,7 @@
 <!-- HOME -->
 <div class="feed" ng-if="isLoggedIn === true && toggleSideBar(true)" ng-controller="feed">
 
-	<div class="item event pagelet" ng-repeat="event in user.events | orderBy:calculateEventPriority" ng-controller="event" ng-class="mode">
+	<div class="item event pagelet" ng-repeat="event in user.events | orderBy:'created_at':true" ng-controller="event" ng-class="mode">
 		<div class="inner" ng-class="{'show-people-list':showPeopleList, 'new-event':!event.id}">
 			<div class="desc" ng-click="togglePeopleList(false)">
 				<div class="desc-wrapper">
@@ -61,7 +61,7 @@
 					</div>
 					<!-- @end save-or-cancel -->
 					<div class="comments" ng-hide="mode === 'edit' || !event.id">
-						<div class="comment" ng-repeat="comment in event.comments">
+						<div class="comment" ng-repeat="comment in event.comments | orderBy:'id':(mode==='compact') | limitTo:(mode==='compact')?1:event.comments.length">
 							<div class="image" bg-image="{{comment.user.profile_image}}"></div>
 							<div class="message">
 								<div class="user">{{comment.user.first_name}} {{comment.user.last_name}}:</div>

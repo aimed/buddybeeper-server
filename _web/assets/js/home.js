@@ -9,7 +9,10 @@ bb.controller("event", ["$scope", "Event",  function (scope, Event) {
 	scope.expand 		  = function () { scope.mode = "expanded"; scope.backup.recover(); }
 	scope.compact 		  = function () { scope.mode = "compact"; scope.backup.recover(); }
 	scope.isHost		  = function () { return scope.event.host.id == scope.user.id; }
-	scope.parseDate		  = function (d) { return new Date(d); }
+	scope.parseDate		  = function (d) { 
+		return (typeof d !== "string") ? d : new Date(Date.parse(d.replace("-","/"))); 
+	}
+	scope.event.created_at = scope.parseDate(scope.event.created_at);
 	scope.hasVotedOn		 = function (item) { return !item.votes || item.votes.indexOf(scope.user.id) > -1; }
 	scope.togglePeopleList   = function (bool) { 
 		scope.showPeopleList = bool; scope.limitPeopleList = bool ? scope.event.invites.length : 2; 
@@ -28,12 +31,12 @@ bb.controller("event", ["$scope", "Event",  function (scope, Event) {
 	}
 	scope.addDate = function (date) {
 		date.votes = [scope.user.id];
-		scope.event.dates.push(date);
+		if (scope.event.dates.indexOf(date) === -1) scope.event.dates.push(date);
 		if (scope.event && scope.event.id) event.createDate(date.start,function (r) { date.id = r.id; });
 	}
 	scope.addActivity = function (activity) {
 		activity.votes = [scope.user.id];
-		scope.event.activities.push(activity);
+		if (scope.event.activities.indexOf(activity) === -1) scope.event.activities.push(activity);
 		if (scope.event && scope.event.id) event.createActivity(activity.name,function (r) { activity.id = r.id; });
 	}
 	scope.invite = {
@@ -63,13 +66,14 @@ bb.controller("event", ["$scope", "Event",  function (scope, Event) {
 			scope.expand();
 			scope.event.id = r.id;
 			scope.event.token = r.token;
+			//scope.event.invites = r.invites;
 			event = new Event(r.token);
 			console.log(scope.event);
 			for (ac in e.activities) {
-				scope.addActivity(ac.name);
+				scope.addActivity(e.activities[ac]);
 			}
 			for (da in e.dates) {
-				scope.addDate(da.start);
+				scope.addDate(e.dates[da]);
 			}
 		});
 	}

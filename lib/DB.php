@@ -12,7 +12,7 @@ class DB {
 	/**
 	 * Last query
 	 */
-	private static $_queries = array();
+	public static $_queries = array();
     
 
 	/**
@@ -201,7 +201,7 @@ class DB {
 	 * @return Integer Affected Rows
 	 */
 	public static function affectedRows () {
-	    return is_null(self::$lastStatement) ? null : self::$lastStatement->rowCount();
+	    return empty(self::$lastStatement) ? null : self::$lastStatement->rowCount();
 	}
 
 

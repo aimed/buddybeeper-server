@@ -9,10 +9,10 @@ bb.controller("event", ["$scope", "Event",  function (scope, Event) {
 	scope.expand 		  = function () { scope.mode = "expanded"; scope.backup.recover(); }
 	scope.compact 		  = function () { scope.mode = "compact"; scope.backup.recover(); }
 	scope.isHost		  = function () { return scope.event.host.id == scope.user.id; }
-	scope.parseDate		  = function (d) { 
-		return (typeof d !== "string") ? d : new Date(Date.parse(d.replace("-","/"))); 
+	scope.parseDate		  = function (d) {
+		return typeof d === "string" ? Date.parse(d.split("-").join("/")) : d;
 	}
-	scope.event.created_at = scope.parseDate(scope.event.created_at);
+	scope.event.created_at   = scope.parseDate(scope.event.created_at);
 	scope.hasVotedOn		 = function (item) { return !item.votes || item.votes.indexOf(scope.user.id) > -1; }
 	scope.togglePeopleList   = function (bool) { 
 		scope.showPeopleList = bool; scope.limitPeopleList = bool ? scope.event.invites.length : 2; 

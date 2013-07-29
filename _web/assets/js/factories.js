@@ -89,7 +89,7 @@ bb.factory("Event", ["$rootScope", "$http", function (scope, http) {
  */
 bb.factory("User", ["$rootScope", "$http", function (scope, http) {
 	scope.user = {};
-	scope.isLoggedIn = false;
+	scope.isLoggedIn = null;
 	
 	scope.$on("loginstatechange", function (event,state) {
 		if (state) state = state.response;

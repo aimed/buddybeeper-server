@@ -5,6 +5,6 @@ Hey,
 {{event.title}}
 {{event.description}}
 
-Join him and others at at
+Join him and others at 
 
 {{link}}

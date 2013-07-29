@@ -32,6 +32,6 @@ class AccessToken extends Model {
     public function deleteExpired () {
         $query = new QueryBuilder;
         $query->delete->from($this->table)->where("expires_at","<",time());
-        DB::query($query);
+        DB::query($query, $query->data);
     }
 }

@@ -11,3 +11,6 @@ Utils::define("MAIL_DEFAULT_FROM_ADDRESS", "noreply@buddybeeper.net");
 
 // Vault
 Utils::define("VAULT_SECRET", "NwatEwfN3y5C2DEUAqwbl20v1SwuxLQ9R5gtbOZy");
+
+// Uploader
+Utils::define("UPLOADER_DEFAULT_DIR", ROOT_DIR . DIRECTORY_SEPARATOR . "_web" . DIRECTORY_SEPARATOR . "usercontent");

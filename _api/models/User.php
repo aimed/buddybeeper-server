@@ -8,7 +8,9 @@ class User extends Model {
         "last_name",
         "password",
         "profile_image",
-        "locale"
+        "locale",
+        "is_default_image",
+        "allow_name_change"
     );
     
     
@@ -103,7 +105,7 @@ class User extends Model {
     }
     
     public function info () {
-        return $this->get("id", "first_name", "last_name", "profile_image");
+        return $this->get("id", "first_name", "last_name", "profile_image", "is_default_image");
     }
 
 

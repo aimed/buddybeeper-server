@@ -28,6 +28,7 @@ class EventInvite extends Model {
             $user = new User;
             $user->first_name = $first_name;
             $user->last_name  = $last_name;
+            $user->allow_name_change = 1;
             $user->save();
             
             // @TODO: gravatar and shit

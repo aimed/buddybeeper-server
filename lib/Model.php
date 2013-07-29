@@ -153,7 +153,7 @@ class Model extends Injector {
      * @return Mixed key value
      */
     public function primaryKey () {
-        if (func_num_args() === 1) $this->{$this->_primaryKey} = func_get_arg(0);
+        if (func_num_args() === 1) $this->_storage[$this->_primaryKey] = func_get_arg(0);
         return $this->__isset($this->_primaryKey) ? $this->_storage[$this->_primaryKey] : null; 
         //@TODO: throws notice when access via __get. why?
     }
@@ -186,7 +186,7 @@ class Model extends Injector {
      * @return Bool
      */
     protected function _hasKey ($name) {
-        return in_array($name, $this);
+        return in_array($name, $this->_keys);
     }
 
 
@@ -334,7 +334,7 @@ class Model extends Injector {
      */
     public function update ($where = null) {
         if (empty($this->_modified)) return 0;
-        if (empty($where)) $where = $this->_getModelIdentifier;
+        if (empty($where)) $where = $this->_getModelIdentifier();
         
         DB::update($this->table, $this->_modified, $where);
         $this->_modified = array();

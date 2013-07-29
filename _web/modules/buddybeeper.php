@@ -56,7 +56,7 @@ class buddybeeper extends RESTHelper {
 	 *
 	 * @param stdClass $response
 	 */
-	public function setRefreshToken ($response) {
+	public function setRefreshTokenFromResponse ($response) {
 		if (isset($response->response->refresh_token)) $this->refresh_token = $response->response->refresh_token;
 	}
 	
@@ -66,8 +66,17 @@ class buddybeeper extends RESTHelper {
 	 *
 	 * @param stdClass $response
 	 */
-	public function setAccessToken ($response) {
+	public function setAccessTokenFromResponse ($response) {
 		if (isset($response->response->access_token)) $this->access_token = $response->response->access_token;
+	}
+	
+	
+	/**
+	 * Signs the request with client credentials
+	 */
+	public function signWithClientCredentials () {
+		$this->set("client_id", $this->client_id);
+		$this->set("client_secret", $this->client_secret);		
 	}
 	
 	
@@ -88,15 +97,14 @@ class buddybeeper extends RESTHelper {
 	 * @param String $password
 	 */
 	public function getRefreshToken ($username, $password) {
-		$this->set("client_id", $this->client_id);
-		$this->set("client_secret", $this->client_secret);
+		$this->signWithClientCredentials();
 		$this->set("username", $username);
 		$this->set("password", $password);
 		
 		$response = $this->post("/auth/token");	
 		$this->cleanup();
-		$this->setRefreshToken($response);
-		$this->setAccessToken($response);
+		$this->setRefreshTokenFromResponse($response);
+		$this->setAccessTokenFromResponse($response);
 		
 		return $response;
 	}
@@ -110,7 +118,7 @@ class buddybeeper extends RESTHelper {
 		
 		$response = $this->post("/auth/refresh");	
 		$this->cleanup();
-		$this->setAccessToken($response);
+		$this->setAccessTokenFromResponse($response);
 		
 		return $response;
 	}
@@ -123,6 +131,7 @@ class buddybeeper extends RESTHelper {
 	 * @param String $password
 	 * @param String $first_name
 	 * @param String $last_name Optional
+	 * @return stdObject Response
 	 */
 	public function signup ($email, $password, $first_name, $last_name = "") {
 		$this->set("email",      $email);
@@ -138,8 +147,8 @@ class buddybeeper extends RESTHelper {
 		
 		$response = $this->getRefreshToken($email, $password);
 
-		$this->setRefreshToken($response);
-		$this->setAccessToken($response);
+		$this->setRefreshTokenFromResponse($response);
+		$this->setAccessTokenFromResponse($response);
 	
 		$response->response->status = "ok";
 		return $response;

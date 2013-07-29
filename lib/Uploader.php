@@ -37,7 +37,25 @@ class Uploader {
      * Allows the file to be overridden
      */
     private $_allowOverride = false;
-     
+    
+    
+    /**
+     * Wheter to prepend a unique string to the filename
+     */
+    private $_makeUnique = false;
+    
+    
+    /**
+     * Store the filepath
+     */
+    public $filepath = "";
+    
+    
+    /**
+     * Store the file name
+     */
+    public $filename = "";
+    
     
     /**
      * Constructor
@@ -45,8 +63,8 @@ class Uploader {
      * @param String Input $file file name
      * @param Array $source Optional source of file info. Defaults to global files array
      */
-    public function __construct ($file, $source = $_FILES) {
-            
+    public function __construct ($file, $source = null) {
+        if ($source === null) $source = $_FILES;
         if (empty($source[$file])) $this->pushError("File does not exist");
         
         $this->file = $source[$file];
@@ -143,6 +161,15 @@ class Uploader {
     
     
     /**
+     * Adds a unique string to the file name
+     */
+    public function makeUnique () {
+    	$this->_makeUnique = true;
+    	return $this;
+    }
+    
+    
+    /**
      * Checks if the file already exists
      *
      * @param String $dir
@@ -163,7 +190,7 @@ class Uploader {
         if (strlen($name) > 255)
             return $this->pushError($errmsg);
         
-        if (preg_match("/[^a-zA-Z0-9_\-\. ]/", $name))
+        if (preg_match("/[^a-zA-Z0-9_\-\.%]/", $name))
             return $this->pushError($errmsg);
     }
     
@@ -177,15 +204,17 @@ class Uploader {
     public function save ($filename = null, $dir = UPLOADER_DEFAULT_DIR) {
         if (!$this->file) return false;
         
-        if (!$filename) $filename = $this->file["name"];
-        $this->checkFileName($filename);
+        $this->filename = str_replace(" ", "_", $filename ? $filename : $this->file["name"]);
+        if ($this->_makeUnique) $this->filename = uniqid("") . $this->filename;
+        $this->checkFileName($this->filename);
 
-        if ($this->_allowOverride == false && $this->fileExists($dir, $filename)) 
+        if ($this->_allowOverride == false && $this->fileExists($dir, $this->filename)) 
             $this->pushError("File already exists");
         
         if (sizeof($this->_errors) > 0) return false;
         
-        $ok = move_uploaded_file($this->file["tmp_name"], $dir . DIRECTORY_SEPARATOR . $filename);
+        $this->filepath = $dir . DIRECTORY_SEPARATOR . $this->filename;
+        $ok = move_uploaded_file($this->file["tmp_name"], $this->filepath);
         if (!$ok) $this->pushError("Something went wrong");
         
         return $ok;

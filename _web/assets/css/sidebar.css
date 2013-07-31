@@ -3,6 +3,7 @@
 .user.pagelet .text { display: table-cell;  vertical-align: middle; }
 .user.pagelet .text { font-weight: lighter; font-size: 0.8em; }
 .user.pagelet .image {
+ 	overflow: hidden;
 	margin: 10px;
 	height: 60px;
 	width: 60px;
@@ -14,6 +15,21 @@
 	-webkit-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.50), 0px -1px 1px 0px rgba(255,255,255,0.36);
 	box-shadow:         0px 1px 1px 0px rgba(0,0,0,0.50), 0px -1px 1px 0px rgba(255,255,255,0.36);	
 }
+	.user.pagelet .image form { 
+		cursor: pointer;
+		background: 15px 18px no-repeat url(/assets/img/camera.png); 
+		background-color: rgba(0, 0, 0, 0.4);
+	}
+	.user.pagelet .image input[type="file"] {
+		cursor: pointer;
+		font-size: 52px;
+		margin: 0;
+		padding: 0;
+		opacity: 0;
+		border: none;
+		outline: none;
+	}
+
 .user.pagelet .menu { border-top: 1px solid #eee; }
 
 .sidebar .menu { font-size: 14px; }

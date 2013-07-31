@@ -22,10 +22,13 @@
 					<!-- @end details -->
 					<div class="banner section" bg-image="/assets/img/bb_pattern.png"></div>
 					<!-- @end banner -->
-					<div class="date votes hasVote section">
+					<div class="date votes hasVote"  ng-class="{'section': mode !== 'compact' || event.dates.length !== 0}">
 						<div class="heading" ng-show="mode !== 'compact'">
 							<div class="icon"></div>
-							<div class="text">Dates<span class="vote add" ng-click="newDate = !newDate ? {} : null"></span></div>
+							<div class="text">Dates</div>
+							<div class="vote">
+								<span class="click add" ng-click="newDate = !newDate ? {} : null"></span>
+							</div>
 						</div>
 						<form class="inlay" ng-if="newDate && mode !== 'compact'" ng-submit="addDate(newDate); newDate = null;">
 							<i class="tip"></i>
@@ -33,15 +36,26 @@
 							<button class="button">Add</button>
 						</form>
 						<div class="data" ng-repeat="date in event.dates | orderBy:'-votes.length'" ng-class="{'top-voted':$first}">
+							<div class="stats" ng-if="mode === 'expanded'">
+								<div class="bar" style="height: {{100*date.votes.length/event.invites.length}}%;"></div>
+							</div>
 							<div class="icon"></div>
-							<div class="text" ng-click="mode != 'compact' && toggleVote(date,'date')">{{parseDate(date.start) | date:'fullDate'}}<span class="vote" ng-click="mode == 'compact' && toggleVote(date,'date')" ng-class="{'voted':hasVotedOn(date)}"></span></div>
+							<div class="text" ng-click="mode != 'compact' && toggleVote(date,'date')">
+								{{parseDate(date.start) | date:'fullDate'}}
+							</div>
+							<div class="vote">
+								<span class="click" ng-click="toggleVote(date,'date')" ng-class="{'voted':hasVotedOn(date)}"></span>
+							</div>
 						</div>
 					</div>
 					<!-- @end dates -->
-					<div class="activity hasVote votes section">
+					<div class="activity hasVote votes" ng-class="{'section': mode !== 'compact' || event.activities.length !== 0}">
 						<div class="heading" ng-show="mode !== 'compact'">
 							<div class="icon"></div>
-							<div class="text">Activities<span class="vote add" ng-click="newActivity = !newActivity ? {} : null"></span></div>
+							<div class="text">Activities</div>
+							<div class="vote">
+								<span class="click add" ng-click="newActivity = !newActivity ? {} : null"></span>
+							</div>
 						</div>
 						<form class="inlay" ng-if="newActivity && mode !== 'compact'" ng-submit="addActivity(newActivity); newActivity = null;">
 							<i class="tip"></i>
@@ -49,8 +63,14 @@
 							<button class="button">Add</button>
 						</form>
 						<div class="data" ng-repeat="activity in event.activities | orderBy:'-votes.length'" ng-class="{'top-voted':$first}">
+							<div class="stats" ng-if="mode === 'expanded'">
+								<div class="bar" style="height: {{100*activity.votes.length/event.invites.length}}%;"></div>
+							</div>
 							<div class="icon"></div>
-							<div class="text" ng-click="mode != 'compact' && toggleVote(activity,'activity')">{{activity.name}}<span class="vote" ng-click="mode == 'compact' && toggleVote(activity,'activity')" ng-class="{'voted':hasVotedOn(activity)}"></span></div>
+							<div class="text" ng-click="mode != 'compact' && toggleVote(activity,'activity')">{{activity.name}}</div>
+							<div class="vote">
+								<span class="click" ng-click="toggleVote(activity,'activity')" ng-class="{'voted':hasVotedOn(activity)}"></span>
+							</div>
 						</div>
 					<!-- @end activites -->
 					</div>
@@ -61,7 +81,7 @@
 					</div>
 					<!-- @end save-or-cancel -->
 					<div class="comments" ng-hide="mode === 'edit' || !event.id">
-						<div class="comment" ng-repeat="comment in event.comments | orderBy:'id':(mode==='compact') | limitTo:(mode==='compact')?1:event.comments.length">
+						<div class="comment" ng-repeat="comment in event.comments | limitTo:mode==='compact' ? -1 : event.comments.length">
 							<div class="image" bg-image="{{comment.user.profile_image}}"></div>
 							<div class="message">
 								<div class="user">{{comment.user.first_name}} {{comment.user.last_name}}:</div>
@@ -69,7 +89,7 @@
 							</div>
 						</div>
 						<!-- @end comment -->
-						<div class="comment create-comment">
+						<div class="comment create-comment" ng-class="{'has-content': mode!=='compact' || (commentText && commentText !== '')}">
 							<div class="image" bg-image="{{user.profile_image}}"></div>
 							<div class="message user-input">
 								<input type="text" ng-model="commentText" ng-keyup="($event.keyCode === 27) && (commentText = '') || (commentText && commentText != '') && ($event.keyCode === 13) && (addComment({text:commentText}) || (commentText = ''))" placeholder="Type something.." />
@@ -83,14 +103,15 @@
 			</div>
 			<!-- @end desc -->
 			<div class="invited" ng-click="togglePeopleList(1)">
+				<a class="new-invite back" ng-click="togglePeopleList(0); $event.stopPropagation();">Back</a>
 				<form class="new-invite form" ng-if="isHost(event)" ng-submit="invite.submit(event)">
 					<div class="user-invite-data">
 						<div class="data-block email">
-							<input type="text" placeholder="E-Mail" ng-model="invite.email" value="" />
+							<input type="text" placeholder="E-Mail" ng-model="invite.email" ng-required />
 						</div>
 						<div class="data-block personal">
-							<input type="text" placeholder="First name" ng-model="invite.first_name" value="" />
-							<input type="text" placeholder="Last name" ng-model="invite.last_name" value="" />
+							<input type="text" placeholder="First name" ng-model="invite.first_name" />
+							<input type="text" placeholder="Last name" ng-model="invite.last_name" />
 						</div>
 					</div>
 					<div class="user-invite-submit">

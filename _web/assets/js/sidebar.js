@@ -18,4 +18,10 @@ bb.controller("sidebar", ["$scope","$location", "$http", function (scope, locati
 		location.path("/");
 	}
 	
+	scope.setPos = function (event) {
+		console.log(event);
+		scope.left = event.offsetX;
+		scope.top  = event.offsetY;
+	}
+	
 }]);

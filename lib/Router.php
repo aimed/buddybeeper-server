@@ -1,7 +1,13 @@
 <?php
 
 class Router extends Router\Base{
-
+	
+	
+	/**
+	 * Exception handler
+	 */
+	private $_exceptionHandler;
+	
 
 	/**
 	 * Contains the requested route
@@ -95,8 +101,26 @@ class Router extends Router\Base{
 		while ($this->applied == false && $i < $count) {
 			$params = array();
 			if ($this->applied = self::matchRoute($this->requestedRoute, $routes[$i], $params)) {
-				$this->request->params = (object) $params;
-				call_user_func_array($callback, $this->inject($provide));
+				
+				$this->request->params = (object) $params;			
+				$inject = $this->inject($provide);
+				
+				if (!empty($this->_exceptionHandler)) 
+				{
+					try 
+					{
+						call_user_func_array($callback, $inject);
+					}
+					catch (Exception $e) 
+					{
+						call_user_func_array($this->_exceptionHandler, array_merge($e, $inject));
+					}
+				}
+				else 
+				{
+					call_user_func_array($callback, $inject);
+				}
+				
 			}
 			$i++;
 		}
@@ -150,6 +174,16 @@ class Router extends Router\Base{
 		}
 
 	}
+	
+	
+	/**
+	 * Sets an exception handler
+	 *
+	 * @param Function $handler
+	 */
+	public function setExceptionHandler ($handler) {
+		return $this->_exceptionHandler = $handler;
+	}
 
 
 	/**
@@ -166,16 +200,14 @@ class Router extends Router\Base{
 		$provide = array();
 		$argLen = sizeof($args);
 
-		// call_user_func_array expects references?
-		for ($i = 0; $i < $argLen; $i++) {
-
-			switch ($args[$i]) {
+		foreach ($args as $arg) {
+			switch ($arg) {
 				// provide the scope
 				case "scope":
 					$provide[] = &$this->scope;
 					break;
 
-				// provide the self
+				// provide self
 				case "self":
 					$provide[] = &$this;
 					break;

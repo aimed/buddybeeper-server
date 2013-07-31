@@ -18,6 +18,8 @@
 		box-shadow:         0px 1px 1px 0px rgba(0,0,0,0.50), 
 							0px -1px 1px 0px rgba(255,255,255,0.36); }
 	.event .comment .text { font-weight: lighter; }
+	.event .create-comment { opacity: 0.7; }
+	.event .create-comment.has-content { opacity: 1; }
 	.event .comment .image,
 	.event .create-comment .image {
 		background-size: cover;	
@@ -36,9 +38,44 @@
 
 /* @group Votes */
 .event .votes { text-align: center; }
-.event .votes .data { position: relative; overflow: hidden; }
-.event.compact .votes .data { height: 0px; }
-.event.compact .votes .data.top-voted { height: inherit; }
+.event .votes .data,
+.event .votes .heading { overflow: hidden; height: 100%; display: none; width: 100%; }
+
+.event .votes .top-voted,
+.event.edit .votes .data,
+.event.edit .votes .heading,
+.event.expanded .votes .data,
+.event.expanded .votes .heading {
+	display: table !important;
+}
+
+.event .votes .stats,
+.event .votes .icon,
+.event .votes .text,
+.event .votes .vote { display: table-cell; height: 100%; }
+
+.event .votes .stats { width: 5px; vertical-align: bottom; }
+	.event .votes .stats .bar { background-color: #79CF19; transition: 0.2s height ease-out; }
+
+.event .votes .icon { width: 70px; }
+
+.event .votes .vote { 
+	width: 70px; 
+	vertical-align: middle; 
+	opacity: 0.5; 
+	transition: opacity 0.1s; }
+.event .votes .click { 
+	display: inline-block; 
+	width: 25px; 
+	height: 25px; 
+	border-radius: 50%;
+	border: 1px solid #ccc; 
+	transition: background-color 0.1s, border 0.1s; }
+.event .votes .voted { 
+	background: #79CF19 url(/assets/img/okay.png) center no-repeat; 
+	border: 1px solid #79CF19; }
+.event .votes:hover .vote { opacity: 1; }
+
 .event .votes .text {
 	vertical-align: middle;
 	padding: 28px 0 28px;
@@ -46,23 +83,7 @@
 	font-weight: lighter; }
 	.event .votes .heading .text { font-weight: normal; }
 	.event.compact .votes .data .text { font-weight: normal; }
-	.event .date .heading .icon {
-		background-image: url(/assets/img/date.png);
-	}
-.event .votes .vote {
-	padding: 10px;
-	float: right;
-	border: 1px solid #ccc;
-	border-radius: 50%;
-	margin-right: 30px;
-	opacity: 0.4;
-	transition: 0.1s opacity linear; }
-.event .votes .voted {
-	background-color: #79CF19;
-	background-image: url(/assets/img/okay.png);
-	background-position: center;
-	background-repeat: no-repeat;
-	border: 1px solid #79CF19; }
+
 .event .votes .expand {
 	font-size: 9px;
 	padding: 3px;
@@ -158,6 +179,13 @@
 
 .event .new-invite {  display: none; }
 .event .show-people-list .new-invite { display: block; }
+.event .new-invite.back {
+	font-size: small;
+	color: #ccc;
+	/*text-decoration: underline;*/
+	margin-left: 15px;
+	margin-top: 8px;
+}
 .event .user-invite-data,
 .event .user-invite-submit { 
 	display: table-cell; 

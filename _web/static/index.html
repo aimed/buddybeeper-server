@@ -26,7 +26,13 @@
 					<div class="user pagelet">
 						<div class="profile">
 							<div class="picture">
-								<div class="image" style="background-image: url({{user.profile_image}});"></div>
+								<div class="image" style="background-image: url({{user.profile_image}});">
+									<form method="post" target="pi_upload" action="http://api.buddybeeper.dev/test" enctype="multipart/form-data" ng-if="user.is_default_image">
+										<input type="file" name="profile_image" onchange="this.parentNode.submit(); document.getElementById('pi_upload').onload = function(){window.location.reload();};" />
+										<input type="hidden" name="access_token" value="{{accessToken}}" />
+									</form>
+									<iframe id="pi_upload" style="overflow: hidden; opacity: 0;" height="1" width="1"></iframe>
+								</div>
 							</div>
 							<div class="text">
 								<div class="name">{{user.first_name}} {{user.last_name}}</div>

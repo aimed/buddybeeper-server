@@ -1,5 +1,12 @@
 <?php
 
+$router->post(v0 . "/users/me/profile_image", function (&$req, &$res) {
+	
+});
+
+
+
+
 $router->get(v0 . "/users/me", function (&$req, &$res) {
 	
 	if ($token = $req->query("event_token")) 

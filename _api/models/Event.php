@@ -10,6 +10,8 @@ class Event extends Model {
         "final_date",
         "final_activity",
         "final_location",
+        "top_date",
+        "top_activity",
         "deadline",
         "created_at"
     );

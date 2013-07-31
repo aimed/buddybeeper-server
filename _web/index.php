@@ -14,6 +14,14 @@ define("API_KEY", "f4wOVg9nBvLz2vprSa5T00Mh8986eXD7LG95pPBf7ctgR7IOo3qtjOT4Rys99
 
 
 
+// @TODO: move to htacces ?
+$router->get("/usercontent/thumb/*", function (&$req, &$res) {
+	$res->redirect("/usercontent/thumb/default.png");
+	exit(0);
+});
+
+
+
 $router->uses(function (&$req, &$scope) {
 	$scope["rft"] = Vault::decrypt($req->cookies("rft"), VAULT_SECRET);
 	$scope["act"] = Vault::decrypt($req->cookies("act"), VAULT_SECRET);
@@ -56,11 +64,14 @@ $router->post("/register", function (&$req, &$res) {
 	);
 	
 	if (isset($response->response->status) && $response->response->status == "ok") {
-		setcookie("rft", Vault::encrypt($bb->refresh_token, VAULT_SECRET), time() + 3600*24*30, "/", "buddybeeper.dev");
+		$cookie = new Cookie("rtf", Vault::encrypt($bb->refresh_token, VAULT_SECRET));
+		$cookie->expires_in(1, "month");
+		$cookie->set();
 	}
 	
 	$res->json($response);
 });
+
 
 
 $router->get("/logout", function (&$res) {
@@ -75,11 +86,9 @@ $router->get("/ping", function (&$req, &$res, &$scope) {
 	if (!$scope->rft) return $res->json(null);
 	
 	$bb = new buddybeeper("1",API_KEY);
-	$bb->refresh_token = $scope->rft; //"HXjoobLW/0tUKJTf+4PL6xofMHlUnS/I9BIo5vZN0bAVcZmm9VHyO4fvpmwaeyWW";
-	
+	$bb->refresh_token = $scope->rft;	
 	$response = $bb->getAccessToken();
-	setcookie("rft", Vault::encrypt($bb->refresh_token, VAULT_SECRET), time() + 3600*24*30, "/", "buddybeeper.dev");
-	
+
 	$res->json($response);
 	
 },"req res scope");

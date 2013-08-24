@@ -1,7 +1,10 @@
 <?php
 
 class Model extends Injector {
-
+	
+	/*
+	 array("" => array())
+	 */
     
     /**
      * Contains the db instance

@@ -74,3 +74,93 @@ POST /auth/refresh
 	}
 }
 ```
+
+# User
+
+You can get information about a certain user by one of the following endpoints. You will have to pass a valid __access token__ or __event token__ (see below). If you want to request information about the authenticated user, you may also replace the __USER_ID__ with "__me__".
+
+## General data
+
+```
+GET /users/:USER_ID
+```
+
+```
+{
+	id: 1,
+	first_name: "John",
+	last_name: "Doe"
+}
+```
+
+## Events
+
+```
+GET /users/:USER_ID/events
+```
+
+```
+{
+	events: [
+		{
+			event_token: "XXX",
+			title: "Unicorn meeting",
+			description: "Trying to gather all unicorns. Are you in?",
+			created_at: "2012-12-29 18:30:00",
+			host: {
+				id: 1,
+				first_name: "John",
+				last_name: "Doe"
+			},
+			invites: [
+				{
+					id: 1,
+					first_name: "John",
+					last_name: "Doe"
+				}
+			],
+			dates: [
+				{
+					start: "2013-01-01 00:00:00",
+					end: "2013-01-01 01:00:00",
+					votes: [
+						{
+							id: 1,
+							first_name: "John",
+							last_name: "Doe"
+						},
+						...
+					]
+				},
+				...
+			],
+			activities: [
+				{
+					name: "Meeting",
+					votes: [
+						{
+							id: 1,
+							first_name: "John",
+							last_name: "Doe"
+						},
+						...
+					]
+				},
+				...
+			],
+			discussion: [
+				{
+					user: {
+						id: 1,
+						first_name: "John",
+						last_name: "Doe"
+					},
+					text: "ALL MIGHT TO THE UNICORNS!",
+					created_at: "2012-12-30 18:30:00"
+				},
+				...
+			]
+		}
+	]
+}
+```

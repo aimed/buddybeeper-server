@@ -95,7 +95,9 @@ class Cookie {
 	 * @param String $unit
 	 */
 	public function expires_in ($time, $unit = "minutes") {
-		if (empty($time)) return $this->expires = null; // empty values will result in a session cookie
+		if (empty($time)) {
+			return $this->expires = null; // empty values will result in a session cookie
+		}
 		
 		switch ($unit) {
 			case "months" : $time = $time * 60 * 60 * 24 * 31; break;
@@ -103,6 +105,7 @@ class Cookie {
 			case "hours"  : $time = $time * 60 * 60; break;
 			case "minutes": $time = $time * 60; break;
 		}
+		
 		$this->expires = time() + $time;
 	}
 	
@@ -116,7 +119,7 @@ class Cookie {
 		$this->expires = $time;
 	}
 	
-	
+
 	/**
 	 * Sets the cookie
 	 *

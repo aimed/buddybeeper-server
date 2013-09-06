@@ -58,8 +58,12 @@ $router->post(v0 . "/users", function (&$req, &$res) {
     
     $channel = new UserCommunicationChannel;
     $channelexists = !!$channel->findByValue($email);
-    if ($channel->is_bound) throw new ParameterException("Email already in use");
-    elseif ($channelexists) 
+	
+    if ($channel->is_bound) 
+	{
+		throw new ParameterException("Email already in use");
+    }
+	elseif ($channelexists) 
     {
         $data = (object) compact($first_name, $last_name, $password);
         $data->user = $channel->user;
@@ -102,7 +106,7 @@ $router->post(v0 . "/users", function (&$req, &$res) {
 
 $router->get(v0 . "/verify", function (&$req, &$res) {
     $token = new VerificationToken($req->query->token);
-        
+	
     $user = new User($token->data->user);
     $user->first_name = $token->data->first_name;
     $user->last_name  = $token->data->last_name;

@@ -115,11 +115,11 @@ class DB {
 	 * @return Integer Affected Rows
 	 */
 	public static function delete ($table, $condition) {
-	    $query  = "DELETE FROM `" . $table . "` WHERE ";
-	    $query .= self::serialize($condition, " AND ");
-    
-	    self::query($query);
-	    return self::affectedRows();
+		$query  = "DELETE FROM `" . $table . "` WHERE ";
+		$query .= self::serialize($condition, " AND ");
+
+		self::query($query);
+		return self::affectedRows();
 	}
 	
 
@@ -133,19 +133,19 @@ class DB {
 	 */
 	public static function prepareSelect ($table, $attrs, $where = null) {
 
-	    if ($attrs && !is_array($attrs)) {
-	        $attrs = array($attrs);
-	    }
+		if ($attrs && !is_array($attrs)) {
+			$attrs = array($attrs);
+		}
     
-	    $query  = " SELECT " . implode(", ", $attrs);
-	    $query .= " FROM " . self::table($table);
+		$query  = " SELECT " . implode(", ", $attrs);
+		$query .= " FROM " . self::table($table);
     
-	    if($where)
-	    {
-	        $query .= " WHERE " . self::serialize($where, " AND ");
-	    }
+		if($where)
+		{
+			$query .= " WHERE " . self::serialize($where, " AND ");
+		}
     
-	    return $query;
+		return $query;
 	}	
 	
 
@@ -157,7 +157,7 @@ class DB {
 	 * @param Array $where
 	 */
 	public static function grab ($table, $attrs, $where = null) {
-	    return self::fetch(self::prepareSelect($table, $attrs, $where));
+		return self::fetch(self::prepareSelect($table, $attrs, $where));
 	}
 	
 
@@ -169,7 +169,7 @@ class DB {
 	 * @param Array $where
 	 */
 	public static function grabOne ($table, $attrs, $where = null) {
-	    return self::row(self::prepareSelect($table, $attrs, $where));
+		return self::row(self::prepareSelect($table, $attrs, $where));
 	}
 	
 	
@@ -182,16 +182,16 @@ class DB {
 	 * @return Integer Affected Rows
 	 */
 	public static function update ($table, $data, $condition = false) {
-	    $query = "UPDATE `".$table."` SET " . self::serialize($data);
+		$query = "UPDATE `".$table."` SET " . self::serialize($data);
     
-	    if ($condition) 
-	    {
-	        $query .= " WHERE " . self::serialize($condition, " AND ");
-	    }
+		if ($condition) 
+		{
+			$query .= " WHERE " . self::serialize($condition, " AND ");
+		}
     
-	    self::query($query);
+		self::query($query);
     
-	    return DB::affectedRows();
+		return DB::affectedRows();
 	}
 
 
@@ -201,7 +201,7 @@ class DB {
 	 * @return Integer Affected Rows
 	 */
 	public static function affectedRows () {
-	    return empty(self::$lastStatement) ? null : self::$lastStatement->rowCount();
+		return empty(self::$lastStatement) ? null : self::$lastStatement->rowCount();
 	}
 
 
@@ -221,7 +221,7 @@ class DB {
 	 * @return Integer Number of rows
 	 */
 	public static function count ($query, $data = null) {
-	    return count(self::fetch($query, $data));
+		return count(self::fetch($query, $data));
 	}
 	
 
@@ -232,9 +232,9 @@ class DB {
 	 * @return String Escaped name
 	 */
 	public static function table ($table) {
-	    $keys = explode(".", $table);
-	    array_walk($keys, function (&$k) { $k = "`" . $k . "`";} );
-	    return  implode(".", $keys);
+		$keys = explode(".", $table);
+		array_walk($keys, function (&$k) { $k = "`" . $k . "`";} );
+		return  implode(".", $keys);
 	}
 
 
@@ -246,11 +246,11 @@ class DB {
 	 * @return String Serialized array
 	 */
 	public static function serialize ($array, $glue = ",") {
-	    foreach ($array as $key => $value) 
-	    {
-	        $pairs[] = self::table($key) . "=" . self::$driver->quote($value);
-	    }
+		foreach ($array as $key => $value) 
+		{
+			$pairs[] = self::table($key) . "=" . self::$driver->quote($value);
+		}
     
-	    return implode($glue, $pairs);
+		return implode($glue, $pairs);
 	}
 }

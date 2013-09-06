@@ -38,15 +38,16 @@ $router->get("/test", function (&$req, &$res) {
 //    $req->body = (object)array();
 //    $req->params = (object)array();
 //    $req->headers = (object)array();
-//    $req->headers->{"x-access-token"} = "extjNBulUSBKCbalNcxEM4DgZyq/XZPZC39nlKRemxF3xKgST8OIudPcBOBjuRjz";
+//    $req->headers->{"x-access-token"} = "™extjNBulUSBKCbalNcxEM4DgZyq/XZPZC39nlKRemxF3xKgST8OIudPcBOBjuRjz";
 //    $req->headers->{"x-event-token"} = "ec3N1PNntWkmVgMY8arnYb64WJpc33gCyE2uG1WIY5C_k-j-dLP9fx4BVhohwQje";
     /* /HARDCODED*/
-    $i = new Image(ROOT_DIR."/_web/assets/img/IMG_123.jpg");
-    $i->toFormat(Image::jpg);
-    $i->crop(100);
-    $i->save(ROOT_DIR."/_web", "test");
+	$i = new Image(ROOT_DIR."/_web/assets/img/IMG_123.jpg");
+	$i->toFormat(Image::jpg);
+	$i->crop(100);
+	$i->save(ROOT_DIR."/_web", "test");
 	echo("okay");    
 });
+
 $router->post("/test", function (&$req, &$res) {
 	
 	$token = new AccessToken($req->body("access_token"));
@@ -99,8 +100,8 @@ $router->uses(function (&$req, &$res) {
 Set up exception handling
 -----*/
 set_exception_handler(function ($e) use (&$router) {
-    $response = $router->getResponse();
-    $response->json($e->get(), $e->responseCode);
+	$response = $router->getResponse();
+	$response->json($e->get(), $e->responseCode);
 });
 
 

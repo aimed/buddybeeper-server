@@ -86,33 +86,33 @@ class Base {
 	 */
 	public static function matchRoute ($requested, $route, &$params = null) {
 
-        $routeMatches = false;
-        
-        // we need to store the parameter names and the test results
-        $paramVals;
-        $paramKeys = Array();
-        
-        // prepare the route
-        // @TODO: if no params array is passed, we don't need to get keys
-        $route = self::standardizeURI($route);
-        $route = self::prepareRouteExpr($route,$paramKeys);
-        
-        // test it
-        // remember:
-        //   paramKeys are the route uri parameters
-        //   route at this point is a regular expression
-        //   requested is the url we are matching against
-        $routeMatches = preg_match($route, $requested, $paramVals);
-        
-        // route is correct and parametervalues are required 
-        if ($routeMatches && is_array($params) && $paramKeys) {
-        	// assign values to the parameter keys
-        	for ($i = 1; $i < count($paramVals); $i++) {
-    			if (isset($paramVals[$i-1])) {
-    				  $params[$paramKeys[$i-1]] = urldecode($paramVals[$i]);
-    			}
-            }	
-        }
+		$routeMatches = false;
+
+		// we need to store the parameter names and the test results
+		$paramVals;
+		$paramKeys = Array();
+
+		// prepare the route
+		// @TODO: if no params array is passed, we don't need to get keys
+		$route = self::standardizeURI($route);
+		$route = self::prepareRouteExpr($route,$paramKeys);
+
+		// test it
+		// remember:
+		//   paramKeys are the route uri parameters
+		//   route at this point is a regular expression
+		//   requested is the url we are matching against
+		$routeMatches = preg_match($route, $requested, $paramVals);
+
+		// route is correct and parametervalues are required 
+		if ($routeMatches && is_array($params) && $paramKeys) {
+			// assign values to the parameter keys
+			for ($i = 1; $i < count($paramVals); $i++) {
+				if (isset($paramVals[$i-1])) {
+					  $params[$paramKeys[$i-1]] = urldecode($paramVals[$i]);
+				}
+			}	
+		}
   		
   		return $routeMatches;  
 	}

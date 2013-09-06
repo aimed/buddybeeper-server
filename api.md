@@ -9,11 +9,11 @@ Every reponse you get from the API will be a valid JSON object and structured as
 
 ```
 {
-	meta: {
-		code: 200,
-		status: "200 OK",
-		invalid_parameters: null,
-		errors: null
+	"meta": {
+		"code": 200,
+		"status": "200 OK",
+		"invalid_parameters": null,
+		"errors": null
 	},
 	...
 }
@@ -43,13 +43,13 @@ POST /auth/token
 
 ```
 {
-	refresh_token: "XXX",
-	access_token: "XXX",
-	expires_at: 137000000
-	user: {
-		id: 1,
-		first_name: "John",
-		last_name: "Doe"
+	"refresh_token": "XXX",
+	"access_token": "XXX",
+	"expires_at": 137000000
+	"user": {
+		"id": 1,
+		"first_name": "John",
+		"last_name": "Doe"
 	}
 }
 ```
@@ -65,12 +65,12 @@ POST /auth/refresh
 
 ```
 {
-	access_token: "XXX",
-	expires_at: 137000000
-	user: {
-		id: 1,
-		first_name: "John",
-		last_name: "Doe"
+	"access_token": "XXX",
+	"expires_at": 137000000
+	"user": {
+		"id": 1,
+		"first_name": "John",
+		"last_name": "Doe"
 	}
 }
 ```
@@ -79,7 +79,32 @@ POST /auth/refresh
 
 You can get information about a certain user by one of the following endpoints. You will have to pass a valid __access token__ or __event token__ (see below). If you want to request information about the authenticated user, you may also replace the __USER_ID__ with "__me__".
 
-## General data
+## Create
+
+Creating users may result 
+
+```
+POST /users
+```
+
+- ```email```
+- ```password```
+- ```first_name```
+- ```last_name```
+
+```
+{
+	"status": "ok",
+	"user": {
+		"id": 1,
+		"first_name": "John",
+		"last_name": "Doe"
+	}
+}
+```
+
+
+## About
 
 ```
 GET /users/:USER_ID
@@ -87,9 +112,9 @@ GET /users/:USER_ID
 
 ```
 {
-	id: 1,
-	first_name: "John",
-	last_name: "Doe"
+	"id": 1,
+	"first_name": "John",
+	"last_name": "Doe"
 }
 ```
 
@@ -101,64 +126,53 @@ GET /users/:USER_ID/events
 
 ```
 {
-	events: [
+	"events": [
 		{
-			event_token: "XXX",
-			title: "Unicorn meeting",
-			description: "Trying to gather all unicorns. Are you in?",
-			created_at: "2012-12-29 18:30:00",
-			host: {
-				id: 1,
-				first_name: "John",
-				last_name: "Doe"
+			"event_token": "XXX",
+			"title": "Unicorn meeting",
+			"description": "Trying to gather all unicorns. Are you in?",
+			"created_at": "2012-12-29 18:30:00",
+			"host": {
+				"id": 1,
+				"first_name": "John",
+				"last_name": "Doe"
 			},
-			invites: [
+			"invites": [
 				{
-					id: 1,
-					first_name: "John",
-					last_name: "Doe"
+					"id": 1,
+					"first_name": "John",
+					"last_name": "Doe"
 				}
 			],
-			dates: [
+			"dates": [
 				{
-					start: "2013-01-01 00:00:00",
-					end: "2013-01-01 01:00:00",
-					votes: [
+					"start": "2013-01-01 00:00:00",
+					"end": "2013-01-01 01:00:00",
+					"votes": [
 						{
-							id: 1,
-							first_name: "John",
-							last_name: "Doe"
-						},
-						...
+							"id": 1,
+							"first_name": "John",
+							"last_name": "Doe"
+						}
 					]
-				},
-				...
+				}
 			],
-			activities: [
+			"activities": [
 				{
-					name: "Meeting",
-					votes: [
-						{
-							id: 1,
-							first_name: "John",
-							last_name: "Doe"
-						},
-						...
-					]
-				},
-				...
+					"name": "Meeting",
+					"votes": []
+				}
 			],
-			discussion: [
+			"discussion": [
 				{
-					user: {
-						id: 1,
-						first_name: "John",
-						last_name: "Doe"
+					"user": {
+						"id": 1,
+						"first_name": "John",
+						"last_name": "Doe"
 					},
-					text: "ALL MIGHT TO THE UNICORNS!",
-					created_at: "2012-12-30 18:30:00"
-				},
-				...
+					"text": "ALL MIGHT TO THE UNICORNS!",
+					"created_at": "2012-12-30 18:30:00"
+				}
 			]
 		}
 	]

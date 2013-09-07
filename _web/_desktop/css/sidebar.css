@@ -17,7 +17,7 @@
 }
 	.user.pagelet .image form { 
 		cursor: pointer;
-		background: 15px 18px no-repeat url(/assets/img/camera.png); 
+		background: 15px 18px no-repeat url(/_desktop/img/camera.png); 
 		background-color: rgba(0, 0, 0, 0.4);
 	}
 	.user.pagelet .image input[type="file"] {

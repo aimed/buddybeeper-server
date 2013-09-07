@@ -1,0 +1,56 @@
+html,
+body {
+	margin: 0px; 
+	padding: 0px; 
+	min-height: 100%; 
+	
+	background: #f5f5f5 url("/assets/img/bb_pattern.png");
+	color: #004356;
+	font-family: "Source Sans Pro", sans-serif;
+	font-stretch: 0.8; }
+	
+#container { position: relative; overflow-x: hidden; height: 100%; }
+	#container.menu-open #menu { 
+		left: 0%;
+		visibility: visible;
+		transition-duration: 0, 200ms;
+		transition-property: visibility, left;
+		transition-delay: 0;	
+	}
+	#container.menu-open #content { margin-left: 80%; }
+	#container.menu-open #content > .overlay { display:  inherit;	}
+	#container.hidden-title-bar #content > .head { display: none;	}
+
+#menu,
+#content { display: inline-block; height: 100%; }
+
+#menu { 
+	left: -80%;
+	width: 80%;
+	position: absolute; 
+	top: 0; 
+	z-index: 1001;
+	visibility: hidden;
+	
+	background: #004356;
+	transition-duration: 0, 200ms;
+	transition-property: visibility, left;
+	transition-delay: 200ms, 0;	}
+
+#content { 
+	width: 100%; 
+	position: relative; 
+	margin-left: 0%;
+	transition: margin 200ms linear;	}
+	
+	#content > .body { position: relative;	}
+	#content > .overlay {
+		display: none;
+		position: absolute;
+		top: 60px; bottom: 0;
+		left: 0; right: 0;
+		z-index: 1000;
+		
+		background-color: rgba(45, 45, 45, 0.70);	}
+
+a { color: inherit; text-decoration: none;	}

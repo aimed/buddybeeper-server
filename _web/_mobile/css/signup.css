@@ -1,0 +1,8 @@
+.signup { padding: 10px;	}
+.signup .branding { text-align: center;	}
+.signup .links,
+.signup .signin-button-wrapper { margin-top: 15px;	}
+.signup .links { text-align: center; text-decoration: underline;	}
+.signup .button {
+	width: 100%;
+	padding: 10px; }

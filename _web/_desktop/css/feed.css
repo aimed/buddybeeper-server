@@ -72,7 +72,7 @@
 	border: 1px solid #ccc; 
 	transition: background-color 0.1s, border 0.1s; }
 .event .votes .voted { 
-	background: #79CF19 url(/assets/img/okay.png) center no-repeat; 
+	background: #79CF19 url(/_desktop/img/okay.png) center no-repeat; 
 	border: 1px solid #79CF19; }
 .event .votes:hover .vote { opacity: 1; }
 

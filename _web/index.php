@@ -83,7 +83,9 @@ $router->get("/logout", function (&$res) {
 
 
 $router->get("/ping", function (&$req, &$res, &$scope) {
-	if (!$scope->rft) return $res->json(null);
+	if (!$scope->rft) {
+		return $res->json(null);
+	}
 	
 	$bb = new buddybeeper("1",CLIENT_SECRET);
 	$bb->refresh_token = $scope->rft;	
@@ -96,5 +98,9 @@ $router->get("/ping", function (&$req, &$res, &$scope) {
 
 
 $router->get("/*", function (&$req, &$res) {
-    include __DIR__ . DIRECTORY_SEPARATOR . "_desktop" . DIRECTORY_SEPARATOR . "index.html";
+	// Check if mobile site was requested.
+	$env = substr($_SERVER["SERVER_NAME"], 0, 2) === "m." ? 
+		"_mobile" : 
+		"_desktop";
+	include __DIR__ . DIRECTORY_SEPARATOR . $env . DIRECTORY_SEPARATOR . "index.html";
 });

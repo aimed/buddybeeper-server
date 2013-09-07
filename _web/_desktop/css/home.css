@@ -1,6 +1,6 @@
 .home h1 { text-align: center; }
 .home .hero {
-	background-image: url(/assets/img/friends_bg.jpg);
+	background-image: url(/_desktop/img/friends_bg.jpg);
 	padding: 70px 0;
 	text-align: center;
 }

@@ -14,8 +14,8 @@ bb.controller("event", ["$scope", "Event",  function (scope, Event) {
 	}
 	scope.event.created_at   = scope.parseDate(scope.event.created_at);
 	scope.hasVotedOn		 = function (item) { return !item.votes || item.votes.indexOf(scope.user.id) > -1; }
-	scope.togglePeopleList   = function (bool) { 
-		scope.showPeopleList = bool; scope.limitPeopleList = bool ? scope.event.invites.length : 2; 
+	scope.togglePeopleList   = function (bool) {
+		scope.showPeopleList = bool; scope.limitPeopleList = bool ? scope.event.invites.length : 2;
 	}
 	scope.toggleVote = function (item, type) {
 		if (scope.hasVotedOn(item, type)) {
@@ -49,8 +49,8 @@ bb.controller("event", ["$scope", "Event",  function (scope, Event) {
 			};
 			scope.event.invites.push(data);
 			if (scope.event.id) {
-				event.invite([data], function (r) { 
-					if (r && r.response) scope.event.invites = r.response.invites; 
+				event.invite([data], function (r) {
+					if (r && r.response) scope.event.invites = r.response.invites;
 				});
 			}
 			this.first_name = "";
@@ -127,8 +127,8 @@ bb.controller("landingPage", ["$scope", "User", "$location", function (scope, us
 
 	scope.login = function (form) {
 		
-		response = user.login(form, function (r) {
-			if (r.code == 1003) form.error = "Invalid e-mail or password"; 
+		response = user.login(form.email, form.username, function (r) {
+			if (r.code == 1003) form.error = "Invalid e-mail or password";
 		});
 		scope.$emit("loginstatechange",response);
 

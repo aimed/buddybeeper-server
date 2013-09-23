@@ -4,7 +4,6 @@ include "../autoload.php";
 include "../config/globals.php";
 include "../config/database.php";
 
-new SplClassLoader(null, __DIR__);
 $router = new Router();
 $router->route($_SERVER["REQUEST_URI"]);
 
@@ -57,9 +56,9 @@ $router->post("/login", function (&$req, &$res) {
 $router->post("/register", function (&$req, &$res) {
 	$bb = new buddybeeper("1",CLIENT_SECRET);
 	$response = $bb->signup(
-		$req->body("email"), 
-		$req->body("password"), 
-		$req->body("first_name"), 
+		$req->body("email"),
+		$req->body("password"),
+		$req->body("first_name"),
 		$req->body("last_name")
 	);
 	
@@ -88,7 +87,7 @@ $router->get("/ping", function (&$req, &$res, &$scope) {
 	}
 	
 	$bb = new buddybeeper("1",CLIENT_SECRET);
-	$bb->refresh_token = $scope->rft;	
+	$bb->refresh_token = $scope->rft;
 	$response = $bb->getAccessToken();
 
 	$res->json($response);
@@ -97,10 +96,22 @@ $router->get("/ping", function (&$req, &$res, &$scope) {
 
 
 
+$router->get("/_mobile/*", function (&$req, &$res) {
+	$res->send("",404);
+});
+
+
+
+$router->get("/_desktop/*", function (&$req, &$res) {
+	$res->send("",404);
+});
+
+
+
 $router->get("/*", function (&$req, &$res) {
 	// Check if mobile site was requested.
-	$env = substr($_SERVER["SERVER_NAME"], 0, 2) === "m." ? 
-		"_mobile" : 
+	$env = substr($_SERVER["SERVER_NAME"], 0, 2) === "m." ?
+		"_mobile" :
 		"_desktop";
 	include __DIR__ . DIRECTORY_SEPARATOR . $env . DIRECTORY_SEPARATOR . "index.html";
 });

@@ -1,7 +1,8 @@
 input:focus {
 	border: 0;
 	outline: 0;	}
-	
+
+
 form.form .input-container {
 	display: inline-block;
 	margin: 2px;
@@ -25,7 +26,21 @@ form.form .input-container {
 		color: inherit;
 		font-size: 16px;	}
 		
-		form.form .input-group .input-container {
-			display: block;
-			margin: 0;	}
-
+form.form .input-group {
+	border: 1px solid #f0f0f0;
+	border-radius: 5px;	}
+		
+form.form .input-group .input-container {
+	display: block;
+	margin: 0;
+	border: 0;
+	border-bottom: 1px solid #f0f0f0;	}
+	
+	form.form .input-group .input-container:last-child { 
+		border: 0;	}
+	form.form .input-group .input-container:first-child,
+	form.form .input-group .input-container:first-child input { 
+		border-radius: 3px 3px 0 0; }
+	form.form .input-group .input-container:last-child,
+	form.form .input-group .input-container:last-child input { 
+		border-radius: 0 0 3px 3px; }

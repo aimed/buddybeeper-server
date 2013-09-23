@@ -1,0 +1,88 @@
+<div class="events" ng-if="isLoggedIn">
+	<div class="item event">
+		<div class="details">
+			<div class="title"><a href="<!-- @path event_activities.html -->">Unicorn Meeting</a></div>
+			<div class="vote-time-remaining">4 hours</div>
+		</div><!-- @end details -->
+		<div class="notifications">
+			<div class="item">
+				<a class="activity" href="<!-- @path event_activities.html -->"><span class="notification-count">1</span></a>
+			</div>
+			<div class="item"><a class="date" href="<!-- @path event_dates.html -->"></a></div>
+			<div class="item"><a class="invite" href="<!-- @path event_invites.html -->"></a></div>
+			<div class="item"><a class="discussion" href="<!-- @path event_discussions.html -->"></a></div>
+		</div><!-- @end notifications -->
+	</div><!-- @end .event.item -->
+	<div class="item event inactive">
+		<div class="details">
+			<div class="title">Secret Mission</div>
+			<div class="vote-time-remaining">Vote completed.</div>
+		</div><!-- @include event_nav.html -->
+	</div><!-- @end .event.item -->
+	<div class="create-event">
+		<a class="button blue big">Create Event</a>
+	</div>
+</div><!-- @end Events -->
+
+<!-- Login Page -->
+<div class="signup" ng-controller="landingController" ng-if="!isLoggedIn && showTitleBar(false)">
+	<div class="branding">
+		<h1>buddybeeper</h1>
+	</div>
+	<!-- @end Branding Section -->
+
+	<div class="signin-button-wrapper" ng-if="state == 'default'">
+		<a class="button yellow big" ng-click="setState('signin')">Login</a>
+		<a class="button blue big" ng-click="setState('signup')">Sign Up</a>
+	</div>
+	<!-- @end Main Section -->
+
+	<div class="signin-form" ng-if="state == 'signin'" ng-controller="signinController">
+		<form class="form" ng-submit="signin(this)">
+			<div class="error">{{error}}</div>
+			<div class="input-group">
+				<div class="input-container">
+					<input type="text" name="email" ng-model="email" placeholder="E-Mail" />
+				</div>
+				<div class="input-container">
+					<input type="password" name="password" ng-model="password" placeholder="Password" />
+				</div>
+			</div><!-- @end .input-group -->
+			<div class="signin-button-wrapper">
+				<button class="button yellow big">Sign In</button>
+			</div><!-- @end .signin-button-wrapper -->
+			<div class="links">
+				<a ng-click="setState('signup')">Create an account</a>
+			</div><!-- @end .links -->
+		</form>
+	</div><!-- @end .signin-form -->
+	<!-- @end Signin Section -->
+
+	<div class="signup-form" ng-if="state == 'signup'" ng-controller="signupController">
+		<form class="form" ng-submit="signup(this)">
+			<div class="error">{{error}}</div>
+			<div class="input-group">
+				<div class="input-container">
+					<input type="text" name="email" ng-model="email" placeholder="E-Mail" />
+				</div>
+				<div class="input-container">
+					<input type="password" name="password" ng-model="password" placeholder="Password" />
+				</div>
+				<div class="input-container">
+					<input type="text" name="first_name" ng-model="firstName" placeholder="First Name" />
+				</div>
+				<div class="input-container">
+					<input type="text" name="last_name" ng-model="lastName" placeholder="Last Name" />
+				</div>
+			</div><!-- @end .input-group -->
+			<div class="signin-button-wrapper">
+				<button class="button yellow big">Get Started</button>
+			</div><!-- @end .signin-button-wrapper -->
+			<div class="links">
+				<a ng-click="setState('signin')">Already got an account?</a>
+			</div><!-- @end .links -->
+		</form>
+	</div><!-- @end .signup-form -->
+	<!-- @end Signup Section -->
+</div>
+<!-- @end Login Page -->

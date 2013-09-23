@@ -11,7 +11,7 @@ bb.factory("Event", ["$rootScope", "$http", function (scope, http) {
 	
 	event.prototype.comment = function (text) {
 		var response = {text:text,user:this.user};
-		http.post(APIROOT + "/events/comment",{text:text},{headers:{"X-Event-Token":this.token}})
+		http.post(APIROOT + "/events/comment", {text:text}, {headers:{"X-Event-Token":this.token}})
 		.success(function (r) {
 			if (r.response) {
 				response = r.response;
@@ -47,7 +47,7 @@ bb.factory("Event", ["$rootScope", "$http", function (scope, http) {
 	event.prototype.create = function (data,cb) {
 		var self = this;
 		var send = {};
-		var host = data.invites.splice(0, 1); 
+		var host = data.invites.splice(0, 1);
 
 		send.title = data.title;
 		send.description = data.description;
@@ -105,10 +105,10 @@ bb.factory("User", ["$rootScope", "$http", function (scope, http) {
 			});
 		},
 		
-		login : function (form,cb) {
+		login : function (email, password, cb) {
 			var response = {};
 			
-			http.post("/login",{email:form.email,password:form.password})
+			http.post("/login",{email:email,password:password})
 			.success(function (r) {
 				console.log("got user", arguments);
 				response = r;
@@ -141,7 +141,7 @@ bb.factory("User", ["$rootScope", "$http", function (scope, http) {
 			var response = {};
 			
 			http.get(APIROOT + "/users/me?event_token=" + event_token)
-			.success(function(r) { 
+			.success(function(r) {
 				console.log("got user", arguments);
 				if (cb) cb(r);
 			});

@@ -1,10 +1,10 @@
-// credits for handling login states to 
+// credits for handling login states to
 // http://www.espeo.pl/2012/02/26/authentication-in-angularjs-application
-var bb = angular.module("buddybeeper",[]);
+var bb = angular.module("buddybeeper",["ngRoute"]);
 bb.config(["$locationProvider", "$routeProvider", "$httpProvider",
     function ($locationProvider, $routeProvider, $httpProvider) {
 		
-		var staticPrefix = "_desktop";        
+		var staticPrefix = "_desktop";
 
         /*---
         Routing
@@ -19,7 +19,7 @@ bb.config(["$locationProvider", "$routeProvider", "$httpProvider",
 /**
  * Controller: rootController
  *
- * 
+ *
  */
 bb.controller("rootController",["$rootScope", "User", function (scope, user) {
 	scope.hasSideBar = false;

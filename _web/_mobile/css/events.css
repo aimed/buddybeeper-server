@@ -1,0 +1,192 @@
+/*
+	Single event
+*/
+.event .discussions {
+	position: relative;
+	padding-left: 70px;
+	line-height: 60px;
+}
+.event .discussion-item .message {
+	border-radius: 5px;
+	background: #B9AC9B;
+	padding: 5px;
+	line-height: 1;
+}
+.event .discussions {
+	margin: 15px;
+}
+.event .discussion-item .user-image,
+.event .discussion-item .message {
+}
+.event .discussion-item .user-image {
+	height: 60px;
+	width: 60px;
+	background: center center no-repeat;
+	border-radius: 3px;
+	border: 1px solid #B9AC9B;
+	position: absolute;
+	left: 0;
+	bottom: 0px;
+}
+.event .cover {
+	text-align: center;
+	background: center center;
+	background-size: cover;
+}
+.event .cover img {
+	display: inline-block;
+	margin: 50px;
+	border: 1px solid #fff;
+	box-shadow: 0px 1px 1px #000;
+}
+.event-detailed .add-item {
+	margin: 15px;
+}
+.event-detailed .add-item .button {
+	width: 100%;
+}
+.event-detailed .notifications {
+	background-color: #004050;
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #004050), color-stop(100%, #003245));
+	background-image: -webkit-linear-gradient(top, #004050, #003245);
+	background-image: -moz-linear-gradient(top, #004050, #003245);
+	background-image: -ms-linear-gradient(top, #004050, #003245);
+	background-image: -o-linear-gradient(top, #004050, #003245);
+	background-image: linear-gradient(top, #004050, #003245);
+}
+
+.event-subview .invite {
+	border-bottom: 1px solid #E7E1D8;
+	padding: 0.5em 0.2em 0.5em 0.5em;
+}
+.event-subview .invite:last-child {
+	border: none;
+}
+
+.event-subview .invites {
+	padding: 0 !important;
+}
+.event-subview .votable {
+	padding: 0.2em !important;
+	cursor: pointer;
+}
+.event-subview .votable-inner {
+	display: table;
+	width: 100%;
+}
+.event-subview .votable-inner > div {
+	display: table-cell;
+	min-height: 40px;
+}
+.event-subview .invite .text,
+.event-subview .votable .text {
+	padding-left: 0.8em;
+	vertical-align: middle;
+	line-height: 40px;
+	font-size: 1.1em;
+}
+.event-subview .profile-image,
+.event-subview .vote-indicator,
+.event-subview .friend-indicator {
+	width: 40px;
+	background-position: center center;
+}
+.event-subview .invite.accepted,
+.event-subview .votable.voted {
+	color: white;
+	background-color: #f9d857;
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f9d857), color-stop(100%, #ffbf00));
+	background-image: -webkit-linear-gradient(top, #f9d857, #ffbf00);
+	background-image: -moz-linear-gradient(top, #f9d857, #ffbf00);
+	background-image: -ms-linear-gradient(top, #f9d857, #ffbf00);
+	background-image: -o-linear-gradient(top, #f9d857, #ffbf00);
+	background-image: linear-gradient(top, #f9d857, #ffbf00);
+}
+.event-subview .votable.voted {
+	border: none;
+	box-shadow: 0px 1px 1px #CCC;
+}
+
+/*
+	Event stream
+*/
+.events .event,
+.event-subview .invites,
+.event-subview .votable {
+	border: 1px solid #E7E1D8;
+	background: #ffffff;
+	margin: 15px;
+	padding: 1em;
+	border-radius: 3px;	
+}
+.events .event.inactive,
+.events .event.inactive .vote-time-remaining  { 
+	color: #B9AC9B !important;	
+}
+.events .event .title a {
+	display: block;
+}
+.events .event .vote-time-remaining { 
+	margin-top: 5px;
+	color: #E94046; 
+	font-size: 11px;
+	text-transform: uppercase;	
+}
+
+.events .create-event {
+	margin: 15px;
+}
+.events .create-event .button {
+	width: 100%;
+}
+
+/*
+	Event subnav and notifications
+*/
+
+.event .notifications { 
+	text-align: justify;
+	display: table;
+	width: 100%;
+/*	padding: 0 10%;	*/
+}
+.events .event .notifications {
+	margin-top: 10px;
+}
+.event .notifications > .item {
+	display: inline-block;
+	display: table-cell;
+	width: 25%;
+	padding: 10px;
+	text-align: center;
+}
+.event .notifications a {
+	width: 40px;
+	height: 40px;
+	display: inline-block;
+	position: relative;
+	border-radius: 50%;
+	border: 1px solid #888;
+	background-position: center center;
+	background-size: 150%;
+}
+.event .notifications a.date {
+	background-image: url(date.png);
+	border: none;
+}
+.event .notifications a.activity {
+	background-image: url(activity.png);
+	border: none;
+}
+.event span.notification-count {
+	position: absolute;
+	font-size: 10px;
+	top: -0.5em;
+	right: -0.5em;
+	padding: 0 0.5em;
+	text-align: center;
+	
+	color: white;
+	background-color: #E94046;
+	border-radius: 1em;
+}

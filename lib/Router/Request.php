@@ -165,7 +165,7 @@ class Request {
 		
 		return (object) $headers;
 	}
-	
+
 
 	/**
 	 * Gets request body

@@ -1,56 +1,100 @@
 html,
 body {
-	margin: 0px; 
-	padding: 0px; 
-	min-height: 100%; 
-	
-	background: #f5f5f5 url("/assets/img/bb_pattern.png");
+	min-height: 100%;
+	margin: 0px;
+	padding: 0px;
+		
 	color: #004356;
 	font-family: "Source Sans Pro", sans-serif;
-	font-stretch: 0.8; }
-	
-#container { position: relative; overflow-x: hidden; height: 100%; }
-	#container.menu-open #menu { 
-		left: 0%;
-		visibility: visible;
-		transition-duration: 0, 200ms;
-		transition-property: visibility, left;
-		transition-delay: 0;	
-	}
-	#container.menu-open #content { margin-left: 80%; }
-	#container.menu-open #content > .overlay { display:  inherit;	}
-	#container.hidden-title-bar #content > .head { display: none;	}
+	font-stretch: expanded;
+}
 
+#container,
+#pusher,
 #menu,
-#content { display: inline-block; height: 100%; }
+#content {
+	height: 100%;
+}
 
-#menu { 
+#container {
+	position: relative;
+	overflow: hidden;
+}
+
+#pusher {
+	position: relative;
+	left: 0;
+	-webkit-transition: left 0.3s ease-in-out;
+	transition: left 0.3s ease-in-out;
+	background: #f5f5f5 url(/assets/img/bb_pattern.png);
+}
+.menu-open #pusher {
+	left: 80%;
+}
+
+#menu {
+	position: absolute;
+	top: 0;
 	left: -80%;
 	width: 80%;
-	position: absolute; 
-	top: 0; 
-	z-index: 1001;
+	
+	color: #fff;
+	background: #004356 url(/assets/img/bb_pattern_blue.png);
+}
+#content {
+	position: relative;
+	overflow-y: scroll;
+}
+	
+#content > .body { position: relative;	}
+#content > .overlay {
 	visibility: hidden;
+	position: absolute;
+	z-index: 1;
+	top: 60px; bottom: 0;
+	left: 0; right: 0;
 	
-	background: #004356;
-	transition-duration: 0, 200ms;
-	transition-property: visibility, left;
-	transition-delay: 200ms, 0;	}
+	background-color: rgba(45, 45, 45, 0.70);
+}
+.menu-open #content > .overlay {
+	visibility: visible;
+}
 
-#content { 
-	width: 100%; 
-	position: relative; 
-	margin-left: 0%;
-	transition: margin 200ms linear;	}
+#content > .head {
+	display: table;
+	width: 100%;
+	height: 60px;
+	z-index: 1;
 	
-	#content > .body { position: relative;	}
-	#content > .overlay {
-		display: none;
-		position: absolute;
-		top: 60px; bottom: 0;
-		left: 0; right: 0;
-		z-index: 1000;
-		
-		background-color: rgba(45, 45, 45, 0.70);	}
+	color: white;
+	box-shadow: 0px 1px 0px #cccccc;
+	text-shadow: 0px 1px 0px #E0B43A;
+	background-color: #f9d857;
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f9d857), color-stop(100%, #ffbf00));
+	background-image: -webkit-linear-gradient(top, #f9d857, #ffbf00);
+	background-image: -moz-linear-gradient(top, #f9d857, #ffbf00);
+	background-image: -ms-linear-gradient(top, #f9d857, #ffbf00);
+	background-image: -o-linear-gradient(top, #f9d857, #ffbf00);
+	background-image: linear-gradient(top, #f9d857, #ffbf00);
+}
+#container.hidden-title-bar #content > .head {
+	display: none;
+}
+#content > .head > div { display: table-cell; }
 
-a { color: inherit; text-decoration: none;	}
+#content > .head .right-padding,
+#content > .head .back-button,
+#content > .head .menu-toggle { width: 70px; }
+
+#content > .head .menu-toggle {
+	background: url(/assets/img/menu_toggle.png) no-repeat center center;
+}
+#content > .head .title {
+	text-align: center;
+	font-size: 24px;
+	padding-top: 14px;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;	}

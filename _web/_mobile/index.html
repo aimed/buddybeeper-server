@@ -1,92 +1,45 @@
 <html>
-	<head>
-		<title>buddybeeper</title>
-		<link rel="stylesheet" href="/_mobile/css/css.css" />
-		<link rel="stylesheet" href="/_mobile/css/head.css" />
-		<link rel="stylesheet" href="/_mobile/css/signup.css" />
-		<link rel="stylesheet" href="/_mobile/css/forms.css" />
-		<link rel="stylesheet" href="/_mobile/css/buttons.css" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	</head>
-	<body>
-		<div id="container" class="-menu-open hidden-title-bar">
-			<div id="menu"></div>
-			<!-- @end #menu -->
-			<div id="content">
-				<div class="overlay"></div>
-				<!-- @end .overlay -->
-				<div class="head">
-					<div class="menu-toggle back-button" onclick="triggerClass(document.getElementById('container'),'menu-open');"></div>
-					<div class="title">Title</div>
-					<div class="right-padding"></div>
-				</div>
-				<!-- @end .head -->		
-
-				<div class="body">
-					<!-- Login Page -->
-					<div class="signup">
-						<div class="branding">
-							<h1>buddybeeper</h1>
-						</div>
-						<div class="signin-form">
-							<form class="form" method="post" action="">
-								<div class="input-group">
-									<div class="input-container">
-										<input type="text" name="email" value="" placeholder="E-Mail" />
-									</div>
-									<div class="input-container">
-										<input type="password" name="password" value="" placeholder="Password" />
-									</div>
-								</div>
-								<!-- @end .input-group -->
-								<div class="signin-button-wrapper">
-									<button class="button yellow">Sign In</button>
-								</div>
-								<!-- @end .signin-button-wrapper -->
-								<div class="links">
-									<a href="#">Create an account</a>
-								</div>
-								<!-- @end .links -->
-							</form>
-						</div>
+<head>
+	<title>buddybeeper</title>
+	<link rel="stylesheet" href="/_mobile/css/css.css" 		type="text/css" charset="utf-8">
+	<link rel="stylesheet" href="/_mobile/css/buttons.css" 	type="text/css" charset="utf-8">
+	<link rel="stylesheet" href="/_mobile/css/events.css" 	type="text/css" charset="utf-8">
+	<link rel="stylesheet" href="/_mobile/css/forms.css" 	type="text/css" charset="utf-8">
+	<link rel="stylesheet" href="/_mobile/css/menu.css" 		type="text/css" charset="utf-8">
+	<link rel="stylesheet" href="/_mobile/css/signup.css" 	type="text/css" charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+</head>
+<body ng-app="buddybeeper" ng-controller="rootController">
+	<div id="container" ng-class="{'hidden-title-bar':!hasTitleBar, 'menu-open':menuOpen}">
+		<div id="pusher">
+			<div id="menu">
+				<div class="user">
+					<div class="image-wrapper">
+						<img src="" alt="" />
 					</div>
-					<!-- @end Login Page -->
+					<div class="name">Max M</div>
 				</div>
-				<!-- @end .body -->
-			</div>
-			<!-- @end #content -->
-		</div>
-		<!-- @end #container -->
-		<script type="text/javascript">
-			function hasClass (elem, className) {
-			  var expression = new RegExp(" " + className + " ");
-			  return expression.test(" " + elem.className + " ");
-			}
-			
-			function addClass (elem, className) {
-			  if (!hasClass(elem, className)) {
-			    elem.className += " " + className;
-			  }
-			}
-			
-			function removeClass (elem, className) {
-			  var expression = new RegExp(" " + className.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, "\\$&") + " ");
-			  elem.className = trim((" " + elem.className + " ").replace(expression, " "));
-			}
-			
-			function triggerClass (elem, className, setActive) {
-			  if (setActive === undefined) {
-			    setActive = !hasClass(elem, className);
-			  }
-			  if (setActive) {
-			    addClass(elem, className);
-			  } else {
-			    removeClass(elem, className);
-			  }
-			}
-			function trim (str) {
-			  return str.replace(/^\s+|\s+$/g,"");
-			}
-		</script>
-	</body>
+				<div class="links">
+					<a href="/events" class="active">Home</a>
+					<a href="/">Logout</a>
+				</div>
+			</div><!-- @end #menu -->
+			<div id="content">
+				<div class="overlay" ng-click="showMenu(false)"></div><!-- @end .overlay -->
+				<div class="head">
+					<div class="menu-toggle back-button" ng-click="showMenu()"></div>
+					<div class="title">{{title}}</div>
+					<div class="right-padding"></div>
+				</div><!-- @end .head -->
+				<div class="body" ng-view></div><!-- @end .body -->
+			</div><!-- @end #content -->
+		</div><!-- @end #pusher -->
+	</div><!-- @end #container -->
+	<script type="text/javascript" charset="utf-8" src="/assets/js/angular.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="/assets/js/angular-route.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="/assets/js/angular-touch.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="/_mobile/js/bootstrap.js"></script>
+	<script type="text/javascript" charset="utf-8" src="/assets/js/factories.js"></script>
+	<script type="text/javascript" charset="utf-8" src="/_mobile/js/home.js"></script>
+</body>
 </html>

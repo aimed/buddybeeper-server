@@ -47,7 +47,7 @@ class Cookie {
 	
 	/**
 	 * Cookie type
-	 * 
+	 *
 	 * 0 = normal cookie
 	 * 1 = cookie with hash
 	 * 2 = encrypted cookie
@@ -75,7 +75,7 @@ class Cookie {
 	
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param String $name
 	 * @param String $value
 	 * @param Int Type
@@ -84,7 +84,11 @@ class Cookie {
 		$this->name   = $name;
 		$this->value  = $value;
 		$this->_type  = $type;
-		$this->domain = "." . $_SERVER["HTTP_HOST"];
+		
+		// Set default domain
+		$domainParts 		= explode(".", $_SERVER["HTTP_HOST"]);
+		$domainPartsLength 	= count($domainParts);
+		$this->domain 		= "." . $domainParts[$domainPartsLength - 2] . "." . $domainParts[$domainPartsLength - 1];
 	}
 	
 	
@@ -126,7 +130,15 @@ class Cookie {
 	 * @return Bool setcookie successfull
 	 */
 	public function set () {
-		return setcookie($this->name, $this->value, $this->expires, $this->path, $this->domain, $this->secure, $this->http_only);
+		return setcookie(
+			$this->name,
+			$this->value,
+			$this->expires,
+			$this->path,
+			$this->domain,
+			$this->secure,
+			$this->http_only
+		);
 	}
 	
 	
@@ -136,6 +148,7 @@ class Cookie {
 	 * @return Booke setcookie successfull
 	 */
 	public function delete () {
-		return setcookie($this->name, "", time() - 3600);
+		$this->expires_at(time() - 3600);
+		return $this->set();
 	}
 }

@@ -44,8 +44,11 @@ $router->post("/test", function (&$req, &$res) {
 $router->post("/login", function (&$req, &$res) {
 	$bb = new buddybeeper("1",CLIENT_SECRET);
 	$response = $bb->getRefreshToken($req->body("email"),$req->body("password"));
+	
 	if (isset($response->response)) {
-		setcookie("rft", Vault::encrypt($bb->refresh_token, VAULT_SECRET), time() + 3600*24*30, "/", "buddybeeper.dev");
+		$cookie = new Cookie("rft", Vault::encrypt($bb->refresh_token, VAULT_SECRET));
+		$cookie->expires_in(1, "months");
+		$cookie->set();
 	}
 	
 	$res->json($response);
@@ -64,7 +67,7 @@ $router->post("/register", function (&$req, &$res) {
 	
 	if (isset($response->response->status) && $response->response->status == "ok") {
 		$cookie = new Cookie("rtf", Vault::encrypt($bb->refresh_token, VAULT_SECRET));
-		$cookie->expires_in(1, "month");
+		$cookie->expires_in(1, "months");
 		$cookie->set();
 	}
 	
@@ -76,6 +79,8 @@ $router->post("/register", function (&$req, &$res) {
 $router->get("/logout", function (&$res) {
 	$cookie = new Cookie("rft");
 	$cookie->delete();
+	echo 'what';
+	die('');
 	$res->redirect("/");
 }, "res");
 

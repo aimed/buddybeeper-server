@@ -1,33 +1,47 @@
-<div class="event event-detailed">
+<div class="event event-detailed" ng-controller="eventController" ng-init="showTitleBar(true)">
 	<div class="cover" style="background-image: url(http://placehold.it/1x1/777&text=);">
 		<img src="http://placehold.it/100x100" alt="" />
 	</div><!-- @end .cover -->
 	
 	<div class="notifications nav">
 		<div class="item">
-			<a class="activity" href="<!-- @path event_activities.html -->"><span class="notification-count">1</span></a>
+			<a class="activity" href="#" ng-click="goTo('activity')">
+				<span class="notification-count">1</span>
+			</a>
 		</div>
-		<div class="item"><a class="date" href="<!-- @path event_dates.html -->"></a></div>
-		<div class="item"><a class="invite" href="<!-- @path event_invites.html -->"></a></div>
-		<div class="item"><a class="discussion" href="<!-- @path event_discussions.html -->"></a></div>
+		<div class="item">
+			<a class="date" href="#" ng-click="goTo('date')"></a>
+		</div>
+		<div class="item">
+			<a class="invite" href="#" ng-click="goTo('invite')"></a>
+			</div>
+		<div class="item">
+			<a class="discussion" href="#" ng-click="goTo('discussion')"></a>
+		</div>
 	</div><!-- @end .nav -->
 	
 	<div class="event-subview-container">
 		
-		<div class="event-subview">
-			<div class="dates">
-				<div class="date votable">
-					<div class="votable-inner">
-						<div class="text date">29. Jul</div>
-						<div class="text time">9 - 18h</div>
-						<div class="friend-indicator"></div>
-						<div class="vote-indicator"></div>
-					</div>
+		<div class="event-subview" ng-if="tab == 'new'">
+			<div class="admin">
+				<div class="input votable">
+					<input name="" type="text" placeholder="Title">
 				</div>
-				<div class="date votable">
+				<div class="input votable">
+					<input name="" type="text" placeholder="Description">
+				</div>
+			</div>
+			<div class="add-item">
+				<div class="button yellow big" ng-click="goTo('activity')">Create Event</div>
+			</div>
+		</div>
+		
+		<div class="event-subview" ng-if="tab == 'date'">
+			<div class="dates">
+				<div class="date votable" ng-repeat="date in dates">
 					<div class="votable-inner">
-						<div class="text date">30. Jul</div>
-						<div class="text time">all day</div>
+						<div class="text date">{{date.start}}</div>
+						<div class="text time"></div>
 						<div class="friend-indicator"></div>
 						<div class="vote-indicator"></div>
 					</div>
@@ -35,61 +49,47 @@
 			</div>
 			<div class="add-item">
 				<div class="button blue big">Add Date</div>
+				<div class="button yellow big" ng-click="goTo('invite')">Next</div>
 			</div>
 		</div>
 		<!-- @end Subview Dates -->
 		
-		<div class="event-subview">
+		<div class="event-subview" ng-if="tab == 'activity'">
 			<div class="activities">
-				<div class="activity votable">
+				<div class="activity votable"  ng-repeat="activity in activities">
 					<div class="votable-inner">
-						<div class="text">Go-Cart</div>
-						<div class="friend-indicator"></div>
-						<div class="vote-indicator"></div>
-					</div>
-				</div>
-				<div class="activity votable voted">
-					<div class="votable-inner">
-						<div class="text">Skydiving</div>
+						<div class="text">
+							<span ng-if="!isNew(activity)">{{activity.name}}</span>
+							<input name="" type="text"  ng-if="isNew(activity)" ng-model="activity.name"></div>
 						<div class="friend-indicator"></div>
 						<div class="vote-indicator"></div>
 					</div>
 				</div>
 			</div><!-- @end .activities -->
 			<div class="add-item">
-				<div class="button blue big">Add Activity</div>
-			</div><!-- @end .add-item -->
+				<div class="button blue big" ng-click="addActivity();">Add Activity</div>
+<!-- 				<div class="button yellow big" ng-click="goTo('date')">Next</div>
+ -->			</div><!-- @end .add-item -->
 		</div>
 		<!-- @end Subview Activities -->
 		
-		<div class="event-subview">
+		<div class="event-subview" ng-if="tab == 'invite'">
 			<div class="invites">
-				<div class="invite">
+				<div class="invite" ng-repeat="invites in invites">
 					<div class="votable-inner">
 						<div class="profile-image" style="background-image: url(http://placehold.it/40x40);"></div>
 						<div class="username text">Peter</div>
 					</div>
 				</div>
-				<div class="invite accepted">
-					<div class="votable-inner">
-						<div class="profile-image" style="background-image: url(http://placehold.it/40x40);"></div>
-						<div class="username text">Justus</div>
-					</div>
-				</div>
-				<div class="invite">
-					<div class="votable-inner">
-						<div class="profile-image" style="background-image: url(http://placehold.it/40x40);"></div>
-						<div class="username text">Bob</div>
-					</div>
-				</div>
 			</div><!-- @end .invites -->
 			<div class="add-item">
 				<div class="button blue big">Invite A Friend</div>
-			</div><!-- @end .add-item -->
+<!-- 				<div class="button yellow big">Create Event</div>
+ -->			</div><!-- @end .add-item -->
 		</div>
 		<!-- @end Subview Invites -->
 		
-		<div class="event-subview">
+		<div class="event-subview" ng-if="tab == 'discussion'">
 			<div class="discussions">
 				<div class="discussion-item">
 					<div class="user-image" style="background-image: url(http://placehold.it/60x60);"></div>
@@ -98,8 +98,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="add-item">
-			</div>
+			<div class="add-item"></div>
 		</div>
 		<!-- @end Subview Discussion -->
 		

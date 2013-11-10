@@ -1,26 +1,21 @@
-<div class="events" ng-if="isLoggedIn">
-	<div class="item event">
+<!-- Events -->
+<div class="events" ng-if="isLoggedIn && showTitleBar(true)">
+	<div class="item event" ng-repeat="event in user.events">
 		<div class="details">
-			<div class="title"><a href="<!-- @path event_activities.html -->">Unicorn Meeting</a></div>
-			<div class="vote-time-remaining">4 hours</div>
+			<div class="title"><a href="/event/{{event.token}}/home">{{event.title}}</a></div>
+			<div class="vote-time-remaining"></div>
 		</div><!-- @end details -->
 		<div class="notifications">
 			<div class="item">
-				<a class="activity" href="<!-- @path event_activities.html -->"><span class="notification-count">1</span></a>
+				<a class="activity" href="/event/{{event.token}}/activity"><span class="notification-count">1</span></a>
 			</div>
-			<div class="item"><a class="date" href="<!-- @path event_dates.html -->"></a></div>
-			<div class="item"><a class="invite" href="<!-- @path event_invites.html -->"></a></div>
-			<div class="item"><a class="discussion" href="<!-- @path event_discussions.html -->"></a></div>
+			<div class="item"><a class="date" href="/event/{{event.token}}/date"></a></div>
+			<div class="item"><a class="invite" href="/event/{{event.token}}/invite"></a></div>
+			<div class="item"><a class="discussion" href="/event/{{event.token}}/discussion"></a></div>
 		</div><!-- @end notifications -->
 	</div><!-- @end .event.item -->
-	<div class="item event inactive">
-		<div class="details">
-			<div class="title">Secret Mission</div>
-			<div class="vote-time-remaining">Vote completed.</div>
-		</div><!-- @include event_nav.html -->
-	</div><!-- @end .event.item -->
 	<div class="create-event">
-		<a class="button blue big">Create Event</a>
+		<a class="button blue big" href="/event/create/new">Create Event</a>
 	</div>
 </div><!-- @end Events -->
 

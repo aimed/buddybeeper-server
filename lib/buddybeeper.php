@@ -6,7 +6,7 @@ class buddybeeper extends RESTHelper {
 	/**
 	 * Base url
 	 */
-	protected $_baseURL = "http://api.buddybeeper.dev";
+	protected $_baseURL = "http://api.local.buddybeeper.net";
 	
 	
 	/**
@@ -76,13 +76,13 @@ class buddybeeper extends RESTHelper {
 	 */
 	public function signWithClientCredentials () {
 		$this->set("client_id", $this->client_id);
-		$this->set("client_secret", $this->client_secret);		
+		$this->set("client_secret", $this->client_secret);
 	}
 	
 	
 	/**
 	 * Override post to prepend base url and version
-	 * 
+	 *
 	 * @param String $url
 	 */
 	public function post ($url) {
@@ -101,7 +101,7 @@ class buddybeeper extends RESTHelper {
 		$this->set("username", $username);
 		$this->set("password", $password);
 		
-		$response = $this->post("/auth/token");	
+		$response = $this->post("/auth/token");
 		$this->cleanup();
 		$this->setRefreshTokenFromResponse($response);
 		$this->setAccessTokenFromResponse($response);
@@ -116,7 +116,7 @@ class buddybeeper extends RESTHelper {
 	public function getAccessToken () {
 		$this->set("refresh_token", $this->refresh_token);
 		
-		$response = $this->post("/auth/refresh");	
+		$response = $this->post("/auth/refresh");
 		$this->cleanup();
 		$this->setAccessTokenFromResponse($response);
 		

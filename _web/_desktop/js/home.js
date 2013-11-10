@@ -123,11 +123,13 @@ bb.controller("feed",["$scope", "$location", "User", function (scope, location, 
 bb.controller("landingPage", ["$scope", "User", "$location", function (scope, user, location) {
 		
 	
-	scope.setSignUpFormMode = function (mode) { scope.signUpFormMode = mode; }
+	scope.setSignUpFormMode = function (mode) {
+		scope.signUpFormMode = mode;
+	}
 
 	scope.login = function (form) {
 		
-		response = user.login(form.email, form.username, function (r) {
+		response = user.login(form.email, form.password, function (r) {
 			if (r.code == 1003) form.error = "Invalid e-mail or password";
 		});
 		scope.$emit("loginstatechange",response);

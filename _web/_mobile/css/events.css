@@ -117,20 +117,20 @@
 	background: #ffffff;
 	margin: 15px;
 	padding: 1em;
-	border-radius: 3px;	
+	border-radius: 3px;
 }
 .events .event.inactive,
-.events .event.inactive .vote-time-remaining  { 
-	color: #B9AC9B !important;	
+.events .event.inactive .vote-time-remaining  {
+	color: #B9AC9B !important;
 }
 .events .event .title a {
 	display: block;
 }
-.events .event .vote-time-remaining { 
+.events .event .vote-time-remaining {
 	margin-top: 5px;
-	color: #E94046; 
+	color: #E94046;
 	font-size: 11px;
-	text-transform: uppercase;	
+	text-transform: uppercase;
 }
 
 .events .create-event {
@@ -144,7 +144,7 @@
 	Event subnav and notifications
 */
 
-.event .notifications { 
+.event .notifications {
 	text-align: justify;
 	display: table;
 	width: 100%;
@@ -165,19 +165,36 @@
 	height: 40px;
 	display: inline-block;
 	position: relative;
-	border-radius: 50%;
-	border: 1px solid #888;
 	background-position: center center;
-	background-size: 150%;
+	background-size: 100%;
 }
+
 .event .notifications a.date {
-	background-image: url(date.png);
-	border: none;
+	background-image: url(/assets/img/dates.png);
 }
 .event .notifications a.activity {
-	background-image: url(activity.png);
-	border: none;
+	background-image: url(/assets/img/activities.png);
 }
+.event .notifications a.invite {
+	background-image: url(/assets/img/invites.png);
+}
+.event .notifications a.discussion {
+	background-image: url(/assets/img/discussion.png);
+}
+
+.events .event .notifications a.date {
+	background-image: url(/assets/img/dates_blue.png);
+}
+.events .event .notifications a.activity {
+	background-image: url(/assets/img/activities_blue.png);
+}
+.events .event .notifications a.invite {
+	background-image: url(/assets/img/invites_blue.png);
+}
+.events .event .notifications a.discussion {
+	background-image: url(/assets/img/discussion_blue.png);
+}
+
 .event span.notification-count {
 	position: absolute;
 	font-size: 10px;
@@ -189,4 +206,12 @@
 	color: white;
 	background-color: #E94046;
 	border-radius: 1em;
+}
+
+.event .votable input {
+	font: inherit;
+	border: none;
+	width: 100%;
+	line-height: 40px;
+	vertical-align: middle;
 }

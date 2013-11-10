@@ -1,4 +1,4 @@
-var APIROOT = "http://api.buddybeeper.dev/v0";
+var APIROOT = "http://api.local.buddybeeper.net/v0";
 
 /**
  * Factory: Event
@@ -77,6 +77,15 @@ bb.factory("Event", ["$rootScope", "$http", function (scope, http) {
 		});
 	}
 	
+	event.prototype.get = function (token, cb) {
+		console.log(token);
+		http.get(APIROOT  + "/events", {}, {headers:{"X-Event-Token":token}})
+		.success(function (r) {
+			console.log(arguments);
+			cb(r);
+		});
+	}
+	
 	return event;
 	
 }]);
@@ -87,9 +96,15 @@ bb.factory("Event", ["$rootScope", "$http", function (scope, http) {
  *
  *
  */
-bb.factory("User", ["$rootScope", "$http", function (scope, http) {
+bb.factory("User", ["$rootScope", "$http", "$location", function (scope, http, location) {
 	scope.user = {};
 	scope.isLoggedIn = null;
+	
+	scope.logout = function () {
+		console.log("logging out");
+		http.get("/logout").success(function (r) {scope.$emit("loginstatechange");});
+		location.path("/");
+	}
 	
 	scope.$on("loginstatechange", function (event,state) {
 		if (state) state = state.response;

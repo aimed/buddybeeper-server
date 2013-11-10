@@ -115,7 +115,6 @@ $router->get("/_desktop/*", function (&$req, &$res) {
 
 $router->get("/*", function (&$req, &$res) {
 	// Check if mobile site was requested.
-	// some pointless comment
 	$env = substr($_SERVER["SERVER_NAME"], 0, 2) === "m." ?
 		"_mobile" :
 		"_desktop";

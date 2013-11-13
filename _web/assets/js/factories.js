@@ -1,5 +1,4 @@
-var APIROOT = "http://api.local.buddybeeper.net/v0";
-
+var APIVERSION = "/v0";
 /**
  * Factory: Event
  */
@@ -11,7 +10,7 @@ bb.factory("Event", ["$rootScope", "$http", function (scope, http) {
 	
 	event.prototype.comment = function (text) {
 		var response = {text:text,user:this.user};
-		http.post(APIROOT + "/events/comment", {text:text}, {headers:{"X-Event-Token":this.token}})
+		http.post(APIROOT + APIVERSION + "/events/comment", {text:text}, {headers:{"X-Event-Token":this.token}})
 		.success(function (r) {
 			if (r.response) {
 				response = r.response;
@@ -25,23 +24,23 @@ bb.factory("Event", ["$rootScope", "$http", function (scope, http) {
 	// @TODO: move together
 	event.prototype.vote = function (item, type) {
 		if (!item.id) return;
-		http.post(APIROOT + "/events/" + type + "/" + item.id, {}, {headers:{"X-Event-Token":this.token}})
+		http.post(APIROOT + APIVERSION + "/events/" + type + "/" + item.id, {}, {headers:{"X-Event-Token":this.token}})
 		.success(function (r) { console.log("voted", r); });
 	}
 	event.prototype.unvote = function (item, type) {
 		if (!item.id) return;
 		// @TODO: lolwhat. delete doesnt seem to pass header or body
-		http.delete(APIROOT + "/events/" + type + "/" + item.id + "?token=" + this.token, {token:this.token}, {headers:{"X-Event-Token":this.token}})
+		http.delete(APIROOT + APIVERSION + "/events/" + type + "/" + item.id + "?token=" + this.token, {token:this.token}, {headers:{"X-Event-Token":this.token}})
 		.success(function (r) { console.log("unvoted", r); });
 	}
 	event.prototype.createDate = function (start,cb) {
 		start = new Date(start);
 		start = [start.getFullYear(),start.getMonth()+1,start.getDate()].join("-") + " 00:00:00";
-		http.post(APIROOT + "/events/date", {start:start}, {headers:{"X-Event-Token":this.token}})
+		http.post(APIROOT + APIVERSION + "/events/date", {start:start}, {headers:{"X-Event-Token":this.token}})
 		.success(function (r) { console.log("create date", arguments); if(cb) cb(r.response);});
 	}
 	event.prototype.createActivity = function (name,cb) {
-		http.post(APIROOT + "/events/activity", {name:name}, {headers:{"X-Event-Token":this.token}})
+		http.post(APIROOT + APIVERSION + "/events/activity", {name:name}, {headers:{"X-Event-Token":this.token}})
 		.success(function (r) { console.log("create activity", arguments); if(cb) cb(r.response);});
 	}
 	event.prototype.create = function (data,cb) {
@@ -53,7 +52,7 @@ bb.factory("Event", ["$rootScope", "$http", function (scope, http) {
 		send.description = data.description;
 		send.invites = data.invites;
 
-		http.post(APIROOT + "/events", send, {headers:{"X-Access-Token":scope.accessToken}})
+		http.post(APIROOT + APIVERSION + "/events", send, {headers:{"X-Access-Token":scope.accessToken}})
 		.success(function(r){
 			console.log("create event", arguments);
 			if (r && r.response && r.response.token) {
@@ -70,7 +69,7 @@ bb.factory("Event", ["$rootScope", "$http", function (scope, http) {
 	
 	event.prototype.invite = function (list,cb) {
 		console.log(list);
-		http.post(APIROOT + "/events/invite",{invites:list}, {headers:{"X-Event-Token":this.token}})
+		http.post(APIROOT + APIVERSION + "/events/invite",{invites:list}, {headers:{"X-Event-Token":this.token}})
 		.success(function (r) {
 			console.log(arguments);
 			if (cb) cb();
@@ -79,7 +78,7 @@ bb.factory("Event", ["$rootScope", "$http", function (scope, http) {
 	
 	event.prototype.get = function (token, cb) {
 		console.log(token);
-		http.get(APIROOT  + "/events", {}, {headers:{"X-Event-Token":token}})
+		http.get(APIROOT + APIVERSION  + "/events", {}, {headers:{"X-Event-Token":token}})
 		.success(function (r) {
 			console.log(arguments);
 			cb(r);
@@ -155,7 +154,7 @@ bb.factory("User", ["$rootScope", "$http", "$location", function (scope, http, l
 			
 			var response = {};
 			
-			http.get(APIROOT + "/users/me?event_token=" + event_token)
+			http.get(APIROOT + APIVERSION + "/users/me?event_token=" + event_token)
 			.success(function(r) {
 				console.log("got user", arguments);
 				if (cb) cb(r);

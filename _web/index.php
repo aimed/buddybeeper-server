@@ -79,8 +79,6 @@ $router->post("/register", function (&$req, &$res) {
 $router->get("/logout", function (&$res) {
 	$cookie = new Cookie("rft");
 	$cookie->delete();
-	echo 'what';
-	die('');
 	$res->redirect("/");
 }, "res");
 
@@ -109,6 +107,10 @@ $router->get("/_mobile/*", function (&$req, &$res) {
 
 $router->get("/_desktop/*", function (&$req, &$res) {
 	$res->send("",404);
+});
+
+$router->get('/api_endpoint', function (&$req, &$res) {
+	$res->send('var APIROOT = ' . '"' . BUDDYBEPPER_API_URL . '";');
 });
 
 

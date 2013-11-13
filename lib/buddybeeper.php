@@ -6,7 +6,7 @@ class buddybeeper extends RESTHelper {
 	/**
 	 * Base url
 	 */
-	protected $_baseURL = "http://api.local.buddybeeper.net";
+	protected $_baseURL = BUDDYBEPPER_API_URL;
 	
 	
 	/**
